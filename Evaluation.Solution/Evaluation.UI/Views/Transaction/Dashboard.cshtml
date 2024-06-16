@@ -1,0 +1,82 @@
+﻿@model Evaluation.UI.Models.SalesTransactionDashboardVM
+@{
+    ViewData["Title"] = "Transaction";
+    ViewData["SubTitle"] = "Dashboard";
+}
+<link href="~/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
+      rel="stylesheet" />
+<link rel="stylesheet"
+      type="text/css"
+      href="~/assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css" />
+@*<h2>@Model.FirstName @Model.MiddleName @Model.LastName</h2>*@
+<input type="hidden" id="ContactId" value="@Model.ContactVM.RecId">
+<div class="row">
+    <div class="col-6 "> <h2>@Model.ContactVM.FirstName @Model.ContactVM.MiddleName @Model.ContactVM.LastName</h2></div>
+    <div class="col-6 ">
+        <div class="" style="float: right;">
+            <button type="button" id="btnDashboardDetails" class="
+                        btn btn-danger
+                      ">
+                Detailed Dashboard
+            </button>
+            <button type="button" id="btnTransaction" class="
+                        btn btn-secondary
+                      ">
+                New Transaction
+            </button>
+            @*    <button type="button" id="btnCqscreen" class="btn btn-primary"> CQ Screen
+            </button> test*@
+
+
+
+        </div>
+    </div>
+</div>
+<br />
+<table id="tableDashboard" style="width:100%" class="display responsive table table-striped">
+    <thead>
+        <tr>
+            @* <th></th> *@
+            <th>Ticket Code</th>
+            <th>Open Date</th>
+            <th>Business Line</th>
+            <th>Header Status</th>
+            <th>Details Status</th>
+            <th>AF1 Resume</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="tbodyDashboard">
+        @*   @foreach (var item in Model.SalesTransactions)
+        {
+        <tr>
+        <th><input type="checkbox" name="checkmeSQ" value="@item.SalesTransactionId" data-businesslineid="@item.BusinessLineId" class="checkmeSQ" data-cqurl="@item.CQURL" onclick="selectOnlyOne(this)" /></th>
+        <th>@item.TicketCode</th>
+        <th>@item.OpenDate</th>
+        <th>@item.BusinessLine</th>
+        <th>@item.HeaderStatus</th>
+        <th>@item.DetailStatus</th>
+        <th>@item.NbrDays</th>
+        <th>@item.TAT</th>
+        <th>
+        <a href="#" id="btnEdit" onclick="redirectAction(this)" data-id="@item.RecId" data-businesslineid="@item.BusinessLineId" data-transactionid="@item.SalesTransactionId" data-afurl="@item.AF1URL" data-cqurl="@item.CQURL" data-typeid="@item.DetailStatusId"><i class="fas fa-edit"></i></a>
+        <a href="#" id="btnComplete" data-id="@item.RecId" data-businesslineid="@item.BusinessLineId"  data-transactionid="@item.SalesTransactionId"><i class="fas fa-check"></i></a>
+        </th>
+        </tr>
+        }*@
+    </tbody>
+</table>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+
+    <script>
+        var salesTransaction = @Html.Raw(Json.Serialize(Model.SalesTransactions));
+    </script>
+    <script src="~/js/transaction/dashboard.js"></script>
+
+
+}

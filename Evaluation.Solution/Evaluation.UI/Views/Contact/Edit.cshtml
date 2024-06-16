@@ -1,0 +1,117 @@
+﻿@model Evaluation.UI.Models.ContactVM
+@{
+    ViewData["Title"] = "Contact";
+    ViewData["SubTitle"] = "Edit";
+}
+
+<!-- -------------------------------------------------------------- -->
+<!-- Example -->
+<!-- -------------------------------------------------------------- -->
+<div class="col-12">
+    <div class="card">
+        <div class="border-bottom title-part-padding">
+            <h4 class="card-title mb-0">Contact Info</h4>
+        </div>
+        <div class="card-body wizard-content">
+            
+            <div class="row pt-3">
+                <div class="col-md-4 ms-auto">
+                   @*  <button style="float:right" type="button" id="btnTransaction" class="
+                        d-inline-flex
+                        align-items-center
+                        justify-content-center
+                        btn btn-danger
+                      ">
+                        <i class="fas fa-plus"></i>Transaction
+                    </button> *@
+                    <button style="float:right" type="button" id="btnEdit" class="
+                        d-inline-flex
+                        align-items-center
+                        justify-content-center
+                        btn btn-light
+                      ">
+                        <i class="fas fa-edit"></i>Edit
+                    </button>
+
+                   
+                </div>
+            </div>
+            <form id="step1from" class="validation-wizard wizard-circle">
+                <!-- Step 1 -->
+                <h6>Info</h6>
+                <section>
+                    <partial name="_Shared.cshtml" />
+                </section>
+                <!-- Step 2 -->
+                <h6>Channels</h6>
+                <section>
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="border-bottom title-part-padding">
+                                <h4 class="card-title mb-0">Channels (Email, Mobile, Social Media ... )</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="ChannelListView" class="my-4"></div>
+                                <div class="row">
+
+                                    @*   <div class="col-sm-3">
+                                    <div class="mb-3">
+
+                                    <label for="ddlChannel" class="control-label">Channel Type <span class="danger">*</span></label>
+                                    <select id="ddlChannel" name="ddlChannel" class="form-select" asp-items="@(new SelectList(Model.Channels, "code", "description"))">
+                                    <option value="">--Select--</option>
+                                    </select>
+                                    </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                    <div class="mb-3">
+                                    <label for="ddlChannel" class="control-label">Value <span class="danger">*</span></label>
+                                    <input type="text" class="form-control" id="txtChannelValue" name="txtChannelValue" placeholder="Channel Value">
+                                    </div>
+                                    </div>*@
+                                    <div class="col-sm-2">
+                                        <div class="mb-3">
+                                            <button onclick="addChannel();" class="
+                            btn
+                            rounded-pill
+                            px-4
+                            btn-light-success
+                            text-success
+                            font-weight-medium
+                            waves-effect waves-light
+                          " type="button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle feather-sm fill-white"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </form>
+        </div>
+    </div>
+</div>
+@* <partial name="../Shared/_ContactGrid.cshtml" /> *@
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!--This page JavaScript -->
+    <script src="~/assets/libs/jquery.repeater/jquery.repeater.min.js"></script>
+    <script src="~/assets/extra-libs/jquery.repeater/repeater-init.js"></script>
+    <script src="~/assets/libs/jquery-steps/build/jquery.steps.min.js"></script>
+ @*    <script src="~/assets/libs/jquery.repeater/jquery.repeater.min.js"></script>
+    <script src="~/assets/extra-libs/jquery.repeater/repeater-init.js"></script>
+    <script src="~/assets/libs/jquery-steps/build/jquery.steps.min.js"></script> *@
+    <script src="~/js/shared/wizard.js"></script>
+    <script src="~/js/contacts/shared.js"></script>
+    <script src="~/js/contacts/edit.js"></script>
+ @*    <script src="~/js/contacts/search.js"></script> *@
+
+    <script>
+        var channelsList = @Html.Raw(Json.Serialize(Model.Channels));
+        var contactChannel = @Html.Raw(Json.Serialize(Model.ContactChannel));
+    </script>
+}

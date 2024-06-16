@@ -1,0 +1,179 @@
+﻿<aside class="left-sidebar">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                       href="~/Home/Index"
+                       aria-expanded="false">
+                        <i data-feather="calendar" class="feather-icon"></i><span class="hide-menu">Home</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark"
+                       href="javascript:void(0)"
+                       aria-expanded="false">
+                        <i data-feather="phone" class="feather-icon"></i><span class="hide-menu">Lead</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="~/Lead/Create" class="sidebar-link">
+                                <i class="mdi mdi-chart-line"></i>
+                                <span class="hide-menu">Create</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="~/Lead/Index" class="sidebar-link">
+                                <i class="mdi mdi-chart-line"></i>
+                                <span class="hide-menu">Search</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark"
+                       href="javascript:void(0)"
+                       aria-expanded="false">
+                        <i data-feather="phone" class="feather-icon"></i><span class="hide-menu">Contact</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="~/contact/widesearch" class="sidebar-link">
+                                <i class="mdi mdi-chart-line"></i>
+                                <span class="hide-menu">Wide Search</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="~/contact/Create" class="sidebar-link">
+                                <i class="mdi mdi-chart-line"></i>
+                                <span class="hide-menu">Create</span>
+                            </a>
+                        </li> 
+                     @*    <li class="sidebar-item">
+                            <a href="~/contact/search" class="sidebar-link">
+                                <i class="mdi mdi-chart-line"></i>
+                                <span class="hide-menu">Search</span>
+                            </a>
+                        </li> *@
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark"
+                       href="javascript:void(0)"
+                       aria-expanded="false">
+                        <i data-feather="settings" class="feather-icon"></i><span class="hide-menu">Product</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="~/Product/Index?isactive=1" class="sidebar-link">
+                                <i class="mdi mdi-chart-line"></i>
+                                <span class="hide-menu">List</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="~/Product/Create" class="sidebar-link">
+                                <i class="mdi mdi-chart-line"></i>
+                                <span class="hide-menu">Create</span>
+                            </a>
+                        </li>  
+                        <li class="sidebar-item">
+                            <a href="~/Product/NetworkList" class="sidebar-link">
+                                <i class="mdi mdi-chart-line"></i>
+                                <span class="hide-menu">Network explanations</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark"
+                       href="javascript:void(0)"
+                       aria-expanded="false">
+                        <i data-feather="settings" class="feather-icon"></i><span class="hide-menu">Tickets</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="~/Ticket/Dashboard" class="sidebar-link">
+                                <i class="mdi mdi-chart-line"></i>
+                                <span class="hide-menu">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="~/Ticket/Create" class="sidebar-link">
+                                <i class="mdi mdi-chart-line"></i>
+                                <span class="hide-menu">Create</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark"
+                       href="javascript:void(0)"
+                       aria-expanded="false">
+                        <i data-feather="settings" class="feather-icon"></i><span class="hide-menu">Renewal</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="~/Renewal/Parameters" class="sidebar-link">
+                                <i class="mdi mdi-chart-line"></i>
+                                <span class="hide-menu">Parameters</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="~/Renewal/Dashboard" class="sidebar-link">
+                                <i class="mdi mdi-chart-line"></i>
+                                <span class="hide-menu">Dashboard</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark"
+                       href="javascript:void(0)"
+                       aria-expanded="false">
+                        <i data-feather="settings" class="feather-icon"></i><span class="hide-menu">General Dashboard</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="~/Dashboard/TicketHistory" class="sidebar-link">
+                                <i class="mdi mdi-chart-line"></i>
+                                <span class="hide-menu">Ticket Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="~/Dashboard/ProductPrice" class="sidebar-link">
+                                <i class="mdi mdi-chart-line"></i>
+                                <span class="hide-menu">Product Prices Controle</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark"
+                       href="javascript:void(0)"
+                       aria-expanded="false">
+                        <i data-feather="settings" class="feather-icon"></i><span class="hide-menu">Settings</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="~/Region/index" class="sidebar-link">
+                                <i class="mdi mdi-chart-line"></i>
+                                <span class="hide-menu">Regions</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="~/Channel/index" class="sidebar-link">
+                                <i class="mdi mdi-chart-line"></i>
+                                <span class="hide-menu">Channels</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+        
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>

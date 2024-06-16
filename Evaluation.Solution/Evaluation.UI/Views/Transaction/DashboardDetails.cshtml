@@ -1,0 +1,56 @@
+﻿@model Evaluation.UI.Models.SalesTransactionDashboardVM
+@{
+    ViewData["Title"] = "Transaction";
+    ViewData["SubTitle"] = "Dashboard";
+}
+<link href="~/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
+      rel="stylesheet" />
+<link rel="stylesheet"
+      type="text/css"
+      href="~/assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css" />
+@*<h2>@Model.FirstName @Model.MiddleName @Model.LastName</h2>*@
+<input type="hidden" id="ContactId" value="@Model.ContactVM.RecId">
+<div class="row">
+    <div class="col-6 "> <h2>@Model.ContactVM.FirstName @Model.ContactVM.MiddleName @Model.ContactVM.LastName</h2></div>
+    <div class="col-6 ">
+        <div class="" style="float: right;">
+            <button type="button" id="btnDashboard" class="
+                        btn btn-danger
+                      ">
+                <i class="m-1 fas  fa-angle-left"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<table id="tableDashboard" style="width:100%" class="display responsive table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Ticket Code</th>
+            <th>Open Date</th>
+            <th>Business Line</th>
+            <th>Header Status</th>
+            <th>Details Status</th>
+            <th>Nbr Days</th>
+            <th>Turnaround Time(TAT)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="tbodyDashboard">
+       
+    </tbody>
+</table>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+    <script src="~/dist/js/pages/datatable/datatable-basic.init.js"></script>
+    <script>
+        var salesTransaction = @Html.Raw(Json.Serialize(Model.SalesTransactions));
+    </script>
+    <script src="~/js/transaction/dashboard.js"></script>
+
+
+}

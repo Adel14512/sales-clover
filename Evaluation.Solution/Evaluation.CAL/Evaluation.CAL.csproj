@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="DTO\BL021502\CQShortListBL021502Dto" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+	  <PackageReference Include="NLog.Web.AspNetCore" Version="5.2.1" />
+	</ItemGroup>
+
+
+
+
+</Project>

@@ -1,0 +1,159 @@
+﻿@model Evaluation.UI.Models.CQAf02VM
+@{
+    ViewData["Title"] = "Businnes";
+    ViewData["SubTitle"] = "Indivudual Health";
+}
+<link href="~/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
+      rel="stylesheet" />
+<link rel="stylesheet"
+      type="text/css"
+      href="~/assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css" />
+<style>
+    .table-container {
+        overflow-x: auto;
+    }
+</style>
+<div class="row">
+    <div class="col-6 "> <h2>@Model.ContactVM.FirstName @Model.ContactVM.MiddleName @Model.ContactVM.LastName</h2></div>
+    <div class="col-6 ">
+        <div class="" style="float: right;">
+            <input type="button" class="btn btn-danger" value="Special" id="btnSpecial" />
+            <input type="button" class="btn btn-primary" value="Dashboard" id="btnDashboard" />
+
+            <button type="button" id="btnSendEmailExcel" class="
+                        btn btn-secondary
+                      ">
+                <i class="m-1 fas fa-download"></i>Excel Template
+            </button>
+
+        </div>
+    </div>
+</div>
+<input type="hidden" id="ContactID" value="@Model.ContactVM.RecId" />
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link d-flex active" data-bs-toggle="tab" href="#cqdtl" role="tab">
+            <span>
+                <i class="fas fa-user"></i>
+            </span>
+            <span class="d-none d-md-block ms-2">CQ Details</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link d-flex " data-bs-toggle="tab" href="#cqsum" role="tab">
+            <span>
+                <i class="fas fa-user"></i>
+            </span>
+            <span class="d-none d-md-block ms-2">CQ Summary</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link d-flex " data-bs-toggle="tab" href="#cqpvt" role="tab">
+            <span>
+                <i class="fas fa-user"></i>
+            </span>
+            <span class="d-none d-md-block ms-2">CQ Pivot</span>
+        </a>
+    </li>
+</ul>
+<!-- Tab panes -->
+
+<div class="tab-content">
+    <div class="tab-pane active" id="cqdtl" role="tabpanel">
+        <div class="">
+            <table id="tableCQDetails" style="width:100%" class="display responsive table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+
+                        </th>
+                        <th>SalesTrxId</th>
+                        <th>Family</th>
+                        <th>Inssured</th>
+                        <th>Age</th>
+                        <th>Relation</th>
+                        <th>Product</th>
+                        <th>Insurer Product</th>
+                        <th>Sheet</th>
+                        <th>Section Name</th>
+                        <th>Combination</th>
+                        <th>Member/Family</th>
+                        <th>Members nb</th>
+                        <th>Price</th>
+                        <th>Cost</th>
+                        <th>Fees</th>
+                        <th>Featrures</th>
+                    </tr>
+                </thead>
+                <tbody>
+            
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane" id="cqsum" role="tabpanel">
+        <div class="">
+            <table id="tableCQSummary" style="width:100%" class="display responsive table table-striped">
+                <thead>
+                    <tr>
+                        <th>Family</th>
+                        <th>Inssured</th>
+                        <th>Product</th>
+                        <th>Insurer Product</th>
+                        <th>Sheet</th>
+                        <th>Section Name</th>
+                        <th>Combination</th>
+                        <th>Member/Family</th>
+                        <th>Price</th>
+                        <th>Cost</th>
+                        <th>Fees</th>
+                        <th>Featrures</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane" id="cqpvt" role="tabpanel">
+        <div class="">
+            <table id="tableCQPivot" style="width:100%" class="display responsive table table-striped">
+                <thead>
+                  
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<partial name="_SpecialPrice.cshtml" />
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="~/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/dist/js/pages/datatable/datatable-basic.init.js"></script>
+    <script src="~/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+   
+    <script>
+        var dataTableDataDetails = @Html.Raw(Json.Serialize(Model.CQDetailsBL021502));
+        var dataTableDataSummary = @Html.Raw(Json.Serialize(Model.CQSummaryBL021502));
+
+        var datapivot = @Html.Raw(Json.Serialize(Model.CQPivotList));
+        var dataBenefit = @Html.Raw(Json.Serialize(Model.CQBenefitList));
+        var dataBills = @Html.Raw(Json.Serialize(Model.CQBillsList));
+        var dataHeader = @Html.Raw(Json.Serialize(Model.CQHeader));
+        var dataCategory = @Html.Raw(Json.Serialize(Model.CQCategory));
+
+    </script>
+    <script src="~/js/cq/shared.js"></script>
+
+}

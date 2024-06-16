@@ -1,0 +1,168 @@
+﻿@model Evaluation.UI.Models.Lead.LeadVM
+<form id="form">
+    <input type="hidden" asp-for="RecId" class="form-control" />
+    <div class="row pt-3">
+        <div class="col-md-4">
+            <div class="mb-3">
+
+                <label asp-for="Owner" class="control-label">Owner <span class="danger">*</span> </label>
+                <input type="text" asp-for="Owner" class="form-control required" required />
+                <span asp-validation-for="Owner" class="text-danger"></span>
+                @*id="txtFirstName"*@
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="BusinessLine" class="control-label">Business Line <span class="danger">*</span> </label>
+                <input type="text" asp-for="BusinessLine" class="form-control " required />
+                <span asp-validation-for="BusinessLine" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="FirstName" class="control-label">First Name <span class="danger">*</span> </label>
+                <input type="text" asp-for="FirstName" class="form-control required" required />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="LastName" class="control-label">Last Name  <span class="danger">*</span></label>
+                <input type="text" asp-for="LastName" class="form-control required" required />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+
+                <label asp-for="Mobile" class="control-label">Mobile  <span class="danger">*</span></label>
+                <input type="text" asp-for="Mobile" class="form-control required" required />
+                <span asp-validation-for="Mobile" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+
+                <label asp-for="EMail" class="control-label">Email  </label>
+                <input type="email" class="form-control " asp-for="EMail">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="Job" class="control-label">Job</label>
+                <input type="text" class="form-control " asp-for="Job">
+                <span asp-validation-for="Job" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="Company">Company </label>
+                <input type="text" class="form-control" asp-for="Company" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="CountryId">Country</label>
+                <select asp-for="CountryId" class="form-select">
+                    <option value="">--Select--</option>
+                    @foreach (var item in Model.Regions)
+                    {
+                        if (item.RecId == Model.RecId)
+                        {
+                            <option value="@item.RecId" selected>@item.Description</option>
+                        }
+                        else
+                        {
+                            <option value="@item.RecId">@item.Description</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="LeadStatusId" class="control-label ">Status  <span class="danger">*</span></label>
+                <select asp-for="LeadStatusId" class="form-select required" required>
+                    <option value="">--Select--</option>
+                    @foreach (var item in Model.LeadSales)
+                    {
+                        if (item.RecId == Model.LeadSaleId)
+                        {
+                            <option value="@item.RecId" selected>@item.Description</option>
+                        }
+                        else
+                        {
+                            <option value="@item.RecId">@item.Description</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="LeadStatusId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="Job">Topic </label>
+                <input type="text" class="form-control" asp-for="Job" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="LeadSourceId">Source</label>
+                <select asp-for="LeadSourceId" class="form-select">
+                    <option value="">--Select--</option>
+                    @foreach (var item in Model.LeadSources)
+                    {
+                        if (item.RecId == Model.LeadSourceId)
+                        {
+                            <option value="@item.RecId" selected>@item.Description</option>
+                        }
+                        else
+                        {
+                            <option value="@item.RecId">@item.Description</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="LeadSaleId" class="control-label">Chance Of Sale</label>
+                <select asp-for="LeadSaleId" class="form-select">
+                    <option value="">--Select--</option>
+                    @foreach (var item in Model.LeadSales)
+                    {
+                        if (item.RecId == Model.LeadSaleId)
+                        {
+                            <option value="@item.RecId" selected>@item.Description</option>
+                        }
+                        else
+                        {
+                            <option value="@item.RecId">@item.Description</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="LeadSaleId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="SummaryFeedback">Summar Feedback </label>
+                <input type="text" class="form-control" asp-for="SummaryFeedback" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="NextActionDate">Next Action Date  <span class="danger">*</span></label>
+                <input type="date" class="form-control required" asp-for="NextActionDate" required />
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,76 @@
+﻿@model Evaluation.UI.Models.Product.ProductVM
+@{
+    ViewData["Title"] = "Product";
+    ViewData["SubTitle"] = "Edit";
+}
+<link href="~/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
+      rel="stylesheet" />
+<link rel="stylesheet"
+      type="text/css"
+      href="~/assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css" />
+
+<link rel="stylesheet" type="text/css" href="~/lib/datatableAddons/css/colvis.css">
+<link href="~/assets/libs/sweetalert2/dist/sweetalert2.min.css"
+      rel="stylesheet" />
+<div class="row">
+    <div class="col-5 "> </div>
+    <div class="col-7 ">
+        <div class="" style="float: right;">
+
+            <button type="button" id="btnSave" class="
+                        btn btn-primary
+                      ">
+                <i class="m-1 fas fa-plus"></i>Save
+            </button>
+
+
+        </div>
+    </div>
+    <input type="file" id="fileInput" name="file" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none">
+</div>
+<input type="hidden" id="txtBusinesslineCode" value="@Model.BusinessLineCode"/>
+<!-- -------------------------------------------------------------- -->
+<!-- Example -->
+<!-- -------------------------------------------------------------- -->
+<div class="col-12">
+    <div class="card">
+        <div class="border-bottom title-part-padding">
+            <h4 class="card-title mb-0">Product: @Model.EditProduct.RecId - @Model.EditProduct.InsurerProductName</h4>
+        </div>
+        <div class="card-body wizard-content">
+
+
+            <partial name="_SharedEdit.cshtml" />
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!--This page JavaScript -->
+
+    <script>
+        var productDetails = @Html.Raw(Json.Serialize(Model.EditProduct.ProductDetails));
+        var productClassOfCoverage = @Html.Raw(Json.Serialize(Model.ProductClassOfCoverages));
+        var productDetailsPOIs = @Html.Raw(Json.Serialize(Model.EditProduct.ProductDetailsPOI));
+        var productDetailsPOINetworks = @Html.Raw(Json.Serialize(Model.ProductDetailsPOINetworks));
+        var productDetailsPOISections = @Html.Raw(Json.Serialize(Model.ProductDetailsPOISections));
+        var productTerritorialScope = @Html.Raw(Json.Serialize(Model.TerritorialScopes));
+        var productCombinations = @Html.Raw(Json.Serialize(Model.ProductCombination));
+        var productPrice = @Html.Raw(Json.Serialize(Model.ProductPrices));
+        var productBenifits = @Html.Raw(Json.Serialize(Model.ProductBenefits));
+    </script>
+
+    <script src="~/assets/libs/jquery-steps/build/jquery.steps.min.js"></script>
+    <script src="~/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+    <script src="~/assets/libs/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    @*     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script> *@
+    <script src="~/js/product/shared.js"></script>
+    <script src="~/js/product/edit.js"></script>
+
+}

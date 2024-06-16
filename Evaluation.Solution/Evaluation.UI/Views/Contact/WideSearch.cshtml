@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+    ViewData["SubTitle"] = "Search";
+}
+<link href="~/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
+      rel="stylesheet" />
+<link rel="stylesheet"
+      type="text/css"
+      href="~/assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css" />
+<div class="row pt-3">
+    <div class="col-md-2 ms-auto">
+       @*  <button style="float:right" type="button" id="btnAddWizard" class="
+                        d-inline-flex
+                        align-items-center
+                        justify-content-center
+                        btn btn-success btn-circle btn-lg
+                      ">
+            <i class="fas fa-plus"></i>
+        </button> *@
+        <button style="float:right" type="button" id="btnAddWizard" class="
+                        btn btn-secondary
+                      ">
+            Add New Contact
+        </button>
+    </div>
+</div>
+      <form id="formSearch">
+    <div class="row pt-3">
+        <div class="col-md-12">
+            <div class="mb-3">
+                <label class="control-label">Wide Search</label>
+                <input type="search" id="SearchValue" name="WideSearch" class="form-control">
+            </div>
+        </div>
+
+    </div>
+    </form>
+
+<partial name="../Shared/_ContactGrid.cshtml" />
+@section Scripts{
+    <!--This page plugins -->
+    <script src="~/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+    <script src="~/dist/js/pages/datatable/datatable-basic.init.js"></script>
+    <script src="~/js/contacts/search.js"></script>
+}

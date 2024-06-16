@@ -1,0 +1,137 @@
+﻿@model Evaluation.UI.Models.AF1_30VM
+@{
+    ViewData["Title"] = "Businnes";
+    ViewData["SubTitle"] = "Indivudual Health";
+}
+<link href="~/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
+      rel="stylesheet" />
+<link rel="stylesheet"
+      type="text/css"
+      href="~/assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css" />
+
+<link rel="stylesheet" type="text/css" href="~/lib/datatableAddons/css/colvis.css">
+
+@*<input type="hidden" id="SalesId" value="@Model.SalesTransactionBL77Dto.RecId">*@
+<input type="hidden" id="BusinessLineCode">
+<input type="hidden" id="ContactId" value="@Model.ContactVM.RecId">
+<div class="row">
+    <div class="col-5 "> <h2>@Model.ContactVM.FirstName @Model.ContactVM.MiddleName @Model.ContactVM.LastName</h2></div>
+    <div class="col-7 ">
+        <div class="" style="float: right;">
+            <button type="button" id="btnDashboard" class="
+                        btn btn-danger
+                      ">
+                <i class="m-1 fas  fa-angle-left"></i>
+            </button>
+            <button type="button" id="btnSubmit" class="
+                        btn btn-primary
+                      ">
+                <i class="m-1 fas fa-plus"></i>Submit
+            </button>
+            <button type="button" id="btnUploadExcel" class="
+                        btn btn-primary
+                      ">
+                <i class="m-1 fas fa-upload"></i>Upload AF
+            </button>
+            <button type="button" id="btnSubmitWithEmail" class="
+                        btn btn-info
+                      " title="Send AF To Client">
+                <i class="m-1 fas fa-envelope"></i>Send AF
+            </button>
+
+            <button type="button" id="btnSendEmailExcel" class="
+                        btn btn-secondary
+                      ">
+                <i class="m-1 fas fa-download"></i>Export Data
+            </button>
+
+            <button type="button" id="btnDownloadEmptyExcel" class="
+                        btn btn-secondary
+                      " title="Download Empty Application Form Template">
+                <i class="m-1 fas fa-download"></i>Download AF
+            </button>
+        </div>
+    </div>
+    <input type="file" id="fileInput" name="file" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none">
+</div>
+<div class="">
+    <table id="tableAf130" style="width:100%" class="display responsive table">
+    <thead>
+        <tr>
+          @*  <th>SERIAL</th>
+            <th>CLIENT NAME</th>
+            <th>STAFF NO.</th>
+            <th>FIRST NAME</th>
+            <th>FATHER/MIDDLE NAME</th>
+            <th>LAST NAME</th>
+            <th>GENDER</th>
+            <th>RELATION</th>
+            <th>DOB</th>
+            <th>NATIONALITY</th>
+            <th>MARITAL STATUS</th>
+            <th>NSSF</th>
+            <th>CLASS OF COVERAGE</th>
+            <th>AMBULATORY</th>
+            <th>PRESCRIPTION MEDICINE</th>
+            <th>DOCTOR'S VISIT</th>*@
+        </tr>
+    </thead>
+
+    <tbody id="table-body">
+
+           @* @if (Model.SalesTransactionBL301401Dto != null && Model.SalesTransactionBL301401Dto.AF1BL301401!=null)
+            {
+                @foreach (var item in Model.SalesTransactionBL301401Dto.AF1BL301401)
+                {
+                    <tr>
+                        <td data-serial="@item.Serial">@item.Serial</td>
+                        <td data-client-name="@item.ClientName">@item.ClientName</td>
+                        <td data-staff-nbr="@item.StaffNbr">@item.StaffNbr</td>
+                        <td data-first-name="@item.FirstName">@item.FirstName</td>
+                        <td data-middle-name="@item.MiddleName">@item.MiddleName</td>
+                        <td data-last-name="@item.LastName">@item.LastName</td>
+                        <td data-gender-code="@item.GenderCode">@Model.Genders.Where(x=>x.code==item.GenderCode).Select(x=>x.description).FirstOrDefault().ToString()</td>
+                        <td data-relation-code="@item.RelationCode">@Model.Relations.Where(x=>x.Code==item.RelationCode).Select(x=>x.Description).FirstOrDefault().ToString()</td>
+                        <td data-dob="@item.DOB">@item.DOB</td>
+                        <td data-nationality-code="@item.NationalityCode">@Model.Regions.Where(x=>x.code==item.NationalityCode).Select(x=>x.description).FirstOrDefault().ToString()</td>
+                        <td data-marital-status-code="@item.MaritalStatusCode">@Model.MaritalStatuses.Where(x=>x.code==item.MaritalStatusCode).Select(x=>x.description).FirstOrDefault().ToString()</td>
+                        <td data-nssf="@item.NSSF">@item.NSSF</td>
+                        <td data-class-of-coverage-code="@item.ClassOfCoveragCode">@item.ClassOfCoveragCode</td>
+                        <td data-ambulatory="@item.Ambulatory">@item.Ambulatory</td>
+                        <td data-prescription-medecine="@item.PrescriptionMedecine">@item.PrescriptionMedecine</td>
+                        <td data-doctor-visit="@item.DoctorVisit">@item.DoctorVisit</td>
+
+                    </tr>
+                }
+               
+            }*@
+        </tbody>
+</table>
+</div>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!--This page JavaScript -->
+  @*  <script src="~/assets/libs/jquery.repeater/jquery.repeater.min.js"></script>
+    <script src="~/assets/extra-libs/jquery.repeater/repeater-init.js"></script>
+    <script src="~/assets/libs/jquery-steps/build/jquery.steps.min.js"></script>*@
+
+
+    <script src="~/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+    <script>
+        var relationList = @Html.Raw(Json.Serialize(Model.Relations));
+        var genderList = @Html.Raw(Json.Serialize(Model.Genders));
+        var maritalStatusList = @Html.Raw(Json.Serialize(Model.MaritalStatuses));
+        var regionList = @Html.Raw(Json.Serialize(Model.Regions));
+        var networkList = @Html.Raw(Json.Serialize(Model.NetworkLevel));
+        var classOfCoverageList = @Html.Raw(Json.Serialize(Model.ProductClassOfCoverage));
+        var datatablelist = @Html.Raw(Json.Serialize(Model.SalesTransactionBL301401Dto));
+        //var hasValue = @Model.SalesTransactionBL301401Dto.AF1BL301401.Any().ToString();
+    </script>
+    <script src="~/js/business/AF1_30.js"></script>
+}

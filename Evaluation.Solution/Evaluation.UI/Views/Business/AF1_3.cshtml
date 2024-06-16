@@ -1,0 +1,185 @@
+﻿@model Evaluation.UI.Models.AF1_3VM
+@{
+    ViewData["Title"] = "Personal";
+    ViewData["SubTitle"] = "Life";
+}
+<input type="hidden" id="BusinessLineCode">
+<input type="hidden" id="ContactId" value="@Model.ContactVM.RecId">
+<div class="row">
+    <div class="col-6 "> <h2>@Model.ContactVM.FirstName @Model.ContactVM.MiddleName @Model.ContactVM.LastName</h2></div>
+    <div class="col-6 ">
+        <div class="" style="float: right;">
+            <button type="button" id="btnDashboard" class="
+                        btn btn-danger
+                      ">
+                <i class="m-1 fas  fa-angle-left"></i>
+            </button>
+            <button type="button" id="btnSubmit" onclick="Submit()" class="
+                        btn btn-primary
+                      ">
+                <i class="m-1 fas fa-plus"></i>Submit
+            </button>
+
+
+        </div>
+    </div>
+    <input type="file" id="fileInput" name="file" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none">
+</div>
+<form id="form">
+    <div class="row">
+        <div class="col-md-6">
+            <p>1- First Name   <span class="danger">*</span></p>
+        </div>
+        <div class="col-md-4">
+            <input input="text" class="form-control" asp-for="AF1BL030904Dto.FirstName" />
+            <span class="error" asp-validation-for="AF1BL030904Dto.FirstName"></span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <p>2- Father/Middle Name  <span class="danger">*</span></p>
+        </div>
+        <div class="col-md-4">
+            <input input="text" class="form-control" asp-for="AF1BL030904Dto.MiddleName" />
+            <span class="error" asp-validation-for="AF1BL030904Dto.MiddleName"></span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <p>3- Last Name  <span class="danger">*</span></p>
+        </div>
+        <div class="col-md-4">
+            <input input="text" class="form-control" asp-for="AF1BL030904Dto.LastName" />
+            <span class="error" asp-validation-for="AF1BL030904Dto.MiddleName"></span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <p>4- Gender<span class="danger">*</span></p>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select required" asp-for="AF1BL030904Dto.GenderCode" required>
+                @foreach (var item in Model.Genders)
+                {
+                    <option value="@item.code">@item.description</option>
+                }
+            </select>
+            <span class="error" asp-validation-for="AF1BL030904Dto.GenderCode"></span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <p>5- Date of Birth   <span class="danger">*</span></p>
+        </div>
+        <div class="col-md-4">
+      @*      <input input="date" class="form-control" asp-for="AF1BL030904Dto.DOB" value="@Model.AF1BL030904Dto.DOB.ToString("yyyy-MM-dd")" />*@
+            <input type="date" id="Dob" name="Dob[]" class="form-control " required asp-for="AF1BL030904Dto.DOB" />
+            <span class="error" asp-validation-for="AF1BL030904Dto.DOB"></span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <p>6- Nationality  <span class="danger">*</span></p>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select required" asp-for="AF1BL030904Dto.NationalityCode" required>
+                @foreach (var item in Model.Regions)
+                {
+                    <option value="@item.code">@item.description</option>
+                }
+            </select>
+            <span class="error" asp-validation-for="AF1BL030904Dto.NationalityCode"></span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <p>7- Marital Status  <span class="danger">*</span></p>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select required" asp-for="AF1BL030904Dto.MaritalStatusCode" required>
+                @foreach (var item in Model.MaritalStatuses)
+                {
+                    <option value="@item.code">@item.description</option>
+                }
+            </select>
+            <span class="error" asp-validation-for="AF1BL030904Dto.MaritalStatusCode"></span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <p>8- Country of Residence   <span class="danger">*</span></p>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select required" asp-for="AF1BL030904Dto.CountryOfResidenceCode" required>
+                @foreach (var item in Model.TerritorialScope)
+                {
+                    <option value="@item.Code">@item.Description</option>
+                }
+            </select>
+            <span class="error" asp-validation-for="AF1BL030904Dto.CountryOfResidenceCode"></span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <p>9- Requested Limit & Currency<span class="danger">*</span></p>
+        </div>
+        <div class="col-md-4">
+            <input input="text" class="form-control" asp-for="AF1BL030904Dto.RequestedLimitCurrency" />
+            <span class="error" asp-validation-for="AF1BL030904Dto.RequestedLimitCurrency"></span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <p>10- Occupation<span class="danger">*</span></p>
+        </div>
+        <div class="col-md-4">
+            <input input="text" class="form-control" asp-for="AF1BL030904Dto.Occupation" />
+            <span class="error" asp-validation-for="AF1BL030904Dto.Occupation"></span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <p>11- Reason of Insurance   <span class="danger">*</span></p>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select required" asp-for="AF1BL030904Dto.ReasonOfInsurance" required>
+
+                <option value="Loan">Loan</option>
+                <option value="Security purpose">Security purpose</option>
+            </select>
+            <span class="error" asp-validation-for="AF1BL030904Dto.ReasonOfInsurance"></span>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <p>12- Beneficiary Specify the Financial Institution Name in case of Loan    <span class="danger">*</span></p>
+        </div>
+        <div class="col-md-4">
+            <input input="text" class="form-control" asp-for="AF1BL030904Dto.Beneficiary" />
+            <span class="error" asp-validation-for="AF1BL030904Dto.Beneficiary"></span>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    <script>
+        var relationList = @Html.Raw(Json.Serialize(Model.Relations));
+        var genderList = @Html.Raw(Json.Serialize(Model.Genders));
+        var maritalStatusList = @Html.Raw(Json.Serialize(Model.MaritalStatuses));
+        var regionList = @Html.Raw(Json.Serialize(Model.Regions));
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/business/AF1_3.js"></script>
+}

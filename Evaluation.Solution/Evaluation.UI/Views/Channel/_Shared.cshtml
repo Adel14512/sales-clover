@@ -1,0 +1,22 @@
+﻿@model Evaluation.UI.Models.ChannelVM
+<div class="col-md-4">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" asp-for="Description" placeholder="Enter Name here">
+        <label asp-for="Description">Name</label>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" asp-for="Code" placeholder="Enter Code here">
+        <label asp-for="Code">Code</label>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="form-floating">
+        <select asp-for="Type" class="form-control" style="background: white">
+            <option value="Number">Number</option>
+            <option value="Phone">Phone</option>
+        </select>
+        <label asp-for="Type">Type</label>
+    </div>
+</div>

@@ -1,0 +1,415 @@
+﻿@model Evaluation.UI.Models.AF1_33VM
+@{
+    ViewData["Title"] = "Businnes";
+    ViewData["SubTitle"] = "Group Health";
+}
+<link href="~/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
+      rel="stylesheet" />
+<link rel="stylesheet"
+      type="text/css"
+      href="~/assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css" />
+
+<link rel="stylesheet" type="text/css" href="~/lib/datatableAddons/css/colvis.css">
+<link href="~/assets/libs/sweetalert2/dist/sweetalert2.min.css"
+      rel="stylesheet" />
+<style>
+    /* Style for selected row */
+    .selected {
+        background-color: yellow;
+    }
+
+</style>
+<div class="col-12">
+    <div class="card">
+        <div class="border-bottom title-part-padding">
+            <div class="row">
+                <div class="col-7"><h4 class="card-title mb-0">@Model.ContactVM.FirstName @Model.ContactVM.MiddleName @Model.ContactVM.LastName</h4></div>
+                <div class="col-5">
+                    <div class="" style="float: right;">
+                        <button type="button" id="btnDashboard" class="
+                        btn btn-danger
+                      " title="Get Back to Dashboard">
+                            <i class="m-1 fas  fa-angle-left"></i>
+                        </button>
+                        <button type="button" id="btnSlip" class="hide
+                        btn btn-secondary
+                      ">
+                            Print Slip
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-body wizard-content">
+            <form id="step1from" class="validation-slip wizard-circle">
+                <!-- Step 1 -->
+                <h6>Details AF1</h6>
+                <section>
+                    <input type="hidden" id="BusinessLineCode">
+                    <input type="hidden" id="ContactId" value="@Model.ContactVM.RecId">
+                    <div class="row">
+                        <div class="col-5 "></div>
+                        <div class="col-7 ">
+                            <div class="" style="float: right;">
+                                <button type="button" id="btnSubmit" class="
+                        btn btn-primary
+                      " title="Save Data">
+                                    <i class="m-1 fas fa-plus"></i>Submit
+                                </button>
+
+                                <button type="button" id="btnUploadExcel" class="
+                        btn btn-primary
+                      " title="Upload Application Form Excel">
+                                    <i class="m-1 fas fa-upload"></i>Upload AF
+                                </button>
+                                <button type="button" id="btnSubmitWithEmail" class="
+                        btn btn-info
+                      " title="Send AF To Client">
+                                    <i class="m-1 fas fa-envelope"></i>Send AF
+                                </button>
+                                <button type="button" id="btnSendEmailExcel" class="
+                        btn btn-secondary
+                      " title="Export Data to excel file">
+                                    <i class="m-1 fas fa-download"></i>Export Data
+                                </button>
+                                <button type="button" id="btnDownloadEmptyExcel" class="
+                        btn btn-secondary
+                      " title="Download Empty Application Form Template">
+                                    <i class="m-1 fas fa-download"></i>Download AF
+                                </button>
+                            </div>
+                        </div>
+                        <input type="file" id="fileInput" name="file" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none">
+                        <input type="file" id="fileInputStep4" name="file" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none">
+                    </div>
+                    <div class="">
+                        <table id="tableAf133" style="width:100%" class="responsive table table-bordered compact">
+
+                            <tbody id="table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <!-- Step 2 -->
+                <h6>Summary AF1 by Category</h6>
+                <section>
+                    <div class="row">
+                        <div class="col-5 "> </div>
+                        <div class="col-7 ">
+                            <div class="" style="float: right;">
+                                <button type="button" id="btnSubmitStep2" class="hide
+                        btn btn-secondary
+                      " title="Save all the data in this step">
+                                    <i class="m-1 fas fa-plus"></i> Submit
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <table id="tStep2" style="width:100%" class="table table-bordered compact"></table>
+                </section>
+                <!-- Step 3 -->
+                <h6>Categories & Sections</h6>
+                <section>
+                    <div class="row">
+                        <div class="col-5 "> </div>
+                        <div class="col-7 ">
+                            <div class="" style="float: right;">
+                                <button type="button" id="btnSubmitStep3" class="
+                        btn btn-secondary
+                      " title="Save all the data in this step">
+                                    <i class="m-1 fas fa-plus"></i> Submit
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <table id="tStep3" style="width:100%" class="display responsive  table-bordered table compact"></table>
+                </section>
+                <!-- Step 4 -->
+                <h6>Benefits</h6>
+                <section>
+                    <div class="row">
+                        <div class="col-5 "> </div>
+                        <div class="col-7 ">
+                            <div class="" style="float: right;">
+                                <button type="button" id="btnDownloadEmptyExcelStep4" class="
+                        btn btn-secondary
+                      " title="Download Empty Application Form Template">
+                                    <i class="m-1 fas fa-download"></i>Download Template
+                                </button>
+                                <button type="button" id="btnUploadStep4" class="
+                        btn btn-primary
+                      " title="Upload Application Form Excel">
+                                    <i class="m-1 fas fa-upload"></i>Upload
+                                </button>
+                                <button type="button" id="btnStep4ExportData" class="
+                        btn btn-secondary
+                      " title="Export Data to excel file">
+                                    <i class="m-1 fas fa-download"></i>Export Data
+                                </button>
+                                <button type="button" id="btnSubmitStep4" class="
+                        btn btn-secondary
+                      " title="Save all the data in this step">
+                                    <i class="m-1 fas fa-plus"></i> Submit
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <table id="tStep4" style="width:100%" class="table-bordered table compact ">
+                      
+
+                    </table>
+                </section>
+                <!-- Step 5 -->
+                <h6>Sending Slip</h6>
+                <section>
+                    <div class="row">
+                        <div class="col-5 "> </div>
+                        <div class="col-7 ">
+                            <div class="" style="float: right;">
+                                <button type="button" id="btnSubmitStep5" class="
+                        btn btn-primary
+                      " title="Save Combination">
+                                    <i class="m-1  fas fa-plus"></i> Submit
+                                </button>
+                            </div>
+                            <div class="" style="float: right;">
+                                <button type="button" id="getSelectedRowBtn" class="
+                        btn btn-secondary
+                      " title="Link Insurrer to Party">
+                                    <i class="m-1  fas fa-arrows-alt-h"></i> Link
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Linked</h2>
+                            <ul id="linkedItems">
+                            </ul>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+
+                        <div class="col-5">
+                            <h2>Insurrer</h2>
+                            <table id="tStep5Insurrer" style="width:100%" class=" responsive table table-bordered compact hover"></table>
+                        </div>
+                        <div class="col-1">
+                        </div>
+                      
+
+                    </div>
+                </section>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add Row Modal step 2-->
+<div id="modalStep2" class="modal  fade " tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg ">
+
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Summary AF1 by Category</h4>
+            </div>
+
+            <!-- Modal body -->
+            <form id="formModelStep2">
+                <div class="modal-body">
+
+
+                    <div class="row">
+                        <!-- Label -->
+                        <div class="col-md-6">
+                            <div class="md-2"><lable>Category:</lable><input type="text" class="form-control" id="txtCategory" disabled></div>
+                            <div class="md-3"><lable>Members</lable></div>
+                            <div class="md-6"> <input type="text" class="form-control" id="txtMembers" disabled></div>
+                            <div class="md-3"><lable>Grade</lable></div>
+                            <div class="md-6"> <input type="text" class="form-control" id="txtGrade" disabled></div>
+                            <div class="md-3"><lable>Class</lable></div>
+                            <div class="md-6"> <input type="text" class="form-control" id="txtClass" disabled></div>
+                            <div class="md-3"><lable>AMB</lable></div>
+                            <div class="md-6"> <input type="text" class="form-control" id="txtAMB" disabled></div>
+                            <div class="md-3"><lable>PM</lable></div>
+                            <div class="md-6"> <input type="text" class="form-control" id="txtPM" disabled></div>
+                            <div class="md-3"><lable>DV</lable></div>
+                            <div class="md-6"> <input type="text" class="form-control" id="txtDV" disabled></div>
+                            <div class="md-3"><lable>Dental</lable></div>
+                            <div class="md-6"> <input type="text" class="form-control" id="txtDental" disabled></div>
+                            <div class="md-3"><lable>Optical</lable></div>
+                            <div class="md-6"> <input type="text" class="form-control" id="txtOptical" disabled></div>
+                            <div class="md-3"><lable>AML</lable></div>
+                            <div class="md-3">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="txtAmount" placeholder="Amount">
+                                    <button class="
+                          btn btn-light-secondary
+                          text-secondary
+                          font-weight-medium
+                        " type="button" onclick="addNumberToValue('txtAmount',999999999)" title="Add 999999999 to AML">
+                                        Max
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Edit -->
+                        <div class="col-md-6">
+
+                            <div class="md-3"><lable><b><u>Existing Members</u></b></lable></div>
+
+                            <div class="md-3"><lable>No Underwriting</lable></div>
+                            <div class="md-3">
+                                <select class="form-select" id="ddlE_NoUnderwriting">
+                                    <option value="true" selected>Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                            <div class="md-3"><lable>Continuity</lable></div>
+                            <div class="md-3">
+                                <select class="form-select" id="ddlE_Continuity">
+                                    <option value="true" selected>Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                            <div class="md-3"><lable>No Waiting Period</lable></div>
+                            <div class="md-3">
+                                <input type="text" class="form-control" id="txtE_NoWaitingPeriod" />
+                            </div>
+                            <div class="md-3"><lable>Renewability</lable></div>
+                            <div class="md-3">
+                                <select class="form-select" id="ddlE_Renewability">
+                                    <option value="true" selected>Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                            <div class="md-3"><lable><b><u>New Members</u></b></lable></div>
+
+                            <div class="md-3"><lable>No Underwriting</lable></div>
+                            <div class="md-3">
+                                <select class="form-select" id="ddlN_NoUnderwriting">
+                                    <option value="true" selected>Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                            <div class="md-3"><lable>Continuity</lable></div>
+                            <div class="md-3">
+                                <select class="form-select" id="ddlN_Continuity">
+                                    <option value="true" selected>Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                            <div class="md-3"><lable>No Waiting Period</lable></div>
+                            <div class="md-3">
+                                <input type="text" class="form-control" id="txtN_NoWaitingPeriod" />
+                            </div>
+                            <div class="md-3"><lable>Renewability</lable></div>
+                            <div class="md-3">
+                                <select class="form-select" id="ddlN_Renewability">
+                                    <option value="true" selected>Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnCloseModalStep2"
+                        data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button id="btnSaveModalStep2" class="btn btn-success">Save</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Add Row Modal step 3-->
+<div id="modalStep3" class="modal fade" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Categories & Sections</h4>
+            </div>
+
+            <!-- Modal body -->
+            <form id="formModelStep3">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="md-3"><lable>Category</lable></div>
+                        <div class="md-6"> <input type="text" class="form-control" id="txtCategoryStep3" disabled></div>
+                        <div class="md-3"><lable>Section</lable></div>
+                        <div class="md-6"> <input type="text" class="form-control" id="txtSection" disabled></div>
+                        
+                        <div class="md-3"><lable>Limit Amount</lable></div>
+                        <div class="md-6">
+                                <input type="number" class="form-control" id="txtLimitAmount" placeholder="Amount">
+                        </div>
+                        <div class="md-3"><lable>Co Insurance Per.</lable></div>
+                        <div class="md-6"> <input type="number" class="form-control" id="txtCoInsurancePer"></div>
+                        <div class="md-3"><lable>Covered</lable></div>
+                        <div class="md-3">
+                            <select class="form-select" id="txtCovered">
+                                <option value="true" selected>Yes</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnCloseModalStep3"
+                        data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button id="btnSaveModalStep3" class="btn btn-success">Save</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!--This page JavaScript -->
+    <script src="~/assets/libs/jquery-steps/build/jquery.steps.min.js"></script>
+    <script src="~/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="~/lib/datatableAddons/js/colvis.js"></script>
+    <script src="~/js/shared/wizard.js"></script>
+
+
+    <script>
+        var relationList = @Html.Raw(Json.Serialize(Model.Relations));
+        var genderList = @Html.Raw(Json.Serialize(Model.Genders));
+        var maritalStatusList = @Html.Raw(Json.Serialize(Model.MaritalStatuses));
+        var regionList = @Html.Raw(Json.Serialize(Model.Regions));
+        var classOfCoverageList = @Html.Raw(Json.Serialize(Model.ProductClassOfCoverage));
+        var datatablelist = @Html.Raw(Json.Serialize(Model.SalesTransactionBL331211Dto.AF1BL331211));
+        var step2Data = @Html.Raw(Json.Serialize(Model.SalesTransactionBL331211Dto.Slip2BL331211));
+        var step3Data = @Html.Raw(Json.Serialize(Model.SalesTransactionBL331211Dto.Slip3BL331211));
+        var step4Data = @Html.Raw(Json.Serialize(Model.SalesTransactionBL331211Dto.Slip4BL331211));
+        var step5Data = @Html.Raw(Json.Serialize(Model.SalesTransactionBL331211Dto.Slip5BL331211));
+        var step5InsurrerData = @Html.Raw(Json.Serialize(Model.Insurer));
+        var territorias = @Html.Raw(Json.Serialize(Model.Territorias));
+        var networks = @Html.Raw(Json.Serialize(Model.Networks));
+    </script>
+    <script src="~/js/business/AF1_33.js"></script>
+}

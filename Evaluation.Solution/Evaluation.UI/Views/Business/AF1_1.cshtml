@@ -1,0 +1,311 @@
+﻿@model Evaluation.UI.Models.AF1_1VM
+@{
+    ViewData["Title"] = "Personal";
+    ViewData["SubTitle"] = "Travel";
+}
+
+<input type="hidden" id="BusinessLineCode">
+<input type="hidden" id="ContactId" value="@Model.ContactVM.RecId">
+<div class="row">
+    <div class="col-6 "> <h2>@Model.ContactVM.FirstName @Model.ContactVM.MiddleName @Model.ContactVM.LastName</h2></div>
+    <div class="col-6 ">
+        <div class="" style="float: right;">
+            <button type="button" id="btnDashboard" class="
+                        btn btn-danger
+                      ">
+                <i class="m-1 fas  fa-angle-left"></i>
+            </button>
+            <button type="button" id="btnSubmit" onclick="Submit()" class="
+                        btn btn-primary
+                      ">
+                <i class="m-1 fas fa-plus"></i>Submit
+            </button>
+
+
+        </div>
+    </div>
+    <input type="file" id="fileInput" name="file" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none">
+</div>
+<form id="form">
+    <div class="row">
+        <div class="col-md-6">
+            <p>1- Where are you travelling from?  <span class="danger">*</span></p>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select required" asp-for="AF1BL010602Dtco.CountryOfDepartureCode" required>
+                @foreach (var item in Model.Regions)
+                {
+                    <option value="@item.code">@item.description</option>
+                }
+            </select>
+            <span class="error" asp-validation-for="AF1BL010602Dtco.CountryOfDepartureCode"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <p>2- Where are you travelling to? </p>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select" asp-for="AF1BL010602Dtco.CountryOfDestinationCode">
+                @foreach (var item in Model.TerritorialScope)
+                {
+                    <option value="@item.Code">@item.Description</option>
+                }
+            </select>
+            <span class="error" asp-validation-for="AF1BL010602Dtco.CountryOfDestinationCode"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <p>3- Please mention the number of days in case your trip is Less Than 92 Days, otherwise select one of the following options: </p>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select" asp-for="AF1BL010602Dtco.StayTripOptionCode">
+                <option value="">---Select---</option>
+                @foreach (var item in Model.StayTripOption)
+                {
+                    <option value="@item.Code">@item.Description</option>
+                }
+            </select>
+            <span class="error" asp-validation-for="AF1BL010602Dtco.StayTripOptionCode"></span>
+            <input class="form-control" type="number" asp-for="AF1BL010602Dtco.NbrDaysWhenLess92" placeholder="<92" min="0" max="91"/>
+            <span class="error" asp-validation-for="AF1BL010602Dtco.NbrDaysWhenLess92" data-val="false"></span>
+       
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <p>4- Would you like to have Winter &/Or Summer Hazardous Sports coverage?  </p>
+        </div>
+        <div class="col-md-4">
+            <select class="form-select" asp-for="AF1BL010602Dtco.HazardousCoverage">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+            <span class="error" asp-validation-for="AF1BL010602Dtco.HazardousCoverage"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <p>5- Please fill the below table  </p>
+        </div>
+      
+    </div>
+    <input class="btn btn-success" type="button" value="Add Row" onclick="addRow()" />
+
+
+
+    <table id="tblAf1">
+        <thead>
+            <tr>
+                <th>
+                    Relation <span class="danger">*</span>
+                </th>
+                <th>
+                    First Name<span class="danger">*</span>
+                </th>
+                <th>
+                    Father/Middle Name<span class="danger">*</span>
+                </th>
+                <th>
+                    Last Name<span class="danger">*</span>
+                </th>
+                <th>
+                    Gender<span class="danger">*</span>
+                </th>
+                <th>
+                    DOB (DD/MM/YYYY)<span class="danger">*</span>
+                </th>
+                <th>
+                    Nationality<span class="danger">*</span>
+                </th>
+                <th>
+                    Marital Status<span class="danger">*</span>
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (Model.AF1BL010602Dtco.AF1BL010602List != null)
+            {
+
+                foreach (var item in Model.AF1BL010602Dtco.AF1BL010602List)
+                {
+
+                    <tr>
+                        <td>
+                            <select id="Relation" class="form-select required" required>
+                                @foreach (var item1 in Model.Relations)
+                                {
+                                    if (item1.Code == item.RelationCode)
+                                    {
+                                        <option value="@item1.Code" selected>@item1.Description</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item1.Code">@item1.Description</option>
+
+                                    }
+
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control required" id="FirstName" required value="@item.FirstName" />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control required" id="FatherName" required value="@item.MiddleName" />
+                        </td>
+                        <td>
+                            <input type="text" class="form-control required" id="LastName" required value="@item.LastName" />
+                        </td>
+                        <td>
+                            <select id="Region" class="form-select required" required>
+                                @foreach (var item2 in Model.Genders)
+                                {
+                                    if (item2.code == item.GenderCode)
+                                    {
+                                        <option value="@item2.code" selected>@item2.description</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item2.code">@item2.description</option>
+
+                                    }
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            <input type="date" class="form-control required" id="DOB" required value="@item.DOB.ToString("yyyy-MM-dd")" />
+                        </td>
+                        <td>
+                            <select id="Region" class="form-select required" required>
+                            
+                                @if (String.IsNullOrEmpty(item.NationalityCode))
+                                {
+                                    @foreach (var item3 in Model.Regions)
+                                    {
+                                        if (item3.code == item.NationalityCode)
+                                        {
+                                            <option value="@item3.code" selected>@item3.description</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item3.code">@item3.description</option>
+
+                                        }
+                                    }
+                                }
+                                else
+                                {  @foreach (var item3 in Model.Regions)
+                                    {
+                                        if (item3.isDefault)
+                                        {
+                                            <option value="@item3.code" selected>@item3.description</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item3.code">@item3.description</option>
+
+                                        }
+                                    }
+                                    
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            <select id="MaritalStatus" class="form-select required" required>
+                                @foreach (var item4 in Model.MaritalStatuses)
+                                {
+                                    if (item4.code == item.MaritalStatusCode)
+                                    {
+                                        <option value="@item4.code" selected>@item4.description</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item4.code">@item4.description</option>
+
+                                    }
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>
+                        <select id="Relation" class="form-select required" required>
+                            @foreach (var item in Model.Relations)
+                            {
+                                <option value="@item.Code">@item.Description</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control required" id="FirstName" required value="firstname"/>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control required" id="FatherName" required value="fathername" />
+                    </td>
+                    <td>
+                        <input type="text" class="form-control required" id="LastName" required value="lastname" />
+                    </td>
+                    <td>
+                        <select id="Region" class="form-select required" required>
+                            @foreach (var item in Model.Genders)
+                            {
+                                <option value="@item.code">@item.description</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <input type="date" class="form-control required" id="DOB" name="DOB" required />
+                        <span class="error" validation-for="DOB" name="DOB"></span>
+                    </td>
+                    <td>
+                        <select id="Region" class="form-select required" required>
+                            @foreach (var item in Model.Regions)
+                            {
+                                if (item.isDefault)
+                                {
+                                    <option value="@item.code" selected>@item.description</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.code">@item.description</option>
+                                }
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <select id="MaritalStatus" class="form-select required" required>
+                            @foreach (var item in Model.MaritalStatuses)
+                            {
+                                <option value="@item.code">@item.description</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+
+            }
+
+        </tbody>
+    </table>
+</form>
+@section Scripts{
+    <script>
+        var relationList = @Html.Raw(Json.Serialize(Model.Relations));
+        var genderList = @Html.Raw(Json.Serialize(Model.Genders));
+        var maritalStatusList = @Html.Raw(Json.Serialize(Model.MaritalStatuses));
+        var regionList = @Html.Raw(Json.Serialize(Model.Regions));
+        var productClassOfCoverage = @Html.Raw(Json.Serialize(Model.ProductClassOfCoverage));
+        var stayTripOptionList = @Html.Raw(Json.Serialize(Model.StayTripOption));
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/js/business/AF1_1.js"></script>
+}

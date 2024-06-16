@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Lead";
+    ViewData["SubTitle"] = "Create";
+}
+<div class="row pt-3">
+    <div class="col-md-2 ms-auto">
+        <button style="float:right" type="button" id="btnAddWizard" onclick="Submit()" class="
+                        d-inline-flex
+                        align-items-center
+                        justify-content-center
+                        btn btn-success btn-circle btn-lg
+                      ">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+</div>
+<partial name="_Shared.cshtml" />
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="~/js/lead/create.js"></script>
+  
+
+    <script>
+        
+
+    </script>
+}

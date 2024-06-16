@@ -1,0 +1,97 @@
+﻿@model Evaluation.UI.Models.AF1_2VM
+@{
+    ViewData["Title"] = "Businnes";
+    ViewData["SubTitle"] = "Indivudual Health";
+}
+<link href="~/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
+      rel="stylesheet" />
+<link rel="stylesheet"
+      type="text/css"
+      href="~/assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css" />
+
+<link rel="stylesheet" type="text/css" href="~/lib/datatableAddons/css/colvis.css">
+
+@*<input type="hidden" id="SalesId" value="@Model.SalesTransactionBL77Dto.RecId">*@
+<input type="hidden" id="BusinessLineCode">
+<input type="hidden" id="ContactId" value="@Model.ContactVM.RecId">
+<div class="row">
+    <div class="col-5 "> <h2>@Model.ContactVM.FirstName @Model.ContactVM.MiddleName @Model.ContactVM.LastName</h2></div>
+    <div class="col-7 ">
+        <div class="" style="float: right;">
+            <button type="button" id="btnDashboard" class="
+                        btn btn-danger
+                      ">
+                <i class="m-1 fas  fa-angle-left"></i>
+            </button>
+            <button type="button" id="btnSubmit" class="
+                        btn btn-primary
+                      ">
+                <i class="m-1 fas fa-plus"></i>Submit
+            </button>
+            <button type="button" id="btnUploadExcel" class="
+                        btn btn-primary
+                      ">
+                <i class="m-1 fas fa-upload"></i>Upload AF
+            </button>
+            <button type="button" id="btnSubmitWithEmail" class="
+                        btn btn-info
+                      " title="Send AF To Client">
+                <i class="m-1 fas fa-envelope"></i>Send AF
+            </button>
+
+            <button type="button" id="btnSendEmailExcel" class="
+                        btn btn-secondary
+                      ">
+                <i class="m-1 fas fa-download"></i>Export Data
+            </button>
+
+            <button type="button" id="btnDownloadEmptyExcel" class="
+                        btn btn-secondary
+                      " title="Download Empty Application Form Template">
+                <i class="m-1 fas fa-download"></i>Download AF
+            </button>
+        </div>
+    </div>
+    <input type="file" id="fileInput" name="file" accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none">
+</div>
+<div class="">
+    <table id="tableAf12" style="width:100%" class="display responsive table table-striped">
+        <thead>
+            <tr>
+              
+            </tr>
+        </thead>
+
+        <tbody id="table-body">
+
+          
+        </tbody>
+    </table>
+</div>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!--This page JavaScript -->
+    @*  <script src="~/assets/libs/jquery.repeater/jquery.repeater.min.js"></script>
+    <script src="~/assets/extra-libs/jquery.repeater/repeater-init.js"></script>
+    <script src="~/assets/libs/jquery-steps/build/jquery.steps.min.js"></script>*@
+
+
+    <script src="~/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+    <script>
+        var relationList = @Html.Raw(Json.Serialize(Model.Relations));
+        var genderList = @Html.Raw(Json.Serialize(Model.Genders));
+        var maritalStatusList = @Html.Raw(Json.Serialize(Model.MaritalStatuses));
+        var regionList = @Html.Raw(Json.Serialize(Model.Regions));
+        var stayTripOptionList = @Html.Raw(Json.Serialize(Model.StayTripOptions));
+        var classOfCoverageList = @Html.Raw(Json.Serialize(Model.ProductClassOfCoverage));
+        var datatablelist = @Html.Raw(Json.Serialize(Model.SalesTransactionBL021502Dto.AF1BL021502));
+        var territorialScopeList = @Html.Raw(Json.Serialize(Model.TerritorialScope));
+    </script>
+    <script src="~/js/business/AF1_2.js"></script>
+}

@@ -1,0 +1,146 @@
+﻿@model Evaluation.UI.Models.Transaction.Detailed090703VM
+@{
+    ViewData["Title"] = "Transaction";
+    ViewData["SubTitle"] = "Dashboard";
+}
+<link href="~/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
+      rel="stylesheet" />
+<link rel="stylesheet"
+      type="text/css"
+      href="~/assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css" />
+
+<input type="hidden" id="ContactId" value="@Model.ContactVM.RecId">
+<input type="hidden" id="SalestransactionID" value="@Model.SalesTransactionId">
+<input type="hidden" id="BusinessLineCode" value="@Model.BusinessLineCode">
+<input type="hidden" id="PageType" value="@Model.PageType">
+<div class="row">
+
+    <div class="col-5"> <h2>@Model.ContactVM.FirstName @Model.ContactVM.MiddleName @Model.ContactVM.LastName</h2></div>
+    <div class="col-7">
+        <div class="" style="float: right;">
+            <button type="button" id="btnDashboard" title="Dashboard" class="
+                        btn btn-danger
+                      ">
+                <i class="m-1 fas  fa-angle-left"></i>
+            </button>
+            <button type="button" id="btnExportToExcel" class="
+                        btn btn-secondary
+                      ">Export Excel
+            </button>
+            <button type="button" id="btnSlip" class="
+                        btn btn-secondary
+                      ">
+                Slip
+            </button>
+            <button type="button" id="btnQuotation" class="
+                        btn btn-secondary
+                      ">
+                Quotation
+            </button>
+            <button type="button" id="btnOfficialQuote" class="
+                        btn btn-secondary
+                      ">
+                Official Quote
+            </button>
+            <button type="button" id="btnConsolidation" class="
+                        btn btn-secondary
+                      ">
+                Consolidation
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link d-flex active" data-bs-toggle="tab" href="#shortlist" role="tab">
+            <span>
+                <i class="fas fa-user"></i>
+            </span>
+            <span class="d-none d-md-block ms-2">Short List</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link d-flex " data-bs-toggle="tab" href="#longlist" role="tab">
+            <span>
+                <i class="fas fa-user"></i>
+            </span>
+            <span class="d-none d-md-block ms-2">Long List</span>
+        </a>
+    </li>
+
+</ul>
+<!-- Tab panes -->
+
+<div class="tab-content">
+    <div class="tab-pane active" id="shortlist" role="tabpanel">
+        <div class="">
+            <table id="tableDashboardShort" style="width:100%" class="display responsive table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Insured</th>
+                        <th>Insurer Product</th>
+                        <th>Combination</th>
+                        <th>MF</th>
+                        <th>IP</th>
+                        <th>AMB</th>
+                        <th>PM</th>
+                        <th>DV</th>
+                        <th>Total</th>
+                        <th>CP</th>
+                        <th>AF</th>
+                        <th>Total Net</th>
+                        <th>Features</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane" id="longlist" role="tabpanel">
+        <div class="">
+            <table id="tableDashboardLong" style="width:100%" class="display responsive table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Insured</th>
+                        <th>Insurer Product</th>
+                        <th>Combination</th>
+                        <th>MF</th>
+                        <th>IP</th>
+                        <th>AMB</th>
+                        <th>PM</th>
+                        <th>DV</th>
+                        <th>Total</th>
+                        <th>CP</th>
+                        <th>AF</th>
+                        <th>Total Net</th>
+                        <th>Features</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+    <script src="~/dist/js/pages/datatable/datatable-basic.init.js"></script>
+    <script>
+        var shortlist = @Html.Raw(Json.Serialize(Model.CQShortListBL090703));
+        var longlist = @Html.Raw(Json.Serialize(Model.CQFullListBL090703));
+        var headerlist = @Html.Raw(Json.Serialize(Model.CQHeaderBL090703));
+    </script>
+    <script src="~/js/transaction/detailed090703.js"></script>
+
+
+}

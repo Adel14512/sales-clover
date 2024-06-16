@@ -1,0 +1,772 @@
+﻿@model Evaluation.UI.Models.ContactVM
+@{
+    ViewData["Title"] = "Transaction";
+    ViewData["SubTitle"] = "Create";
+}
+<!-- Nav tabs -->
+@*<ul class="nav nav-tabs" role="tablist">
+@foreach(var item in Model.Tabs)
+{
+    <li class="nav-item">
+        <a class="nav-link d-flex active" data-bs-toggle="tab" href="#@item.Id" role="tab">
+            <span>
+                <i class="fas fa-user"></i>
+            </span>
+            <span class="d-none d-md-block ms-2">@item.Name</span>
+        </a>
+    </li>
+}
+</ul>*@
+@*<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link d-flex active" data-bs-toggle="tab" href="#personal" role="tab">
+            <span>
+                <i class="fas fa-user"></i>
+            </span>
+            <span class="d-none d-md-block ms-2">Personal</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link d-flex" data-bs-toggle="tab" href="#businesInd" role="tab">
+            <span>
+                <i class="fas fa-diagnoses"></i>
+            </span>
+            <span class="d-none d-md-block ms-2">Business Individual</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link d-flex" data-bs-toggle="tab" href="#businesCor" role="tab">
+            <span>
+                <i class="fas fa-users"></i>
+            </span>
+            <span class="d-none d-md-block ms-2">Business Corporate</span>
+        </a>
+    </li>
+</ul>*@
+<!-- Tab panes -->
+@*<div class="tab-content">
+    <div class="tab-pane active" id="personal" role="tabpanel">
+         <div id="treePersonal"></div>
+    </div>
+    <div class="tab-pane" id="businesInd" role="tabpanel">
+        <div id="treeBusinessIndividual"></div>
+    </div>
+    <div class="tab-pane" id="businesCor" role="tabpanel">
+        <div id="treeBusinessCor"></div>
+    </div>
+</div>*@
+
+<h2>@Model.FirstName @Model.MiddleName @Model.LastName</h2>
+@Html.Raw(ViewBag.TreeViewHtml)
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/assets/extra-libs/treeview/dist/bootstrap-treeview.min.js"></script>
+    @*<script src="~/assets/extra-libs/treeview/dist/bootstrap-treeview-init.js"></script>*@
+    <script>
+        var personalData = [
+            {
+                text: "CONSTRACTION",
+                href: "#CONSTRACTION",
+                //tags: ["1"],
+                color:"red",
+                nodes: [
+                    {
+                        text: "1 PROJECT",
+                        href: "#1PROJECT",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "Fit_Out Single project ",
+                                href: "#FIT_OUT",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "Erection Contract_Single project",
+                                href: "#Erection",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "Construction Contract_Single project",
+                                href: "#Construction",
+                                // tags: ["0"],
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                text: "HEALTH & LIFE",
+                href: "#HEALTH",
+                color: "red",
+                nodes: [
+                    {
+                        text: "1 FAMILY",
+                        href: "#1FAMILY",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "travel",
+                                href: "#travel",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "health",
+                                href: "#health",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "gr/pcp/pco",
+                                href: "#gr/pcp/pco",
+                                // tags: ["0"],
+                            },
+                        ],
+                    },
+                    {
+                        text: "1 INSURED",
+                        href: "#INSURED",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "life",
+                                href: "#life",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "pa",
+                                href: "#pa",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "compulsory / expatriate",
+                                href: "#compulsory",
+                                // tags: ["0"],
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                text: "MARINE",
+                href: "#MARINE",
+                color: "red",
+                nodes: [
+                    {
+                        text: "1 SHIPMENT",
+                        href: "#1SHIPMENT",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "SINGLE SHIPMENT",
+                                href: "#travel",
+                                // tags: ["0"],
+                            },
+                        ],
+                    },
+                    {
+                        text: "1 YACHT",
+                        href: "#1YACHT",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "YACHT",
+                                href: "#YACHT",
+                                // tags: ["0"],
+                            },
+                            
+                        ],
+                    },
+                ],
+            },
+            {
+                text: "MOTOR",
+                href: "#MOTOR",
+                color: "red",
+                nodes: [
+                    {
+                        text: "1 VEHICLE",
+                        href: "#VEHICLE",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "(All Risk, TPL, Compulsory)",
+                                href: "#AllRiskTPLCompulsory1",
+                                // tags: ["0"],
+                            },
+                        ],
+                    },
+                    {
+                        text: "2 TO 6 VEHICLES",
+                        href: "#2TO6VEHICLES",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "(All Risk, TPL, Compulsory)",
+                                href: "#AllRiskTPLCompulsory2",
+                                // tags: ["0"],
+                            },
+
+                        ],
+                    },
+                    {
+                        text: "1 BUILDING",
+                        href: "#1BUILDING",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "building",
+                                href: "#building",
+                                // tags: ["0"],
+                            },
+
+                        ],
+                    },
+                    {
+                        text: "1 HOUSE",
+                        href: "#1HOUSE",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "household",
+                                href: "#household",
+                                // tags: ["0"],
+                            },
+
+                        ],
+                    },
+                ],
+            },
+        ];
+        $("#treePersonal").treeview({
+            color: "black",
+            selectedBackColor: "#03a9f3",
+            onhoverColor: "rgba(0, 0, 0, 0.05)",
+            expandIcon: "ri-add-line fs-4 me-1",
+            collapseIcon: "ri-subtract-line fs-4 me-1",
+            nodeIcon: "ri-folder-5-line fs-4 me-1",
+            data: personalData,
+        });
+        var businessIndData = [
+            {
+                text: "CONSTRACTION",
+                href: "#CONSTRACTION",
+                //tags: ["1"],
+                color: "red",
+                nodes: [
+                    {
+                        text: "1 PROJECT",
+                        href: "#1PROJECT",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "Fit_Out Single project ",
+                                href: "#FIT_OUT",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "Erection Contract_Single project",
+                                href: "#Erection",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "Construction Contract_Single project",
+                                href: "#Construction",
+                                // tags: ["0"],
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                text: "HEALTH & LIFE",
+                href: "#HEALTH",
+                color: "red",
+                nodes: [
+                    {
+                        text: "<=10 Principals",
+                        href: "#1FAMILY",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "travel",
+                                href: "/Business/BL77",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "life",
+                                href: "#life",
+                                // tags: ["0"],
+                            },
+                            
+                            {
+                                text: "pa",
+                                href: "#pa",
+                                // tags: ["0"],
+                            }, {
+                                text: "compulsory / expatriate",
+                                href: "#compulsory / expatriate",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "health",
+                                href: "#health",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "gr/pcp/pco",
+                                href: "#gr/pcp/pco",
+                                // tags: ["0"],
+                            },
+                        ],
+                    },
+                    {
+                        text: "1 SHIPMENT",
+                        href: "#SHIPMENT",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "SINGLE SHIPMENT",
+                                href: "#SINGLESHIPMENT",
+                                // tags: ["0"],
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                text: "MOTOR",
+                href: "#MOTOR",
+                color: "red",
+                nodes: [
+                    {
+                        text: "1 TO 6 VEHICLES",
+                        href: "#1TO6VEHICLES",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "(All Risk, TPL, Compulsory)",
+                                href: "#AllRiskTPLCompulsory1",
+                                // tags: ["0"],
+                            },
+                        ],
+                    },
+                ],
+            },
+        ];
+        $("#treeBusinessIndividual").treeview({
+            color: "black",
+            selectedBackColor: "#03a9f3",
+            onhoverColor: "rgba(0, 0, 0, 0.05)",
+            expandIcon: "ri-add-line fs-4 me-1",
+            collapseIcon: "ri-subtract-line fs-4 me-1",
+            nodeIcon: "ri-folder-5-line fs-4 me-1",
+            data: businessIndData,
+        });
+        var businessCorData = [
+            {
+                text: "CONSTRACTION",
+                href: "#CONSTRACTION",
+                //tags: ["1"],
+                color: "red",
+                nodes: [
+                    {
+                        text: ">12 PROJECTS",
+                        href: "#12PROJECTS",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "Fit_Out Single project ",
+                                href: "#FIT_OUT",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "Erection Contract_Open project",
+                                href: "#Erection",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "Construction Contract_Open project",
+                                href: "#Construction",
+                                // tags: ["0"],
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                text: "ENGINEERING",
+                href: "#ENGINEERING",
+                color: "red",
+                nodes: [
+                    {
+                        text: "1 INSURED",
+                        href: "#1INSURED",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "computors & electronics",
+                                href: "#computors&electronics",
+                                // tags: ["0"],
+                            }, {
+                                text: "contractors plant and machinery",
+                                href: "#contractorsplantandmachinery",
+                                // tags: ["0"],
+                            },
+                             {
+                                text: "deterioration of stock",
+                                href: "#deteriorationofstock",
+                                // tags: ["0"],
+                            },
+                             {
+                                text: "inspection services",
+                                href: "#inspectionservices",
+                                // tags: ["0"],
+                            },
+                             {
+                                text: "machinery breakdown",
+                                href: "#machinerybreakdown",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "machinery movement",
+                                href: "#machinerymovement",
+                                // tags: ["0"],
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                text: "HEALTH & LIFE",
+                href: "#HEALTH",
+                color: "red",
+                nodes: [
+                    {
+                        text: ">10 Principals",
+                        href: "#1FAMILY",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "Group Health",
+                                href: "#GroupHealth",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "Group Pa",
+                                href: "#GroupPa",
+                                // tags: ["0"],
+                            },
+
+                            {
+                                text: "Group Life",
+                                href: "#pa",
+                                // tags: ["0"],
+                            }
+                        ],
+                    },
+                ],
+            },
+            {
+                text: "MOTOR",
+                href: "#MOTOR",
+                color: "red",
+                nodes: [
+                    {
+                        text: ">6 VEHICLES",
+                        href: "#6VEHICLES",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "Fleet_TPL",
+                                href: "#Fleet_TPL",
+                                // tags: ["0"],
+                            }, {
+                                text: "Fleet_All Risk",
+                                href: "#Fleet_TPL",
+                                // tags: ["0"],
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                text: "MARINE",
+                href: "#MARINE",
+                color: "red",
+                nodes: [
+                    {
+                        text: ">12 SHIPMENTS",
+                        href: "#12SHIPMENTS",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "FLOATING",
+                                href: "#FLOATING",
+                                // tags: ["0"],
+                            }, {
+                                text: "OPEN COVER",
+                                href: "#OPENCOVER",
+                                // tags: ["0"],
+                            },
+                        ],
+                    },
+                ],
+            }, 
+            {
+                text: "MULTIRISK",
+                href: "#MULTIRISK",
+                color: "red",
+                nodes: [
+                    {
+                        text: "1 LOCATION",
+                        href: "#1LOCATION",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "Commercial Risk",
+                                href: "#CommercialRisk",
+                                // tags: ["0"],
+                            }, {
+                                text: "F&B Risk",
+                                href: "#F&BRisk",
+                                // tags: ["0"],
+                            }, {
+                                text: "Leisure Risk",
+                                href: "#LeisureRisk",
+                                // tags: ["0"],
+                            }, {
+                                text: "Office Risk",
+                                href: "#OfficeRisk",
+                                // tags: ["0"],
+                            }, {
+                                text: "Industrial Risk",
+                                href: "#IndustrialRisk",
+                                // tags: ["0"],
+                            },
+                        ],
+                    }, {
+                        text: "2 TO 5 LOCATIONS",
+                        href: "#2TO5LOCATIONS",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "Commercial Risk",
+                                href: "#CommercialRisk",
+                                // tags: ["0"],
+                            }, {
+                                text: "F&B Risk",
+                                href: "#F&BRisk",
+                                // tags: ["0"],
+                            }, {
+                                text: "Leisure Risk",
+                                href: "#LeisureRisk",
+                                // tags: ["0"],
+                            }, {
+                                text: "Office Risk",
+                                href: "#OfficeRisk",
+                                // tags: ["0"],
+                            }, {
+                                text: "Industrial Risk",
+                                href: "#IndustrialRisk",
+                                // tags: ["0"],
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                text: "SPECIAL RISKS",
+                href: "#SPECIALRISKS",
+                color: "red",
+                nodes: [
+                    {
+                        text: "1 INSURED",
+                        href: "#1INSURED",
+                        // tags: ["3"],
+                        color: "blue",
+                        nodes: [
+                            {
+                                text: "block hotel comprehensive",
+                                href: "#blockhotelcomprehensive",
+                                // tags: ["0"],
+                            }, {
+                                text: "bonds",
+                                href: "#bonds",
+                                // tags: ["0"],
+                            }, {
+                                text: "books debt",
+                                href: "#booksdebt",
+                                // tags: ["0"],
+                            }, {
+                                text: "Medical Malpractice (Practitioners)",
+                                href: "#MedicalMalpractice(Practitioners)",
+                                // tags: ["0"],
+                            }, {
+                                text: "Medical Malpractice (Hospitals)",
+                                href: "#MedicalMalpractice(Hospitals)",
+                                // tags: ["0"],
+                            },
+                             {
+                                text: "Medical Malpractice (Fitness Instructor)",
+                                href: "#MedicalMalpractice(FitnessInstructor)",
+                                // tags: ["0"],
+                            },
+                             {
+                                text: "Medical Malpractice (Retirement Homes & Frail Care)",
+                                href: "#MedicalMalpractice(RetirementHomes&FrailCare)",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "Medical Malpractice (Beauticians)",
+                                href: "#MedicalMalpractice(Beauticians)",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "Medical Malpractice (Ambulance Emergency Services)",
+                                href: "#MedicalMalpractice(AmbulanceEmergencyServices)",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "coating performance guarantee_Hydro_products&linings",
+                                href: "#coating performance guarantee_Hydro_products&linings",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "coating performance guarantee_Marine & Offshore",
+                                href: "#coatingperformanceguarantee_Marine&Offshore",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "commercial producer indemnity (One-Off Productions)",
+                                href: "#commercialproducerindemnity(One-OffProductions)",
+                                // tags: ["0"],
+                            },
+                            {
+                                text: "credit insurance",
+                                href: "#creditinsurance",
+                                // tags: ["0"],
+                            }, {
+                                text: "director & officers",
+                                href: "#director&officers",
+                                // tags: ["0"],
+                            }, {
+                                text: "employment practices liability",
+                                href: "#employmentpracticesliability",
+                                // tags: ["0"],
+                            }, {
+                                text: "event cancellation (One-Off Events)",
+                                href: "#eventcancellation(One-OffEvents)",
+                                // tags: ["0"],
+                            },{
+                                text: "event liability (One-Off Events)",
+                                href: "#eventliability(One-OffEvents)",
+                                // tags: ["0"],
+                            }, {
+                                text: "excess liability",
+                                href: "#excessliability",
+                                // tags: ["0"],
+                            },{
+                                text: "fine arts",
+                                href: "#finearts",
+                                // tags: ["0"],
+                            },{
+                                text: "freight forwarding liability",
+                                href: "#freightforwardingliability",
+                                // tags: ["0"],
+                            }, {
+                                text: "hauliers liability",
+                                href: "#hauliersliability",
+                                // tags: ["0"],
+                            },{
+                                text: "internet liability",
+                                href: "#internetliability",
+                                // tags: ["0"],
+                            },{
+                                text: "jewellers block",
+                                href: "#jewellersblock",
+                                // tags: ["0"],
+                            },{
+                                text: "legal expenses insurance",
+                                href: "#legalexpensesinsurance",
+                                // tags: ["0"],
+                            }, {
+                                text: "live stock",
+                                href: "#livestock",
+                                // tags: ["0"],
+                            },{
+                                text: "political violence",
+                                href: "#politicalviolence",
+                                // tags: ["0"],
+                            },{
+                                text: "professional indemnity",
+                                href: "#professionalindemnity",
+                                // tags: ["0"],
+                            },{
+                                text: "school liability",
+                                href: "#schoolliability",
+                                // tags: ["0"],
+                            }, {
+                                text: "stock through put",
+                                href: "#stockthroughput",
+                                // tags: ["0"],
+                            }, {
+                                text: "tour operator liability",
+                                href: "#touroperatorliability",
+                                // tags: ["0"],
+                            },{
+                                text: "valet parking",
+                                href: "#valetparking",
+                                // tags: ["0"],
+                            },{
+                                text: "valuable items",
+                                href: "#valuableitems",
+                                // tags: ["0"],
+                            }, {
+                                text: "warehouse keepers liability",
+                                href: "#warehousekeepersliability",
+                                // tags: ["0"],
+                            },
+                        ],
+                    },
+                ],
+            },
+        ];
+        $("#treeBusinessCor").treeview({
+            color: "black",
+            selectedBackColor: "#03a9f3",
+            onhoverColor: "rgba(0, 0, 0, 0.05)",
+            expandIcon: "ri-add-line fs-4 me-1",
+            collapseIcon: "ri-subtract-line fs-4 me-1",
+            nodeIcon: "ri-folder-5-line fs-4 me-1",
+            data: businessCorData,
+        });
+        // Add an event listener for the nodeSelected event
+        $('#treeBusinessIndividual').on('nodeSelected', function (event, data) {
+            // Redirect to the href of the selected node
+            window.location.href = data.href;
+        });
+        @Html.Raw(ViewBag.TreeViewScript);
+    </script>
+}

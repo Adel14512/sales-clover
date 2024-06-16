@@ -1,0 +1,344 @@
+﻿@*@model Evaluation.UI.Models.ContactVM*@
+@model Evaluation.UI.Models.Product.ProductVM
+<form id="step1from" class="validation-wizard wizard-circle">
+    <!-- Step 1 -->
+    <h6>General info (1)</h6>
+    <section>
+
+        <div class="row pt-3">
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.BranchId" class="control-label">Branch<span class="danger">*</span></label>
+                    <select asp-for="EditProduct.BranchId" class="form-select required" required>
+                        <option value="">--Select--</option>
+                        @foreach (var item in Model.Branchs)
+                        {
+                           
+                                <option value="@item.RecId">@item.Description</option>
+                        }
+
+                    </select>
+                    <span asp-validation-for="EditProduct.BranchId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.CurrencyId" class="control-label">Currency <span class="danger">*</span></label>
+                    <select asp-for="EditProduct.CurrencyId" class="form-select required" required>
+                        <option value="">--Select--</option>
+                        @foreach (var item in Model.Currencys)
+                        {
+                                <option value="@item.RecId">@item.Description</option>
+                        }
+
+                    </select>
+                    <span asp-validation-for="EditProduct.CurrencyId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.FromCountry" class="control-label">From Country</label>
+                    <select asp-for="EditProduct.FromCountry" class="form-select">
+                        <option value="">--Select--</option>
+                        @foreach (var item in Model.Regions)
+                        {
+                                <option value="@item.RecId">@item.Description</option>
+                        }
+
+                    </select>
+                    <span asp-validation-for="EditProduct.FromCountry" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.ThirdPartyAdminId" class="control-label">Third Party Admin <span class="danger">*</span></label>
+                    <select asp-for="EditProduct.ThirdPartyAdminId" class="form-select required" required>
+                        <option value="">--Select--</option>
+                        @foreach (var item in Model.ThirdPartyAdmins)
+                        {
+                                <option value="@item.RecId">@item.Description</option>
+                            
+                        }
+
+                    </select>
+                    <span asp-validation-for="EditProduct.ThirdPartyAdminId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.CreationDate" class="control-label">Creation date <span class="danger">*</span></label>
+                    <input type="date" class="form-control required" required asp-for="EditProduct.CreationDate"  />
+                    <span asp-validation-for="EditProduct.CreationDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.ToCountry" class="control-label">To Country </label>
+                    <select asp-for="EditProduct.ToCountry" class="form-select">
+                        <option value="">--Select--</option>
+                        @foreach (var item in Model.TerritorialScopes)
+                        {
+                                <option value="@item.RecId">@item.Description</option>
+                            
+                        }
+
+                    </select>
+                    <span asp-validation-for="EditProduct.ToCountry" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3">
+
+                    <label asp-for="EditProduct.InsurerId" class="control-label">Insurer<span class="danger">*</span></label>
+                    <select asp-for="EditProduct.InsurerId" class="form-select required" required >
+                        @foreach (var item in Model.Insurers)
+                        {
+                            
+                                <option value="@item.RecId">@item.Description</option>
+                            
+                        }
+
+                    </select>
+                    <span asp-validation-for="EditProduct.InsurerId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.ActivationDate">Activation Date <span class="danger">*</span></label>
+                    <input type="date" class="form-control required" required asp-for="EditProduct.ActivationDate" />
+                    <span asp-validation-for="EditProduct.ActivationDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.PolicyCreationId">Policy Creation <span class="danger">*</span></label>
+                    <select asp-for="EditProduct.PolicyCreationId" class="form-select required" required>
+                        <option value="">--Select--</option>
+                        <option value="Insured">Insured</option>
+                        <option value="Family">Family</option>
+                        <option value="Client">Client</option>
+                    </select>
+                    <span asp-validation-for="EditProduct.PolicyCreationId" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.InsurerProductName" class="control-label">
+                        Insurer Product Name<span class="danger">*</span>
+                    </label>
+                    <input type="text" class="form-control required" required asp-for="EditProduct.InsurerProductName" />
+                    <span asp-validation-for="EditProduct.InsurerProductName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.CountryOfResidence">Country of residence<span class="danger">*</span></label>
+                    <select asp-for="EditProduct.CountryOfResidence" class="form-select required" required>
+                        <option value="">--Select--</option>
+                        @foreach (var item in Model.Regions)
+                        {
+                                <option value="@item.RecId">@item.Description</option>
+                            
+                        }
+
+                    </select>
+                    <span asp-validation-for="EditProduct.CountryOfResidence" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.SubjectToProrata">Subject To prorata<span class="danger">*</span></label>
+                    <select asp-for="EditProduct.SubjectToProrata" class="form-select required" required>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                    <span asp-validation-for="EditProduct.SubjectToProrata" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Step 2 -->
+    <h6>General Info(2)</h6>
+    <section>
+        <div class="row pt-3">
+            <div class="col-md-4">
+                <div class="mb-3">
+
+                    <label asp-for="EditProduct.Standalone" class="control-label">Standalone<span class="danger">*</span></label>
+                    <select asp-for="EditProduct.Standalone" class="form-select required" required>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                    <span asp-validation-for="EditProduct.Standalone" class="text-danger"></span>
+                    @*id="txtFirstName"*@
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.NoUnderwriting" class="control-label">No Underwriting <span class="danger">*</span></label>
+                    <select asp-for="EditProduct.NoUnderwriting" class="form-select required" required>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                    <span asp-validation-for="EditProduct.NoUnderwriting" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.Continuity" class="control-label">Continuity <span class="danger">*</span></label>
+                    <select asp-for="EditProduct.Continuity" class="form-select required" required>
+                        <option value="">--Select--</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option value="Based on AF">Based on AF</option>
+                    </select>
+                    <span asp-validation-for="EditProduct.Continuity" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.NoWaitingPeriod" class="control-label">No Waiting Period <span class="danger">*</span></label>
+                    <select asp-for="EditProduct.NoWaitingPeriod" class="form-select required" required>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                    <span asp-validation-for="EditProduct.NoWaitingPeriod" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+
+                    <label asp-for="EditProduct.ChildStandalone" class="control-label">Child Standalone<span class="danger">*</span></label>
+                    <select asp-for="EditProduct.ChildStandalone" class="form-select required" required>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                    <span asp-validation-for="EditProduct.ChildStandalone" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+
+                    <label asp-for="EditProduct.GuaranteeRenewability" class="control-label">Guarantee Renewability <span class="danger">*</span></label>
+                    <select asp-for="EditProduct.GuaranteeRenewability" class="form-select required" required>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                    <span asp-validation-for="EditProduct.GuaranteeRenewability" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.NewBusinessAgeMinRange" class="control-label">New Business Age Min Range<span class="danger">*</span></label>
+                    <input type="number" class="form-control required" required asp-for="EditProduct.NewBusinessAgeMinRange" min="0" max="99" />
+                    <span asp-validation-for="EditProduct.NewBusinessAgeMinRange" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.RenewalAgeMinRange">Renewal Age Min Range <span class="danger">*</span></label>
+                    <input type="number" class="form-control required" required asp-for="EditProduct.RenewalAgeMinRange" min="0" max="99" />
+                    <span asp-validation-for="EditProduct.RenewalAgeMinRange" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.AgeCalculationYear">Age Calculation Year<span class="danger">*</span></label>
+                    <select asp-for="EditProduct.AgeCalculationYear" class="form-select required" required>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                    <span asp-validation-for="EditProduct.AgeCalculationYear" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.NewBusinessAgeMaxRange" class="control-label">New Business Age Max<span class="danger">*</span></label>
+                    <input type="number" class="form-control required" required asp-for="EditProduct.NewBusinessAgeMaxRange" min="0" max="99" />
+                    <span asp-validation-for="EditProduct.NewBusinessAgeMaxRange" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.RenewalAgeMaxRange">Renewal Age Max Range<span class="danger">*</span></label>
+                    <input type="number" class="form-control required" required asp-for="EditProduct.RenewalAgeMaxRange" min="0" max="99" />
+                    <span asp-validation-for="EditProduct.RenewalAgeMaxRange" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label asp-for="EditProduct.AgeCalculationFullDate">Age Calculation Full Date <span class="danger">*</span></label>
+                    <select asp-for="EditProduct.AgeCalculationFullDate" class="form-select required" required>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                    <span asp-validation-for="EditProduct.AgeCalculationFullDate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label asp-for="EditProduct.FamilyRatesCalculation">Family Rates Calculation <span class="danger">*</span></label>
+                <select asp-for="EditProduct.FamilyRatesCalculation" class="form-select required" required>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+                <span asp-validation-for="EditProduct.FamilyRatesCalculation" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="EditProduct.ActivationDate">Active <span class="danger">*</span></label>
+                <select asp-for="EditProduct.ActivationDate" class="form-select required" required>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+                <span asp-validation-for="EditProduct.ActivationDate" class="text-danger"></span>
+            </div>   
+            <div class="col-md-4">
+                <label asp-for="EditProduct.NoClaimBonus">Claim Bonus <span class="danger">*</span></label>
+                <select asp-for="EditProduct.NoClaimBonus" class="form-select required" required>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+                <span asp-validation-for="EditProduct.NoClaimBonus" class="text-danger"></span>
+            </div>
+        </div>
+    </section>
+    <!-- Step 3 -->
+   @*  <h6>Miscellaneous</h6>
+    <section>
+        <input type="button" id="addtMiscellaneousSheets" class="btn btn-success" value="Add" />
+        <table id="tMiscellaneous" style="width:100%" class="display responsive table table-striped"></table>
+    </section>
+    <!-- Step 4 -->
+    <h6>Technical Sheets</h6>
+    <section>
+        <input type="button" id="addtTechnicalSheets" class="btn btn-success" value="Add" />
+        <table id="tTechnicalSheets" style="width:100%" class="display responsive table table-striped">
+        </table>
+    </section>
+    <!-- Step 5 -->
+    <h6>Combinations</h6>
+    <section>
+        <table id="tCombinations" style="width:100%" class="display responsive table table-striped"></table>
+    </section>
+    <!-- Step 6 -->
+    <h6>Price</h6>
+    <section>
+        <table id="tPrice" style="width:100%" class="display responsive table table-striped"></table>
+    </section> *@
+</form>
+
+<!-- Add Row Modal -->
+

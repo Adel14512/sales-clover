@@ -1,0 +1,38 @@
+﻿@model Evaluation.UI.Response.LeadFindAllResp
+@{
+    ViewData["Title"] = "Lead";
+    ViewData["SubTitle"] = "Search";
+}
+<link href="~/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
+      rel="stylesheet" />
+<link rel="stylesheet"
+      type="text/css"
+      href="~/assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css" />
+
+<table id="tableLead" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Business Line</th>
+            <th>Owner</th>
+            <th>Full Name</th>
+            <th>Mobile</th>
+            <th>Company</th>
+            <th>Job</th>
+            <th>Topic</th>
+            <th>Feedback</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+@section Scripts{
+    <!--This page plugins -->
+    <script>
+        var leadList = @Html.Raw(Json.Serialize(Model.Lead));
+
+    </script>
+    <script src="~/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+    <script src="~/dist/js/pages/datatable/datatable-basic.init.js"></script>
+    <script src="~/js/lead/index.js"></script>
+}

@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--<PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />-->
+  </ItemGroup>
+
+  <ItemGroup>
+	  <ProjectReference Include="..\Evaluation.CAL\Evaluation.CAL.csproj">
+		  <PrivateAssets>all</PrivateAssets>
+		  <!-- <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
+	  </ProjectReference>
+	  <ProjectReference Include="..\Evaluation.DAL\Evaluation.DAL.csproj">
+		  <PrivateAssets>all</PrivateAssets>
+		  <!--<IncludeAssets>compile</IncludeAssets>-->
+		  <!--<PrivateAssets>contentFiles;analyzers</PrivateAssets>-->
+		  <!--<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>-->
+		  <!--<IncludeAssets>all</IncludeAssets>
+		  <ExcludeAssets>contentFiles</ExcludeAssets>-->
+		  <!--<PrivateAssets>contentFiles;analyzers</PrivateAssets>-->
+	  </ProjectReference>
+  </ItemGroup>
+
+</Project>

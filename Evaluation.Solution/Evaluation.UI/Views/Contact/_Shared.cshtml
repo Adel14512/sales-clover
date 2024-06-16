@@ -1,0 +1,106 @@
+﻿@model Evaluation.UI.Models.ContactVM
+<input type="hidden" asp-for="RecId" class="form-control" />
+<div id="formSearch">
+    <div class="row pt-3">
+        <div class="col-md-4">
+            <div class="mb-3">
+                @{
+                    var we = Model;
+                }
+                <label asp-for="FirstName" class="control-label">First Name <span class="danger">*</span></label>
+                <input type="text" asp-for="FirstName" class="form-control required" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+                @*id="txtFirstName"*@
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="LastName" class="control-label">Last Name <span class="danger">*</span></label>
+                <input type="text" asp-for="LastName" class="form-control required" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="MiddleName" class="control-label">Middle Name </label>
+                <input type="text" asp-for="MiddleName" class="form-control " />
+                <span asp-validation-for="MiddleName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="RegistrationNo" class="control-label">Registration No </label>
+                <input type="text" asp-for="RegistrationNo" class="form-control " />
+                <span asp-validation-for="RegistrationNo" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+
+                <label asp-for="GenderId" class="control-label">Gender <span class="danger">*</span></label>
+                <select asp-for="GenderId" class="form-select" required>
+                    <option value="">--Select--</option>
+                    @foreach (var item in Model.Genders)
+                    {
+                        if (item.recId == Model.GenderId)
+                        {
+                            <option value="@item.code" selected>@item.description</option>
+                        }
+                        else
+                        {
+                            <option value="@item.code">@item.description</option>
+                        }
+                    }
+
+                </select>
+                <span asp-validation-for="GenderId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                @* <label asp-for="Dob" class="control-label">Date Of Birth  <span class="danger">*</span></label>
+                <input type="date" asp-for="Dob" class="form-control required" value="@Model.Dob.ToString("yyyy-MM-dd")" />
+                *@
+                <label asp-for="YOB" class="control-label">Year Of Birth  </label>
+                <input type="number" class="form-control" asp-for="YOB" min="1900" max="2024"  pattern="[0-9]{4}">
+                <span asp-validation-for="YOB" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        @*  <div class="col-md-4">
+        <div class="mb-3">
+        <label asp-for="RegionCode" class="control-label">Regions</label>
+        <select asp-for="RegionCode" class="form-select">
+        @foreach (var item in Model.Regions)
+        {
+        if (item.recId == Model.RegionID)
+        {
+        <option value="@item.code" selected>@item.description</option>
+        }
+        else
+        {
+        <option value="@item.code">@item.description</option>
+        }
+        }
+        <option value="">--Select--</option>
+        </select>
+        <span asp-validation-for="RegionCode" class="text-danger"></span>
+        </div>
+        </div> *@
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="Job">Job </label>
+                <input type="text" class="form-control" asp-for="Job" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <label asp-for="Company">Company</label>
+                <input type="text" class="form-control" asp-for="Company" />
+            </div>
+        </div>
+    </div>
+</div>

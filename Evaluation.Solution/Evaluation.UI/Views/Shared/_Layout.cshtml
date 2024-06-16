@@ -1,0 +1,66 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<partial name="_HeadLinks.cshtml" />
+<body>
+    <partial name="_PreLoader.cshtml" />
+    <div id="loading" style="display:none">
+        
+        <div class="d-flex justify-content-center">
+            <div class="spinner-grow text-danger" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-wrapper">
+        <partial name="_Header.cshtml" />
+        <partial name="_LeftSideBar.cshtml" />
+        <!-- Page wrapper  -->
+        <!-- -------------------------------------------------------------- -->
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <partial name="_BreadCrumb.cshtml" />
+                @RenderBody()
+            </div>
+            @*  <partial name="_Footer.cshtml" />*@
+        </div>
+
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="benefitsModal" tabindex="-1" role="dialog" aria-labelledby="benefitsModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="benefitsModalLabel">
+                        Benefits With Answer No
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table" style="max-height: 300px;overflow-y: auto;" id="benefitsTableBody">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Populate rows dynamically using AJAX -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="btnClosebenefitsModal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <partial name="_Scripts.cshtml" />
+    <script>
+        $("#btnClosebenefitsModal").click(function () {
+            $('#benefitsModal').modal('hide');
+        })
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,89 @@
+﻿@model Evaluation.UI.Models.Product.ProductVM
+@{
+    ViewData["Title"] = "Product";
+    ViewData["SubTitle"] = "List";
+}
+<link href="~/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css"
+      rel="stylesheet" />
+<link rel="stylesheet"
+      type="text/css"
+      href="~/assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css" />
+
+
+<div class="row">
+    <div class="col-5 "> <h2>Network Explanations</h2></div>
+
+
+</div>
+<div class="">
+    <table id="tNetwork" style="width:100%" class="display responsive table table-striped">
+        <thead>
+        </thead>
+
+        <tbody id="table-body">
+        </tbody>
+    </table>
+</div>
+<!-- Add Row Modal -->
+<div id="modelNetwork" class="modal fade" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Network Explanation</h4>
+            </div>
+
+            <!-- Modal body -->
+            <form id="form">
+                <div class="modal-body">
+                    <input type="hidden" id="txtRecId">
+                    <div class="row">
+                        <div class="md-3"><lable>Level</lable></div>
+                        <div class="md-3">
+                            <input type="text" disabled class="form-control" id="txtLevel">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="md-3"><lable>Name</lable></div>
+                        <div class="md-3">
+                            <input type="text" disabled class="form-control" id="txtName">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="md-3"><lable>Explanation</lable></div>
+                        <div class="md-3">
+                            <input type="text"  class="form-control" id="txtExplanation">
+                        </div>
+                    </div>
+                   
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btnCloseNetwork"
+                        data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button id="btnSave" class="btn btn-success">Save</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!--This page JavaScript -->
+    <script src="~/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+
+
+
+    <script>
+        var datatablelist = @Html.Raw(Json.Serialize(Model.ProductDetailsPOINetworks));
+    </script>
+    <script src="~/js/product/network.js"></script>
+}

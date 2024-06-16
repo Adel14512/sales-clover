@@ -1,0 +1,98 @@
+﻿
+using Evaluation.UI.DTO.BL331211;
+using Evaluation.UI.DTO.BL021502;
+using Evaluation.UI.DTO.BL041312;
+using Evaluation.UI.DTO.BL051807;
+using Evaluation.UI.DTO.BL080501;
+using Evaluation.UI.DTO.BL281609;
+using Evaluation.UI.DTO.BL291908;
+using Evaluation.UI.DTO.BL301401;
+using Evaluation.UI.DTO.BL311703;
+using Evaluation.UI.DTO.Product;
+using Evaluation.UI.ExcelImportModel;
+using Evaluation.UI.Response.BL080501;
+using Evaluation.UI.DTO.BL321110;
+using Evaluation.UI.DTO.BL061005;
+using Evaluation.UI.DTO.BL090703;
+using Evaluation.UI.DTO.BL070806;
+using Evaluation.UI.DTO.BL030904;
+using Evaluation.UI.DTO.BL010602;
+using Evaluation.UI.Response.BL070806;
+using Evaluation.UI.Response.BL090703;
+using Evaluation.UI.Response.BL010602;
+using Evaluation.UI.Response.BL321110;
+using Evaluation.UI.Response.BL281609;
+using Evaluation.UI.Response.BL331211;
+using Evaluation.UI.Response.BL051807;
+using Evaluation.UI.Response.BL030904;
+using Evaluation.UI.Response.BL041312;
+using Evaluation.UI.Response.BL021502;
+using Evaluation.UI.Response.BL291908;
+using Evaluation.UI.Response.BL301401;
+using Evaluation.UI.Response.BL311703;
+using Evaluation.UI.Response.BL061005;
+
+namespace Evaluation.UI.IUtil
+{
+    public interface IConvertFromToExcel
+    {
+        Task<byte[]> ConvetFormToExcelBl77(byte[] fileByte, List<Af1Bl77EM> aF1BL77Dtos);
+        Task<byte[]> ConvetFormToExcelAF33(byte[] fileBytes, List<Af1_33EM> aF1BL77Dtos);
+        Task<byte[]> ConvetFormToExcelAF32(byte[] fileBytes, List<Af1_32EM> aF1BL77Dtos);
+        Task<byte[]> ConvetFormToExcelAF4(byte[] fileBytes, List<Af1_4EM> aF1BL77Dtos);
+        Task<byte[]> ConvetFormToExcelAF28(byte[] fileBytes, List<Af1_28EM> aF1BL77Dtos);
+        Task<byte[]> ConvetFormToExcelAF5(byte[] fileBytes, List<Af1_5EM> aF1BL77Dtos);
+        Task<byte[]> ConvetFormToExcelAF29(byte[] fileBytes, List<Af1_29EM> aF1BL77Dtos);
+        Task<byte[]> ConvetFormToExcelAF2(byte[] fileBytes, List<Af1_2EM> aF1BL77Dtos);
+        Task<byte[]> ConvetFormToExcelAF30(byte[] fileBytes, List<Af1_30EM> aF1BL77Dtos);
+        Task<byte[]> ConvetFormToExcelAF33DetailsStep5(byte[] fileBytes, List<SalesTransactionBL331211DetailsPricesNewDto> products);
+        Task<byte[]> ConvetFormToExcelCQ30(byte[] fileBytes, List<IDictionary<string, string>> list, List<IDictionary<string, string>> benefits, List<IDictionary<string, string>> bills, List<CQHeader>cQHeaders, List<CQCategory> cQCategories);
+        Task<byte[]> ConvetFormToExcelCQ10(byte[] fileBytes, List<IDictionary<string, string>> dynamicSummary, List<IDictionary<string, string>> dynamicSection, List<IDictionary<string, string>> dynamicMember, List<IDictionary<string, string>> dynamicPivotBenifit, List<IDictionary<string, string>> dynamicPivotPriceList, List<CQHeader321110> cQHeader);
+        Task<byte[]> ConvetFormToExcelCQ30New(byte[] fileBytes, List<List<IDictionary<string, string>>> pivotList, List<List<IDictionary<string, string>>> pivotMemberList, List<List<IDictionary<string, string>>> benifitsCompList, List<List<IDictionary<string, string>>> benifitsList, List<CQHeader301401Dto> cQHeaders, List<CQCategory> cQCategories);
+        Task<byte[]> ConvetFormToExcelCQ1_8(byte[] fileBytes, List<IDictionary<string, string>> list, List<IDictionary<string, string>> benefits, List<IDictionary<string, string>> bills, List<CQHeader080501> cQHeaders, List<CQCategory080501> cQCategories, List<IDictionary<string, string>> compare);
+        Task<byte[]> ConvetFormToExcelCQ6(byte[] fileBytes, List<IDictionary<string, string>> list, List<IDictionary<string, string>> benefits, List<IDictionary<string, string>> bills, List<CQHeader070806Dto> cQHeaders, List<CQCategory070806Dto> cQCategories, List<IDictionary<string, string>> compare);
+        Task<byte[]> ConvetFormToExcelCQ2(byte[] fileBytes, List<IDictionary<string, string>> list, List<IDictionary<string, string>> benefits, List<IDictionary<string, string>> bills, List<CQHeader021502Dto> cQHeaders, List<CQCategory021502Dto> cQCategories);
+        Task<byte[]> ConvetFormToExcelCQ2AF01(byte[] fileBytes, List<IDictionary<string, string>> list, List<IDictionary<string, string>> benefits, List<IDictionary<string, string>> bills, List<CQHeader010602Dto> cQHeaders, List<CQCategory010602Dto> cQCategories);
+        Task<byte[]> ConvetFormToExcelCQ7(byte[] fileBytes, List<IDictionary<string, string>> list, List<IDictionary<string, string>> benefits, List<IDictionary<string, string>> bills, List<CQHeader051807Dto> cQHeaders, List<CQCategory051807Dto> cQCategories);
+        Task<byte[]> ConvetFormToExcelCQ8(byte[] fileBytes, List<IDictionary<string, string>> list, List<IDictionary<string, string>> benefits, List<IDictionary<string, string>> bills, List<CQHeader291908Dto> cQHeaders, List<CQCategory291908Dto> cQCategories);
+        Task<byte[]> ConvetFormToExcelCQ9(byte[] fileBytes, List<IDictionary<string, string>> list, List<IDictionary<string, string>> benefits, List<IDictionary<string, string>> bills, List<IDictionary<string, string>> benefitsCompare, List<CQHeader281609Dto> cQHeaders, List<CQCategory281609Dto> cQCategories);
+        Task<byte[]> ConvetFormToExcelCQ11(byte[] fileBytes, List<IDictionary<string, string>> list, List<IDictionary<string, string>> benefits,  List<IDictionary<string, string>> pricelist, List<IDictionary<string, string>> member, List<IDictionary<string, string>> summury, List<CQHeader331211Dto> cQHeaders, List<CQCategory331211Dto> cQCategories);
+        Task<byte[]> ConvetFormToExcelCQ12(byte[] fileBytes, List<IDictionary<string, string>> list, List<IDictionary<string, string>> benefits, List<IDictionary<string, string>> pricelist, List<IDictionary<string, string>> member, List<IDictionary<string, string>> summury, List<CQHeader041312Dto> cQHeaders, List<CQCategory041312Dto> cQCategories);
+        Task<byte[]> ConvetFormToExcelCQ3(byte[] fileBytes, List<IDictionary<string, string>> list, List<IDictionary<string, string>> benefits, List<IDictionary<string, string>> bills, List<IDictionary<string, string>> compares, List<CQHeader090703Dto> cQHeaders, List<CQCategory311703Dto> cQCategories);
+        Task<byte[]> ConvetFormToExcelProductList(byte[] fileBytes, List<ProductDto> products);
+        Task<byte[]> ConvetFormToExcelProductPrice(byte[] fileBytes, string businessLine,List<ProductPriceEM> products ,List<CombinationEM> combinations, List<TechnicalSheetEM> technicalSheets);
+        Task<byte[]> ConvetFormToExcelAF32SlipStep4(byte[] fileBytes, List<Slip4BL321110Dto> products);
+        Task<byte[]> ConvetFormToExcelAF33SlipStep4(byte[] fileBytes, List<Slip4BL331211Dto> products);
+        Task<byte[]> ConvetFormToExcelAF32DetailsStep5(byte[] fileBytes, List<SalesTransactionDetailsPricesNewDto> products);
+        Task<byte[]> Split080501(byte[] fileBytes, SalesTransactionBL080501SlipResp salesTransactionBL080501SlipResp);
+        Task<byte[]> Split010602(byte[] fileBytes, SalesTransactionBL010602SlipResp salesTransactionBL080501SlipResp);
+        Task<byte[]> Split070806(byte[] fileBytes, SalesTransactionBL070806SlipResp salesTransactionBL080501SlipResp);
+        Task<byte[]> Split090703(byte[] fileBytes, SalesTransactionBL090703SlipResp salesTransactionBL080501SlipResp);
+        Task<byte[]> Split021502(byte[] fileBytes, SalesTransactionBL021502SlipResp salesTransactionBL080501SlipResp);
+        Task<byte[]> Split030904(byte[] fileBytes, SalesTransactionBL030904SlipResp salesTransactionBL080501SlipResp);
+        Task<byte[]> Split051807(byte[] fileBytes, SalesTransactionBL051807SlipResp salesTransactionBL080501SlipResp);
+        Task<byte[]> Split041312(byte[] fileBytes, SalesTransactionBL041312SlipResp salesTransactionBL080501SlipResp);
+        Task<byte[]> Split061005(byte[] fileBytes, SalesTransactionBL061005SlipResp salesTransactionBL080501SlipResp);
+        Task<byte[]> Split291908(byte[] fileBytes, SalesTransactionBL291908SlipResp salesTransactionBL080501SlipResp);
+        Task<byte[]> Split331211(byte[] fileBytes, SalesTransactionBL331211SlipResp salesTransactionBL080501SlipResp);
+        Task<byte[]> Split301401(byte[] fileBytes, SalesTransactionBL301401SlipResp salesTransactionBL080501SlipResp);
+        Task<byte[]> Split321110(byte[] fileBytes, SalesTransactionBL321110SlipResp salesTransactionBL080501SlipResp);
+        Task<byte[]> Split281609(byte[] fileBytes, SalesTransactionBL281609SlipResp salesTransactionBL080501SlipResp);
+        Task<byte[]> Split311703(byte[] fileBytes, SalesTransactionBL311703SlipResp salesTransactionBL080501SlipResp);
+        Task<byte[]> ConvetFormToExcelShortLongListtBL080501(byte[] fileBytes, List<CQShortListBL080501Dto> CQShortListBL080501, List<CQFullListBL080501Dto> CQFullListBL080501, List<CQHeader080501> headerlist);
+        Task<byte[]> ConvetFormToExcelShortLongListtBL331211(byte[] fileBytes, List<CQShortListBL331211Dto> CQShortListBL331211, List<CQFullListBL331211Dto> CQFullListBL331211, List<CQHeader331211Dto> headerlist);
+        Task<byte[]> ConvetFormToExcelShortLongListtBL010602(byte[] fileBytes, List<CQShortListBL010602Dto> CQShortListBL010602, List<CQFullListBL010602Dto> CQFullListBL010602, List<CQHeader010602Dto> headerlist);
+        Task<byte[]> ConvetFormToExcelShortLongListtBL090703(byte[] fileBytes, List<CQShortListBL090703Dto> CQShortListBL090703, List<CQFullListBL090703Dto> CQFullListBL090703, List<CQHeader090703Dto> headerlist);
+        Task<byte[]> ConvetFormToExcelShortLongListtBL030904(byte[] fileBytes, List<CQShortListBL030904Dto> CQShortListBL030904, List<CQFullListBL030904Dto> CQFullListBL030904, List<CQHeader030904Dto> headerlist);
+        Task<byte[]> ConvetFormToExcelShortLongListtBL061005(byte[] fileBytes, List<CQShortListBL061005Dto> CQShortListBL061005, List<CQFullListBL061005Dto> CQFullListBL061005, List<CQHeader061005Dto> headerlist);
+        Task<byte[]> ConvetFormToExcelShortLongListtBL070806(byte[] fileBytes, List<CQShortListBL070806Dto> CQShortListBL070806, List<CQFullListBL070806Dto> CQFullListBL070806, List<CQHeader070806Dto> headerlist);
+        Task<byte[]> ConvetFormToExcelShortLongListtBL021502(byte[] fileBytes, List<CQShortListBL021502Dto> CQShortListBL021502, List<CQFullListBL021502Dto> CQFullListBL021502, List<CQHeader021502Dto> headerlist);
+        Task<byte[]> ConvetFormToExcelShortLongListtBL051807(byte[] fileBytes, List<CQShortListBL051807Dto> CQShortListBL051807, List<CQFullListBL051807Dto> CQFullListBL051807, List<CQHeader051807Dto> headerlist);
+        Task<byte[]> ConvetFormToExcelShortLongListtBL291908(byte[] fileBytes, List<CQShortListBL291908Dto> CQShortListBL291908, List<CQFullListBL291908Dto> CQFullListBL291908, List<CQHeader291908Dto> headerlist);
+        Task<byte[]> ConvetFormToExcelShortLongListtBL281609(byte[] fileBytes, List<CQShortListBL281609Dto> CQShortListBL281609, List<CQFullListBL281609Dto> CQFullListBL281609, List<CQHeader281609Dto> headerlist);
+        Task<byte[]> ConvetFormToExcelShortLongListtBL301401(byte[] fileBytes, List<CQShortListBL301401Dto> CQShortListBL301401, List<CQFullListBL301401Dto> CQFullListBL301401, List<CQHeader> headerlist);
+        Task<byte[]> ConvetFormToExcelShortLongListtBL311703(byte[] fileBytes, List<CQShortListBL311703Dto> CQShortListBL311703, List<CQFullListBL311703Dto> CQFullListBL311703, List<CQHeader311703Dto> headerlist);
+        Task<byte[]> ConvetFormToExcelShortLongListtBL321110(byte[] fileBytes, List<CQShortListBL321110Dto> CQShortListBL321110, List<CQFullListBL321110Dto> CQFullListBL321110, List<CQHeader321110> headerlist);
+        Task<byte[]> ConvetFormToExcelShortLongListtBL041312(byte[] fileBytes, List<CQShortListBL041312Dto> CQShortListBL041312, List<CQFullListBL041312Dto> CQFullListBL041312, List<CQHeader041312Dto> headerlist);
+    }
+}
