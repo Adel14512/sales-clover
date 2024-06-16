@@ -85,7 +85,7 @@ function search() {
                 $('#tTicketHistory').DataTable().destroy();
                 //$('#tTicketHistory').DataTable();
                 // initialize DataTables with the data
-               var table = $('#tTicketHistory').DataTable({
+                var table = $('#tTicketHistory').DataTable({
                     data: data,
                     processing: true,
                     responsive: true,
@@ -99,7 +99,7 @@ function search() {
                         { data: 'ticketDetailsId', title: 'Ticket ID', width: '10px' },
                         { data: 'openDate', title: 'OpenDate', width: '30px' },
                         {
-                            data: 'businessLine', title: 'Business Line'  ,  render: function (data, type, row) {
+                            data: 'businessLine', title: 'Business Line', render: function (data, type, row) {
                                 if (row.detailStatusId == 1) {
                                     return data;
                                 } else {
@@ -107,18 +107,23 @@ function search() {
                                 }
 
                             }
-},
+                        },
                         { data: 'detailStatus', title: 'Detail Status' },
-                        { data: 'tat', title: 'TAT' },
                         {
-                            data: 'aF1Resume', title: 'Resume'   ,render: function (data, type, row) {
+                            data: 'tat', title: 'TAT', render: function (data, type, row) {
+                                var backColor = colorTAT(data);
+                                return "<span class='badge'style='background-color:" + backColor + "'>" + data + "</span>";
+                            }
+                        },
+                        {
+                            data: 'aF1Resume', title: 'Resume', render: function (data, type, row) {
                                 if (row.detailStatusId != 3) {
                                     return '<a  href="#"  onclick="redirectAction(this)" data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '" data-contactid="' + row.contactId + '" data-transactionid="' + row.salesTransactionId + '" data-afurl="' + row.aF1URL + '" data-cqurl="' + row.cqurl + '" data-typeid="' + row.detailStatusId + '" title="Edit Current Sales Transaction">' + data + '</a>';
                                 } else {
                                     return data;
                                 }
                             }
-},
+                        },
                         { data: 'createdBy', title: 'Created By' },
                         {
                             data: null,
@@ -164,13 +169,13 @@ function search() {
 var columnConfig = [
     { data: 'contact', title: 'Contact', width: '60px' },
     { data: 'ticketDetailsId', title: 'Ticket ID', width: '10px' },
-    { data: 'openDate', title: 'OpenDate',width: '30px' },
+    { data: 'openDate', title: 'OpenDate', width: '30px' },
     { data: 'businessLine', title: 'Business Line' },
     { data: 'detailStatus', title: 'Detail Status' },
     { data: 'tat', title: 'TAT' },
     { data: 'af1Resume', title: 'Resume' },
     { data: 'createdBy', title: 'Created By' },
-  
+
 ];
 
 var columnDefs = columnConfig.map(function (column, index) {
@@ -324,4 +329,44 @@ function copyTransaction(e) {
 
             }
         });
+}
+function colorTAT(status) {
+    var color = "";
+    switch (status) {
+        case "On Time":
+            color = "#67ed9d";
+            break;
+        case "Delayed (Acceptable)":
+            color = "#e56e6e";
+            break;
+        case "Delayed (Critical)":
+            color = "red";
+            break;
+        case "Delayed (Non-Excusable)":
+            color = "#695858";
+            break;
+        case "Gathering":
+            color = "gray";
+            break;
+        case "Quotation":
+            color = "blue";
+            break;
+        case "Signature":
+            color = "yellow";
+            break;
+        case "Consolidation":
+            color = "greenyellow";
+            break;
+        case "Policies":
+            color = "green";
+            break;
+        case "Invoice":
+            color = "green";
+            break;
+        default:
+            color = "";
+            break;
+
+    }
+    return color;
 }

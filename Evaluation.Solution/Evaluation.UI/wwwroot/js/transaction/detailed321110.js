@@ -299,7 +299,7 @@ $("#btnDashboard").click(function () {
 });
 
 var tInssurredPartySelectedData;
-var table,tStep2Table, tStep3Table, tStep4Table, tStep5Table;
+var table, tStep2Table, tStep3Table, tStep4Table, tStep5Table;
 $(document).ready(function () {
     var tInssurredParty = $('#tInssurredParty').DataTable({
         data: details,//.map(({ recId, insurer_Code, thirdPartyAdmin_Code }) => ({ recId, insurer_Code, thirdPartyAdmin_Code }))
@@ -424,7 +424,7 @@ $(document).ready(function () {
             dateValue = dateValue.split('T')[0];
         }
         $("#AgeCalculationStartDate").val(dateValue);
-        if ($("#AgeCalculationFullDate").val()=="true") {
+        if ($("#AgeCalculationFullDate").val() == "true") {
             $('#AgeCalculationFullDate').prop('checked', true);
             $('#AgeCalculationYear').prop('checked', false);
             $("#AgeCalculationYear").val("false");
@@ -1280,84 +1280,14 @@ $('#fileInputStep5').change(function () {
 });
 $("#btnSubmitStep5").click(function () {
     var formData = new FormData();
-    if ($("#AgeCalculationFullDate").val() == "true" && $("#AgeCalculationStartDate").valid()) {
-
-
-        var obj = {};
-        obj.RecId = tInssurredPartySelectedData.recId;
-        obj.CommisinOnGPPer = $("#CommisinOnGPPer").val();
-        obj.AdminFeesAmount = $("#AdminFeesAmount").val();
-        obj.CostOfPolicyPer = $("#CostOfPolicyPer").val();
-        obj.CostOfPolicyAmount = $("#CostOfPolicyAmount").val();
-        obj.FixedTaxesAmount = $("#FixedTaxesAmount").val();
-        obj.FixedTaxesPer = $("#FixedTaxesPer").val();
-        obj.VATPer = $("#VATPer").val();
-        obj.AgeCalculationFullDate = $("#AgeCalculationFullDate").val();
-        obj.AgeCalculationStartDate = $("#AgeCalculationStartDate").val();
-        obj.AgeCalculationYear = $("#AgeCalculationYear").val();
-        obj.salesTransactionDetailsPrices = tStep5Table.rows().data().toArray().map(obj => ({ ...obj, SalesTrxDetailsId: tInssurredPartySelectedData.recId }));
-        formData.append('slip', JSON.stringify(obj));
-        $.ajax({
-            type: 'POST',
-            url: '/Slip/SalesTransactionBL321110DetailsPricesNewRec',
-            data: formData,
-            processData: false,
-            contentType: false,
-
-            beforeSend: function (xhr) {
-                showLoading();
-                // xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('jwt'));
-                //  xhr.setRequestHeader('X-CSRF-TOKEN', $('input[name="__RequestVerificationToken"]').val());
-            },
-            success: function (data, status, xhr) {
-                hideLoading();
-                if (data != null && data.webResponseCommon != null && data.webResponseCommon.returnCode == '200') {
-                    toastr.success("", "Saved");
-                    // Filter out the objects with the specified ID
-                    var filtereddetailsPrices = detailsPrices.filter(function (x) {
-                        return x.salesTrxDetailsId !== tInssurredPartySelectedData.recId;
-                    });
-                    detailsPrices = filtereddetailsPrices;
-                    detailsPrices = detailsPrices.concat(tStep5Table.rows().data().toArray());
-                    details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].slip4BL321110 = tStep4Table.rows().data().toArray();
-                    details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].recId = tInssurredPartySelectedData.recId;
-                    details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].commisinOnGPPer = $("#CommisinOnGPPer").val();
-                    details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].adminFeesAmount = $("#AdminFeesAmount").val();
-                    details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].costOfPolicyPer = $("#CostOfPolicyPer").val();
-                    details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].costOfPolicyAmount = $("#CostOfPolicyAmount").val();
-                    details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].fixedTaxesAmount = $("#FixedTaxesAmount").val();
-                    details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].fixedTaxesPer = $("#FixedTaxesPer").val();
-                    details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].vatPer = $("#VATPer").val();
-                    details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].ageCalculationFullDate = $("#AgeCalculationFullDate").val();
-                    details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].ageCalculationStartDate = $("#AgeCalculationStartDate").val();
-                    details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].ageCalculationYear = $("#AgeCalculationYear").val();
-                    //detailsPrices.forEach((price, index) => {
-                    //    const matchingIndex = tStep5Table.rows().data().toArray().findIndex(item => item.salesTrxDetailsId === price.salesTrxDetailsId);
-                    //    if (matchingIndex !== -1) {
-                    //        // Replace the item in detailsPrices with the corresponding item from anotherList
-                    //        detailsPrices[index] = tStep5Table.rows().data().toArray()[matchingIndex];
-                    //    }
-                    //});
-
-                    //var filteredAnotherList = tStep5Table.rows().data().toArray();
-                    //var removedItems = detailsPrices.filter(x => x.salesTrxDetailsId == tInssurredPartySelectedData.recId);
-
-                    //detailsPrices.filter(x => x.salesTrxDetailsId == tInssurredPartySelectedData.recId).map((price, index) => {
-                    //        return filteredAnotherList[index];
-                    //});
-
-                } else {
-                    toastr.warning(data.webResponseCommon.returnMessage, "UnSaved");
-                }
-            },
-            error: function (xhr, status, error) {
-                toastr.error(error, "Error");
-                hideLoading();
-            }
-        });
-    } else {
-        toastr.warning("Fill Full Date", "Full Date");
-    }
+    if ($("#AgeCalculationYear").val() == "true") {
+        step5Submit(formData);
+    } else
+        if ($("#AgeCalculationFullDate").val() == "true" && $("#AgeCalculationStartDate").valid()) {
+            step5Submit(formData);
+        } else {
+            toastr.warning("Fill Full Date", "Full Date");
+        }
 });
 $("#btnStep5ExportData").click(function () {
     var formData = new FormData();
@@ -1483,3 +1413,75 @@ $('input[type=radio]').on('click', function () {
         $("#AgeCalculationStartDate").attr("required", true);
     }
 });
+
+function step5Submit(formData) {
+    var obj = {};
+    obj.RecId = tInssurredPartySelectedData.recId;
+    obj.CommisinOnGPPer = $("#CommisinOnGPPer").val();
+    obj.AdminFeesAmount = $("#AdminFeesAmount").val();
+    obj.CostOfPolicyPer = $("#CostOfPolicyPer").val();
+    obj.CostOfPolicyAmount = $("#CostOfPolicyAmount").val();
+    obj.FixedTaxesAmount = $("#FixedTaxesAmount").val();
+    obj.FixedTaxesPer = $("#FixedTaxesPer").val();
+    obj.VATPer = $("#VATPer").val();
+    obj.AgeCalculationFullDate = $("#AgeCalculationFullDate").val();
+    obj.AgeCalculationStartDate = $("#AgeCalculationStartDate").val();
+    obj.AgeCalculationYear = $("#AgeCalculationYear").val();
+    obj.salesTransactionDetailsPrices = tStep5Table.rows().data().toArray().map(obj => ({ ...obj, SalesTrxDetailsId: tInssurredPartySelectedData.recId }));
+    formData.append('slip', JSON.stringify(obj));
+    $.ajax({
+        type: 'POST',
+        url: '/Slip/SalesTransactionBL321110DetailsPricesNewRec',
+        data: formData,
+        processData: false,
+        contentType: false,
+
+        beforeSend: function (xhr) {
+            showLoading();
+            // xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('jwt'));
+            //  xhr.setRequestHeader('X-CSRF-TOKEN', $('input[name="__RequestVerificationToken"]').val());
+        },
+        success: function (data, status, xhr) {
+            hideLoading();
+            if (data != null && data.webResponseCommon != null && data.webResponseCommon.returnCode == '200') {
+                toastr.success("", "Saved");
+                // Filter out the objects with the specified ID
+                var filtereddetailsPrices = detailsPrices.filter(function (x) {
+                    return x.salesTrxDetailsId !== tInssurredPartySelectedData.recId;
+                });
+                detailsPrices = filtereddetailsPrices;
+                detailsPrices = detailsPrices.concat(tStep5Table.rows().data().toArray());
+                details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].slip4BL321110 = tStep4Table.rows().data().toArray();
+                details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].recId = tInssurredPartySelectedData.recId;
+                details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].commisinOnGPPer = $("#CommisinOnGPPer").val();
+                details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].adminFeesAmount = $("#AdminFeesAmount").val();
+                details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].costOfPolicyPer = $("#CostOfPolicyPer").val();
+                details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].costOfPolicyAmount = $("#CostOfPolicyAmount").val();
+                details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].fixedTaxesAmount = $("#FixedTaxesAmount").val();
+                details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].fixedTaxesPer = $("#FixedTaxesPer").val();
+                details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].vatPer = $("#VATPer").val();
+                details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].ageCalculationFullDate = $("#AgeCalculationFullDate").val();
+                details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].ageCalculationStartDate = $("#AgeCalculationStartDate").val();
+                details.filter(x => x.recId == tInssurredPartySelectedData.recId)[0].ageCalculationYear = $("#AgeCalculationYear").val();
+                //detailsPrices.forEach((price, index) => {
+                //    const matchingIndex = tStep5Table.rows().data().toArray().findIndex(item => item.salesTrxDetailsId === price.salesTrxDetailsId);
+                //    if (matchingIndex !== -1) {
+                //        // Replace the item in detailsPrices with the corresponding item from anotherList
+                //        detailsPrices[index] = tStep5Table.rows().data().toArray()[matchingIndex];
+                //    }
+                //});
+                //var filteredAnotherList = tStep5Table.rows().data().toArray();
+                //var removedItems = detailsPrices.filter(x => x.salesTrxDetailsId == tInssurredPartySelectedData.recId);
+                //detailsPrices.filter(x => x.salesTrxDetailsId == tInssurredPartySelectedData.recId).map((price, index) => {
+                //        return filteredAnotherList[index];
+                //});
+            } else {
+                toastr.warning(data.webResponseCommon.returnMessage, "UnSaved");
+            }
+        },
+        error: function (xhr, status, error) {
+            toastr.error(error, "Error");
+            hideLoading();
+        }
+    });
+}
