@@ -1,59 +1,9 @@
-﻿var table = $('#tTicketHistory').DataTable({
-    data: [],
-    processing: true,
-    responsive: true,
-    autoWidth: false,
-    destroy: true,
-    language: {
-        processing: '<i class="fa fa-spinner fa-spin"></i> Loading...'
-    },
-    columns: [
-        { data: 'contact', title: 'Contact', width: '60px' },
-        { data: 'ticketDetailsId', title: 'Ticket ID', width: '10px' },
-        { data: 'openDate', title: 'OpenDate', width: '30px' },
-        { data: 'businessLine', title: 'Business Line' },
-        { data: 'detailStatus', title: 'Detail Status' },
-        { data: 'tat', title: 'TAT' },
-        { data: 'aF1Resume', title: 'Resume' },
-        { data: 'createdBy', title: 'Created By' },
-        {
-            data: null,
-            render: function (data, type, row) {
-                var isEditEnable = '', isDetailsEnable = '', isDuplicateEnable = '', isExcelPdfEnable = '', isExcelEnable = '', isOfficialEnable = '', isNextStepEnable = '';
-                if (row.detailStatusId == 1) {
-                    isEditEnable = '', isNextStepEnable = '', isDetailsEnable = 'disabled', isDuplicateEnable = 'disabled', isExcelPdfEnable = 'disabled', isExcelEnable = 'disabled', isOfficialEnable = 'disabled';
-                } else if (row.detailStatusId == 2) {
-                    isEditEnable = '', isNextStepEnable = '', isDetailsEnable = '', isDuplicateEnable = '', isExcelPdfEnable = '', isExcelEnable = '', isOfficialEnable = '';
-                } else if (row.detailStatusId == 3) {
-                    isEditEnable = 'disabled', isNextStepEnable = 'disabled', isDetailsEnable = '', isDuplicateEnable = '', isExcelPdfEnable = '', isExcelEnable = '', isOfficialEnable = '';
-
-                }
-                var html = '    <div class="btn-group" role="group">'
-                    + '       <button id="btnGroupVerticalDrop' + contextIdCount + '" type="button" class="btn btn-light-secondary text-secondary font-weight-medium dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
-                    + '          <i class="fas fa-ellipsis-v"></i> '
-                    + '       </button>'
-                    + '       <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop' + contextIdCount + '">'
-                    + '           <a class="dropdown-item ' + isEditEnable + '" href="#" class="btn btn-secondary" onclick="redirectAction(this)" data-id="' + row.recId + '" data-contactid="' + row.contactId + '" data-businesslinecode="' + row.businessLineCode + '" data-transactionid="' + row.salesTransactionId + '" data-afurl="' + row.aF1URL + '" data-cqurl="' + row.cqurl + '" data-typeid="' + row.detailStatusId + '" title="Edit Current Sales Transaction"><i class="fas fa-eye"></i> Edit AF1</a>'
-                    + '           <a class="dropdown-item ' + isNextStepEnable + '" href="#" type="button" class="btn btn-secondary" title="Move to next phase" href="#" onclick="transactionComplete(this)" data-contactid="' + row.contactId + '" data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '"  data-salestransactionid="' + row.salesTransactionId + '"  data-ticketid="' + row.recId + '"data-ticketcode="' + row.ticketCode + '" data-parentsalestransacrionid="' + row.parentSalesTransactionId + '"><i class="fas fa-check"></i> Next Step</a>'
-                    + '           <a class="dropdown-item ' + isDetailsEnable + '" href="#" type="button" class="btn btn-secondary" title="Display Details Quotation " href="#" onclick="redirectToCQ(this)" data-contactid="' + row.contactId + '" data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '" data-cqurl="' + row.cqurl + '"  data-afurl="' + row.aF1URL + '" data-transactionid="' + row.salesTransactionId + '" data-typeid="' + row.detailStatusId + '"><i class="fas fa-eye"></i> Details</a>'
-                    + '           <a class="dropdown-item ' + isDuplicateEnable + '" href="#"  type="button" class="btn btn-secondary"  title="New Version Sales Transaction" href="#" onclick="copyTransaction(this)" data-contactid="' + row.contactId + '" data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '"  data-salestransactionid="' + row.salesTransactionId + '"  data-ticketid="' + row.recId + '"data-ticketcode="' + row.ticketCode + '" data-parentsalestransacrionid="' + row.parentSalesTransactionId + '" ><i class="fas fa-copy"></i> New Version</a>'
-
-                    + '           <a class="dropdown-item ' + isExcelEnable + '"  type="button" class="btn btn-secondary" title="Print Comparative quotation" href="#" data-contactid="' + row.contactId + '" data-cqurl="' + row.cqurl + '" data-afurl="' + row.aF1URL + '"  data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '"  data-transactionid="' + row.salesTransactionId + '" onclick="downloadExcel(this)"><i class="fas fa-file-excel"></i> Print CQ Excel</a>'
-                    + '           <a class="dropdown-item ' + isExcelPdfEnable + '"  type="button" class="btn btn-secondary" title="Print Comparative quotation" href="#" data-contactid="' + row.contactId + '" data-cqurl="' + row.cqurl + '" data-afurl="' + row.aF1URL + '"  data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '"  data-transactionid="' + row.salesTransactionId + '" onclick="downloadPdf(this)"><i class="fas fa-file-pdf"></i> Print CQ Pdf</a>'
-
-                    + '       </div>'
-                    + '   </div>';
-                return html;
-            }
-        }
-    ],
-    columnDefs: columnDefs,
-});
+﻿var table = $('#tTicketHistory').DataTable(dataTableLoad([]));
 $(document).ready(function () {
     $("#formSearch").on("blur", "input", function (event) {
         search();
     });
-
+    search();
     //var table = $('#tTicketHistory').DataTable({
     //    searching: false,
     //    destroy: true,
@@ -85,80 +35,7 @@ function search() {
                 $('#tTicketHistory').DataTable().destroy();
                 //$('#tTicketHistory').DataTable();
                 // initialize DataTables with the data
-                var table = $('#tTicketHistory').DataTable({
-                    data: data,
-                    processing: true,
-                    responsive: true,
-                    autoWidth: false,
-                    destroy: true,
-                    language: {
-                        processing: '<i class="fa fa-spinner fa-spin"></i> Loading...'
-                    },
-                    columns: [
-                        { data: 'contact', title: 'Contact', width: '60px' },
-                        { data: 'ticketDetailsId', title: 'Ticket ID', width: '10px' },
-                        { data: 'openDate', title: 'OpenDate', width: '30px' },
-                        {
-                            data: 'businessLine', title: 'Business Line', render: function (data, type, row) {
-                                if (row.detailStatusId == 1) {
-                                    return data;
-                                } else {
-                                    return '<a  href="#"  title="Display Details Quotation " href="#" onclick="redirectToCQ(this)" data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '" data-contactid="' + row.contactId + '" data-cqurl="' + row.cqurl + '"  data-afurl="' + row.aF1URL + '" data-transactionid="' + row.salesTransactionId + '" data-typeid="' + row.detailStatusId + '">' + data + '</a>';
-                                }
-
-                            }
-                        },
-                        { data: 'detailStatus', title: 'Detail Status' },
-                        {
-                            data: 'tat', title: 'TAT', render: function (data, type, row) {
-                                var backColor = colorTAT(data);
-                                return "<span class='badge'style='background-color:" + backColor + "'>" + data + "</span>";
-                            }
-                        },
-                        {
-                            data: 'aF1Resume', title: 'Resume', render: function (data, type, row) {
-                                if (row.detailStatusId != 3) {
-                                    return '<a  href="#"  onclick="redirectAction(this)" data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '" data-contactid="' + row.contactId + '" data-transactionid="' + row.salesTransactionId + '" data-afurl="' + row.aF1URL + '" data-cqurl="' + row.cqurl + '" data-typeid="' + row.detailStatusId + '" title="Edit Current Sales Transaction">' + data + '</a>';
-                                } else {
-                                    return data;
-                                }
-                            }
-                        },
-                        { data: 'createdBy', title: 'Created By' },
-                        {
-                            data: null,
-                            render: function (data, type, row) {
-                                var isEditEnable = '', isDetailsEnable = '', isDuplicateEnable = '', isExcelPdfEnable = '', isExcelEnable = '', isOfficialEnable = '', isNextStepEnable = '';
-                                if (row.detailStatusId == 1) {
-                                    isEditEnable = '', isNextStepEnable = '', isDetailsEnable = 'disabled', isDuplicateEnable = 'disabled', isExcelPdfEnable = 'disabled', isExcelEnable = 'disabled', isOfficialEnable = 'disabled';
-                                } else if (row.detailStatusId == 2) {
-                                    isEditEnable = '', isNextStepEnable = '', isDetailsEnable = '', isDuplicateEnable = '', isExcelPdfEnable = '', isExcelEnable = '', isOfficialEnable = '';
-                                } else if (row.detailStatusId == 3) {
-                                    isEditEnable = 'disabled', isNextStepEnable = 'disabled', isDetailsEnable = '', isDuplicateEnable = '', isExcelPdfEnable = '', isExcelEnable = '', isOfficialEnable = '';
-
-                                }
-                                var html = '    <div class="btn-group" role="group">'
-                                    + '       <button id="btnGroupVerticalDrop' + contextIdCount + '" type="button" class="btn btn-light-secondary text-secondary font-weight-medium dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
-                                    + '          <i class="fas fa-ellipsis-v"></i> '
-                                    + '       </button>'
-                                    + '       <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop' + contextIdCount + '">'
-                                    + '           <a class="dropdown-item ' + isEditEnable + '" href="#" class="btn btn-secondary" onclick="redirectAction(this)" data-id="' + row.recId + '" data-contactid="' + row.contactId + '" data-businesslinecode="' + row.businessLineCode + '" data-transactionid="' + row.salesTransactionId + '" data-afurl="' + row.aF1URL + '" data-cqurl="' + row.cqurl + '" data-typeid="' + row.detailStatusId + '" title="Edit Current Sales Transaction"><i class="fas fa-eye"></i> Edit AF1</a>'
-                                    + '           <a class="dropdown-item ' + isNextStepEnable + '" href="#" type="button" class="btn btn-secondary" title="Move to next phase" href="#" onclick="transactionComplete(this)" data-contactid="' + row.contactId + '" data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '"  data-salestransactionid="' + row.salesTransactionId + '"  data-ticketid="' + row.recId + '"data-ticketcode="' + row.ticketCode + '" data-parentsalestransacrionid="' + row.parentSalesTransactionId + '"><i class="fas fa-check"></i> Next Step</a>'
-                                    + '           <a class="dropdown-item ' + isDetailsEnable + '" href="#" type="button" class="btn btn-secondary" title="Display Details Quotation " href="#" onclick="redirectToCQ(this)" data-contactid="' + row.contactId + '" data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '" data-cqurl="' + row.cqurl + '"  data-afurl="' + row.aF1URL + '" data-transactionid="' + row.salesTransactionId + '" data-typeid="' + row.detailStatusId + '"><i class="fas fa-eye"></i> Details</a>'
-                                    + '           <a class="dropdown-item ' + isDuplicateEnable + '" href="#"  type="button" class="btn btn-secondary"  title="New Version Sales Transaction" href="#" onclick="copyTransaction(this)" data-contactid="' + row.contactId + '" data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '"  data-salestransactionid="' + row.salesTransactionId + '"  data-ticketid="' + row.recId + '"data-ticketcode="' + row.ticketCode + '" data-parentsalestransacrionid="' + row.parentSalesTransactionId + '" ><i class="fas fa-copy"></i> New Version</a>'
-
-                                    + '           <a class="dropdown-item ' + isExcelEnable + '"  type="button" class="btn btn-secondary" title="Print Comparative quotation" href="#" data-contactid="' + row.contactId + '" data-cqurl="' + row.cqurl + '" data-afurl="' + row.aF1URL + '"  data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '"  data-transactionid="' + row.salesTransactionId + '" onclick="downloadExcel(this)"><i class="fas fa-file-excel"></i> Print CQ Excel</a>'
-                                    + '           <a class="dropdown-item ' + isExcelPdfEnable + '"  type="button" class="btn btn-secondary" title="Print Comparative quotation" href="#" data-contactid="' + row.contactId + '" data-cqurl="' + row.cqurl + '" data-afurl="' + row.aF1URL + '"  data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '"  data-transactionid="' + row.salesTransactionId + '" onclick="downloadPdf(this)"><i class="fas fa-file-pdf"></i> Print CQ Pdf</a>'
-
-                                    + '       </div>'
-                                    + '   </div>';
-                                contextIdCount++;
-                                return html;
-                            }
-                        }
-                    ],
-                    columnDefs: columnDefs,
-                });
+                var table = $('#tTicketHistory').DataTable(dataTableLoad(data));
             }
         },
         error: function (xhr, status, error) {
@@ -167,13 +44,13 @@ function search() {
     });
 }
 var columnConfig = [
-    { data: 'contact', title: 'Contact', width: '60px' },
+    { data: 'contact', title: 'Contact', width: '80px' },
     { data: 'ticketDetailsId', title: 'Ticket ID', width: '10px' },
-    { data: 'openDate', title: 'OpenDate', width: '30px' },
+    { data: 'openDate', title: 'OpenDate', width: '20px' },
     { data: 'businessLine', title: 'Business Line' },
     { data: 'detailStatus', title: 'Detail Status' },
     { data: 'tat', title: 'TAT' },
-    { data: 'af1Resume', title: 'Resume' },
+    { data: 'af1Resume', title: 'Resume', width: '100px' },
     { data: 'createdBy', title: 'Created By' },
 
 ];
@@ -191,6 +68,109 @@ var columnDefs = columnConfig.map(function (column, index) {
     };
 });
 
+
+function dataTableLoad(data) {
+    return {
+        data: data,
+        processing: true,
+       // responsive: true,
+        autoWidth: false,
+        destroy: true,
+        language: {
+            processing: '<i class="fa fa-spinner fa-spin"></i> Loading...'
+        },
+        columns: [
+            { data: 'contact', title: 'Contact', width: '110px' },
+            { data: 'ticketDetailsId', title: 'Ticket ID', width: '5px' },
+            {
+                data: 'openDate', title: 'OpenDate', render: function(data, type, row) {
+
+                    if (data != null) {
+                        return data.split('T')[0];
+                    } else {
+                        return "";
+                    }
+                }
+            },
+            {
+                data: 'businessLine', title: 'Business Line', render: function(data, type, row) {
+                    if (row.detailStatusId == 1) {
+                        return data;
+                    } else {
+                        return '<a  href="#"  title="Display Details Quotation " href="#" onclick="redirectToCQ(this)" data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '" data-contactid="' + row.contactId + '" data-cqurl="' + row.cqurl + '"  data-afurl="' + row.aF1URL + '" data-transactionid="' + row.salesTransactionId + '" data-typeid="' + row.detailStatusId + '">' + data + '</a>';
+                    }
+
+                }
+            },
+            {
+                data: 'detailStatus', title: 'Detail Status', render: function(data, type, row) {
+                    var backColor = colorTAT(data);
+                    return "<span class='badge'style='background-color:" + backColor + "'>" + data + "</span>";
+                }
+            },
+            {
+                data: 'tat', title: 'TAT', render: function(data, type, row) {
+                    var backColor = colorTAT(data);
+                    return "<span class='badge'style='background-color:" + backColor + "'>" + data + "</span>";
+                }
+            },
+            {
+                data: 'aF1Resume', title: 'Resume AF1', width: '400px', render: function(data, type, row) {
+                    if (row.detailStatusId != 3) {
+                        return '<a  href="#"  onclick="redirectAction(this)" data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '" data-contactid="' + row.contactId + '" data-transactionid="' + row.salesTransactionId + '" data-afurl="' + row.aF1URL + '" data-cqurl="' + row.cqurl + '" data-typeid="' + row.detailStatusId + '" title="Edit Current Sales Transaction">' + data + '</a>';
+                    } else {
+                        return data;
+                    }
+                }
+            },
+            { data: 'createdBy', title: 'Created By' },
+            {
+                data: null,
+                render: function(data, type, row) {
+                    var isEditEnable = '', isDetailsEnable = '', isDuplicateEnable = '', isExcelPdfEnable = '', isExcelEnable = '', isOfficialEnable = '', isNextStepEnable = '';
+                    if (row.detailStatusId == 1) {
+                        isEditEnable = '', isNextStepEnable = '', isDetailsEnable = 'disabled', isDuplicateEnable = 'disabled', isExcelPdfEnable = 'disabled', isExcelEnable = 'disabled', isOfficialEnable = 'disabled';
+                    } else if (row.detailStatusId == 2) {
+                        isEditEnable = '', isNextStepEnable = '', isDetailsEnable = '', isDuplicateEnable = '', isExcelPdfEnable = '', isExcelEnable = '', isOfficialEnable = '';
+                    } else if (row.detailStatusId == 3) {
+                        isEditEnable = 'disabled', isNextStepEnable = 'disabled', isDetailsEnable = '', isDuplicateEnable = '', isExcelPdfEnable = '', isExcelEnable = '', isOfficialEnable = '';
+
+                    }
+                    var html = '    <div class="btn-group" role="group">'
+                        + '       <button id="btnGroupVerticalDrop' + contextIdCount + '" type="button" class="btn btn-light-secondary text-secondary font-weight-medium dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
+                        + '          <i class="fas fa-ellipsis-v"></i> '
+                        + '       </button>'
+                        + '       <div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop' + contextIdCount + '">'
+                        + '           <a class="dropdown-item ' + isEditEnable + '" href="#" class="btn btn-secondary" onclick="redirectAction(this)" data-id="' + row.recId + '" data-contactid="' + row.contactId + '" data-businesslinecode="' + row.businessLineCode + '" data-transactionid="' + row.salesTransactionId + '" data-afurl="' + row.aF1URL + '" data-cqurl="' + row.cqurl + '" data-typeid="' + row.detailStatusId + '" title="Edit Current Sales Transaction"><i class="fas fa-eye"></i> Edit AF1</a>'
+                        + '           <a class="dropdown-item ' + isNextStepEnable + '" href="#" type="button" class="btn btn-secondary" title="Move to next phase" href="#" onclick="transactionComplete(this)" data-contactid="' + row.contactId + '" data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '"  data-salestransactionid="' + row.salesTransactionId + '"  data-ticketid="' + row.recId + '"data-ticketcode="' + row.ticketCode + '" data-parentsalestransacrionid="' + row.parentSalesTransactionId + '"><i class="fas fa-check"></i> Next Step</a>'
+                        + '           <a class="dropdown-item ' + isDetailsEnable + '" href="#" type="button" class="btn btn-secondary" title="Display Details Quotation " href="#" onclick="redirectToCQ(this)" data-contactid="' + row.contactId + '" data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '" data-cqurl="' + row.cqurl + '"  data-afurl="' + row.aF1URL + '" data-transactionid="' + row.salesTransactionId + '" data-typeid="' + row.detailStatusId + '"><i class="fas fa-eye"></i> Details</a>'
+                        + '           <a class="dropdown-item ' + isDuplicateEnable + '" href="#"  type="button" class="btn btn-secondary"  title="New Version Sales Transaction" href="#" onclick="copyTransaction(this)" data-contactid="' + row.contactId + '" data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '"  data-salestransactionid="' + row.salesTransactionId + '"  data-ticketid="' + row.recId + '"data-ticketcode="' + row.ticketCode + '" data-parentsalestransacrionid="' + row.parentSalesTransactionId + '" ><i class="fas fa-copy"></i> New Version</a>'
+
+                        + '           <a class="dropdown-item ' + isExcelEnable + '"  type="button" class="btn btn-secondary" title="Print Comparative quotation" href="#" data-contactid="' + row.contactId + '" data-cqurl="' + row.cqurl + '" data-afurl="' + row.aF1URL + '"  data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '"  data-transactionid="' + row.salesTransactionId + '" onclick="downloadExcel(this)"><i class="fas fa-file-excel"></i> Print CQ Excel</a>'
+                        + '           <a class="dropdown-item ' + isExcelPdfEnable + '"  type="button" class="btn btn-secondary" title="Print Comparative quotation" href="#" data-contactid="' + row.contactId + '" data-cqurl="' + row.cqurl + '" data-afurl="' + row.aF1URL + '"  data-id="' + row.recId + '" data-businesslinecode="' + row.businessLineCode + '"  data-transactionid="' + row.salesTransactionId + '" onclick="downloadPdf(this)"><i class="fas fa-file-pdf"></i> Print CQ Pdf</a>'
+
+                        + '       </div>'
+                        + '   </div>';
+                    contextIdCount++;
+                    return html;
+                }
+            }
+        ],
+        initComplete: function() {
+            this.api().columns(0).every(function() {
+                filterAddForGrid(this);
+            }),
+       
+            this.api().columns(2).every(function() {
+                filterAddForGridForDate(this);
+            }),
+            this.api().columns(7).every(function() {
+                filterAddForGrid(this);
+            });
+        },
+        columnDefs: columnDefs,
+    };
+}
 
 function redirectAction(e) {
     var id = e.dataset.id;
@@ -352,7 +332,7 @@ function colorTAT(status) {
             color = "blue";
             break;
         case "Signature":
-            color = "yellow";
+            color = "orange";
             break;
         case "Consolidation":
             color = "greenyellow";
@@ -369,4 +349,40 @@ function colorTAT(status) {
 
     }
     return color;
+}
+function filterAddForGrid(sender) {
+    var column = sender;
+    var select = $('<select  class="select2 form-select"><option value="">---Select---</option></select>\n')
+        .appendTo($(column.header()))
+        .on('change', function () {
+            var val = $.fn.dataTable.util.escapeRegex(
+                $(this).val()
+            );
+
+            column
+                .search(val ? '^' + val + '$' : '', true, false)
+                .draw();
+        });
+
+    column.data().unique().sort().each(function (d, j) {
+        select.append('<option value="' + d + '">' + d + '</option>');
+    });
+}
+function filterAddForGridForDate(sender) {
+    var column = sender;
+    var select = $('<select  class="select2 form-select"><option value="">---Select---</option></select>\n')
+        .appendTo($(column.header()))
+        .on('change', function () {
+            var val = $.fn.dataTable.util.escapeRegex(
+                $(this).val().split('T')[0]
+            );
+
+            column
+                .search(val.split('T')[0] ? '^' + val.split('T')[0] + '$' : '', true, false)
+                .draw();
+        });
+
+    column.data().unique().sort().each(function (d, j) {
+        select.append('<option value="' + d.split('T')[0] + '">' + d.split('T')[0] + '</option>');
+    });
 }
