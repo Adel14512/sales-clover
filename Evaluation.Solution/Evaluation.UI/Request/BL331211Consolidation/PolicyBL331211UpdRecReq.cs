@@ -32,6 +32,6 @@ namespace Evaluation.UI.Request.BL331211Consolidation
         public DateTime PolicyEffectiveDate { get; set; }
         public DateTime PolicyExpiryDate { get; set; }
         public DateTime PolicyIssuedDate { get; set; }
-        //public string PolicyHolder { get; set; }
+        public string PolicyHolder { get; set; }
     }
 }
