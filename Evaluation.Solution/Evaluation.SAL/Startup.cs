@@ -101,7 +101,7 @@ namespace Evaluation.SAL
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                //app.UseSwaggerUI();
                 //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Clover.SAL v1"));
 
                 app.UseSwaggerUI(c =>
