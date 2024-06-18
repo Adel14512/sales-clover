@@ -101,6 +101,7 @@ namespace Evaluation.SAL
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
+                app.UseSwaggerUI();
                 //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Clover.SAL v1"));
 
                 app.UseSwaggerUI(c =>
@@ -112,11 +113,11 @@ namespace Evaluation.SAL
                 });
             }
             //var builder = WebApplication.CreateBuilder(args);
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseAuthentication();
-
+            app.UseHttpsRedirection();
             app.UseAuthorization();
 
             //app.UseSwagger();
