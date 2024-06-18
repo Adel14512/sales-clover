@@ -1309,7 +1309,7 @@ var tPrice = $('#tPrice').DataTable({
         { data: 'gender', title: 'Gender' },
         { data: 'maritalStatus', title: 'Marital Status' },
         { data: 'costSharing', title: 'Cost Sharing' },
-        { data: 'ageMinRange', titlageMaxRangee: 'Age Min' },
+        { data: 'ageMinRange', title: 'Age Min' },
         { data: 'ageMaxRange', title: 'Age Max' },
         { data: 'rate', title: 'Rate' },
         { data: 'premium', title: 'Premium ' },

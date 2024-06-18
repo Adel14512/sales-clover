@@ -93,30 +93,30 @@ $('#fileInput').change(function () {
 
 $("#btnSendEmailExcel").click(function () {
 
-    const dataList = []; // Create an empty list to store the objects
-    var tableRows = document.querySelectorAll('#table-body tr');
-    $('#tableAf132').DataTable().rows().data().toArray().forEach((row) => {
-        const data = {}; // Create an empty object for each row
+    //const dataList = []; // Create an empty list to store the objects
+    //var tableRows = document.querySelectorAll('#table-body tr');
+    //$('#tableAf132').DataTable().rows().data().toArray().forEach((row) => {
+    //    const data = {}; // Create an empty object for each row
 
-        data.serial = row.querySelector('[data-serial]').textContent;
-        data.company = row.querySelector('[data-company]').textContent;
-        data.staffNbr = row.querySelector('[data-staffnbr]').textContent;
-        data.firstName = row.querySelector('[data-firstname]').textContent;
-        data.middleName = row.querySelector('[data-middlename]').textContent;
-        data.lastName = row.querySelector('[data-lastname]').textContent;
-        data.mobileNumber = row.querySelector('[data-mobileNumber]').textContent;
-        data.email = row.querySelector('[data-email]').textContent;
-        data.genderCode = row.querySelector('[data-gendercode]').textContent;
-        data.dob = row.querySelector('[data-dob]').textContent;
-        data.nationalityCode = row.querySelector('[data-nationalitycode]').textContent;
-        data.maritalStatusCode = row.querySelector('[data-maritalstatuscode]').textContent;
-        data.grade = row.querySelector('[data-grade]').textContent;
-        data.currency = row.querySelector('[data-currency]').textContent;
-        data.limitOfCoverage = row.querySelector('[data-limitOfCoverage]').textContent;
-        data.shop = row.querySelector('[data-shop]').textContent;
+    //    data.serial = row.querySelector('[data-serial]').textContent;
+    //    data.company = row.querySelector('[data-company]').textContent;
+    //    data.staffNbr = row.querySelector('[data-staffnbr]').textContent;
+    //    data.firstName = row.querySelector('[data-firstname]').textContent;
+    //    data.middleName = row.querySelector('[data-middlename]').textContent;
+    //    data.lastName = row.querySelector('[data-lastname]').textContent;
+    //    data.mobileNumber = row.querySelector('[data-mobileNumber]').textContent;
+    //    data.email = row.querySelector('[data-email]').textContent;
+    //    data.genderCode = row.querySelector('[data-gendercode]').textContent;
+    //    data.dob = row.querySelector('[data-dob]').textContent;
+    //    data.nationalityCode = row.querySelector('[data-nationalitycode]').textContent;
+    //    data.maritalStatusCode = row.querySelector('[data-maritalstatuscode]').textContent;
+    //    data.grade = row.querySelector('[data-grade]').textContent;
+    //    data.currency = row.querySelector('[data-currency]').textContent;
+    //    data.limitOfCoverage = row.querySelector('[data-limitOfCoverage]').textContent;
+    //    data.shop = row.querySelector('[data-shop]').textContent;
 
-        dataList.push(data); // Add the object to the list
-    });
+    //    dataList.push(data); // Add the object to the list
+    //});
     var formData = new FormData();
     formData.append('data', JSON.stringify($('#tableAf132').DataTable().rows().data().toArray()));
     formData.append('businesscode', BusinessLineCode);
