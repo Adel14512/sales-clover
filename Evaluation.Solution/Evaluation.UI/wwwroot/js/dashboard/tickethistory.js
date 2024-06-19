@@ -45,7 +45,7 @@ function search() {
 }
 var columnConfig = [
     { data: 'contact', title: 'Contact', width: '80px' },
-    { data: 'ticketDetailsId', title: 'Ticket ID', width: '10px' },
+    { data: 'recId', title: 'Ticket ID', width: '10px' },
     { data: 'openDate', title: 'OpenDate', width: '20px' },
     { data: 'businessLine', title: 'Business Line' },
     { data: 'detailStatus', title: 'Detail Status' },
@@ -81,7 +81,7 @@ function dataTableLoad(data) {
         },
         columns: [
             { data: 'contact', title: 'Contact', width: '110px' },
-            { data: 'ticketDetailsId', title: 'Ticket ID', width: '5px' },
+            { data: 'recId', title: 'Ticket ID', width: '5px' },
             {
                 data: 'openDate', title: 'OpenDate', render: function(data, type, row) {
 
