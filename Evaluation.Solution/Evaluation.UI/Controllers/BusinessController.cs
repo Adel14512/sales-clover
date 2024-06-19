@@ -195,7 +195,19 @@ namespace Evaluation.UI.Controllers
             // Code to process the form data
             return Ok(result);
         }
-        [Authorize(AuthenticationSchemes = GlobalWords.CustomAuth)]
+		[Authorize(AuthenticationSchemes = GlobalWords.CustomAuth)]
+		public async Task<IActionResult> EditAF1_7Consolidation(IFormCollection keyValues, CancellationToken ct)
+		{
+
+			SalesTransactionBL070806UpdGlobalRecReq requestBody = JsonConvert.DeserializeObject<SalesTransactionBL070806UpdGlobalRecReq>(keyValues["data"]);
+			var user = await _userApi.GetUserClaims(User.Claims);
+			requestBody.WebRequestCommon.CorrelationId = Guid.NewGuid().ToString();
+			requestBody.WebRequestCommon.UserName = user.EmailAdress;
+			var result = await _transactionApi.EditAf7Consolidation(requestBody, ct);
+			// Code to process the form data
+			return Ok(result);
+		}
+		[Authorize(AuthenticationSchemes = GlobalWords.CustomAuth)]
         public async Task<IActionResult> EditAF1_30Consolidation(IFormCollection keyValues, CancellationToken ct)
         {
 

@@ -619,7 +619,7 @@ $(document).ready(function () {
             obj.MasterId = $("#MasterId").val();
             formBody.append("data", JSON.stringify(obj));
             $.ajax({
-                url: "/Business/EditAF1_8Consolidation",
+                url: "/Business/EditAF1_7Consolidation",
                 type: "POST",
                 contentType: false,
                 processData: false,
@@ -675,7 +675,7 @@ $(document).ready(function () {
                 obj.MasterId = $("#MasterId").val();
                 formBody.append("data", JSON.stringify(obj));
                 $.ajax({
-                    url: "/Business/EditAF1_8",
+                    url: "/Business/EditAF1_7",
                     type: "POST",
                     contentType: false,
                     processData: false,
@@ -1052,7 +1052,7 @@ function removeFile(model) {
         formData.append('data', JSON.stringify(obj));
         $.ajax({
             type: 'POST',
-            url: '/Consolidation/UpdateConsolidationDocument080501',
+            url: '/Consolidation/UpdateConsolidationDocument070806',
             data: formData,
             processData: false,
             contentType: false,
