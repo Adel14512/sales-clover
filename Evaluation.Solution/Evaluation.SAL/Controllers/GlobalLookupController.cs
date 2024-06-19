@@ -74,7 +74,7 @@ namespace Evaluation.SAL.Controllers
                             IsDefault = item.IsDefault
                         });
                     }
-
+                    //clientList.Sort((x, y) => x.Description.CompareTo(y.Description));
                     list = lookupList.FindAll(e => e.TableName == "Mastersn").ToList();
                     var masterList = new List<MasterDto>();
                     foreach (var item in list)
@@ -87,6 +87,7 @@ namespace Evaluation.SAL.Controllers
                             IsDefault = item.IsDefault
                         });
                     }
+                    //masterList.Sort((x, y) => x.Description.CompareTo(y.Description));
 
                     resp.Client = clientList;
                     resp.Master = masterList;
