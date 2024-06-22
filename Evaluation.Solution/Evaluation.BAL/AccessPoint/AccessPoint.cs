@@ -2094,5 +2094,9 @@ namespace Evaluation.BAL.AccessPoint
         {
             return userCredDao.PolicyInquiryFindAll();
         }
+        public List<RenewalProcessDto> RenewalProcessFindAll()
+        {
+            return userCredDao.RenewalProcessFindAll();
+        }
     }
 }

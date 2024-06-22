@@ -168,5 +168,74 @@ namespace Evaluation.SAL.Controllers
                 return Ok(resp);
             }
         }
+
+        [HttpPost]
+        //[AuthorizeAttribute]
+        public IActionResult RenewalProcessFindAll(RenewalProcessReq renewalProcessReq)
+        {
+            RenewalProcessResp resp;
+            resp = new()
+            {
+                WebResponseCommon = new()
+                {
+                },
+                RenewalProcess = new List<RenewalProcessDto>()
+            };
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    resp.WebResponseCommon.SuccessIndicator = "Success";
+                    resp.WebResponseCommon.ReturnCode = StatusCodes.Status400BadRequest.ToString();
+                    resp.WebResponseCommon.ReturnMessage = "Bad Request;" + string.Join(" | ", ModelState.Values
+                        .SelectMany(v => v.Errors)
+                        .Select(e => e.ErrorMessage));
+                    resp.WebResponseCommon.CorrelationId = renewalProcessReq == null ? Guid.NewGuid().ToString() :
+                        renewalProcessReq.WebRequestCommon == null ? Guid.NewGuid().ToString() :
+                        renewalProcessReq.WebRequestCommon.CorrelationId == null ? Guid.NewGuid().ToString() :
+                        renewalProcessReq.WebRequestCommon.CorrelationId.Trim() != string.Empty ?
+                        renewalProcessReq.WebRequestCommon.CorrelationId : Guid.NewGuid().ToString();
+                    return Ok(resp);
+                }
+                _logger.SetCorrelationId(renewalProcessReq.WebRequestCommon.CorrelationId, renewalProcessReq.WebRequestCommon.UserName);
+                _logger.LogInfo("Calling the Endpoint RenewalProcessFindAll is started");
+                _logger.LogDebug(JsonConvert.SerializeObject(renewalProcessReq));
+
+                resp.RenewalProcess = InstManagerAccessPoint.GetNewAccessPoint().RenewalProcessFindAll();
+
+                if (resp != null && resp.RenewalProcess != null && resp.RenewalProcess.Count > 0)
+                {
+                    resp.WebResponseCommon.SuccessIndicator = "Success";
+                    resp.WebResponseCommon.ReturnMessage = resp.RenewalProcess[0].Reserved1 != null ? resp.RenewalProcess[0].Reserved1 : "Enquiry Succeeded";
+                    resp.WebResponseCommon.ReturnCode = resp.RenewalProcess[0].Reserved1 != null ? StatusCodes.Status204NoContent.ToString() : StatusCodes.Status200OK.ToString();
+                    resp.WebResponseCommon.CorrelationId = renewalProcessReq.WebRequestCommon.CorrelationId;
+                    if (resp.RenewalProcess[0].Reserved1 != null)
+                        resp.RenewalProcess = new List<RenewalProcessDto>();
+                }
+                //else
+                //{
+                //    //resp.
+                //}
+                _logger.LogDebug(JsonConvert.SerializeObject(resp));
+
+                _logger.LogInfo("Calling the Endpoint RenewalProcessFindAll is completed");
+
+                return Ok(resp);
+                // UserCredDao t = new UserCredDao();
+                //return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error", ex);
+                resp.WebResponseCommon.SuccessIndicator = "Error";
+                resp.WebResponseCommon.ReturnCode = StatusCodes.Status500InternalServerError.ToString();
+                resp.WebResponseCommon.ReturnMessage = "Internal Server Error";
+                resp.WebResponseCommon.CorrelationId = renewalProcessReq.WebRequestCommon.CorrelationId;
+                resp.RenewalProcess = new List<RenewalProcessDto>();
+                //CorrelationId = channelFindAllReq.WebRequestCommon.CorrelationId
+                _logger.LogDebug(JsonConvert.SerializeObject(resp));
+                return Ok(resp);
+            }
+        }
     }
 }
