@@ -121,19 +121,28 @@ try
     builder.Services.AddTransient<IConsolidationApi, ConsolidationApi>();
     builder.Services.AddTransient<IComparitiveQuotationBusiness, ComparitiveQuotationBusiness>();
 
+    builder.Services.AddTransient<IRenewalApi, RenewalApi>();
     builder.Services.AddTransient<IApiService, ApiService>();
     builder.Services.AddTransient<IHttpClientHelper, HttpClientHelper>();
     builder.Services.AddTransient<ILoggerManager, LoggerManager>();
     builder.Services.AddTransient<IDashboardApi, DashboardApi>();
-
+    //builder.Services.AddSignalR(); // Add SignalR
     builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     builder.Services.AddSession(options =>
     {
         //options.IdleTimeout = TimeSpan.FromSeconds(10);
         options.Cookie.IsEssential = true; // make the session cookie Essential
-        options.IdleTimeout = TimeSpan.FromMinutes(60);
+        options.IdleTimeout = TimeSpan.FromMinutes(1);
         options.Cookie.HttpOnly = true;
     });
+    //builder.Services.AddAuthentication("CookieAuth")
+    //.AddCookie("CookieAuth", config =>
+    //{
+    //    config.Cookie.Name = "UserLoginCookie";
+    //    config.LoginPath = "/Login/Index";
+    //    config.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+    //    config.SlidingExpiration = true;
+    //});
     /// Breadcrumbs  start ///
     ///builder.Services.AddBreadcrumbs(Assembly.GetExecutingAssembly(), options =>
     ///{
@@ -167,10 +176,13 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
     app.UseSession();
-    app.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Login}/{action=Index}/{id?}");
-
+    app.UseEndpoints(endpoints =>
+    {
+        endpoints.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Login}/{action=Index}/{id?}"); // Default route to login
+      //  endpoints.MapHub<SessionHub>("/sessionHub"); // Map SignalR hub
+    });
     app.Run();
 
 }

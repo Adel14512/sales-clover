@@ -1,9 +1,13 @@
 ﻿var table = $('#tTicketHistory').DataTable(dataTableLoad([]));
+var tableRenewal = $('#tTicketHistoryRenewal').DataTable(dataTableLoad([]));
 $(document).ready(function () {
     $("#formSearch").on("blur", "input", function (event) {
-        search();
+        search(false);
     });
-    search();
+    $("#formSearchRenewal").on("blur", "input", function (event) {
+        search(true);
+    });
+    search(false);
     //var table = $('#tTicketHistory').DataTable({
     //    searching: false,
     //    destroy: true,
@@ -12,11 +16,18 @@ $(document).ready(function () {
 
 });
 var contextIdCount = 0;
-function search() {
+function search(isRenewal) {
 
     var formBody = new FormData();
     var obj = {};
-    obj.NbrDays = $("#txtNbrofDays").val();
+    if (isRenewal) {
+        obj.NbrDays = $("#txtNbrofDaysRenewal").val();
+    } else {
+        obj.NbrDays = $("#txtNbrofDays").val();
+    }
+   
+   
+    obj.IsRenewal = isRenewal;
     formBody.append("nbr", JSON.stringify(obj));
     $.ajax({
         url: "../DashBoard/SearchTicketHistory",
@@ -31,11 +42,15 @@ function search() {
         success: function (data) {
             hideLoading();
             if (data != null) {
-                //Destroy
-                $('#tTicketHistory').DataTable().destroy();
-                //$('#tTicketHistory').DataTable();
-                // initialize DataTables with the data
-                var table = $('#tTicketHistory').DataTable(dataTableLoad(data));
+                if (isRenewal) {
+                    $('#tTicketHistoryRenewal').DataTable().destroy();
+                    var table = $('#tTicketHistoryRenewal').DataTable(dataTableLoad(data));
+                } else {
+                    $('#tTicketHistory').DataTable().destroy();
+                    var table = $('#tTicketHistory').DataTable(dataTableLoad(data));
+                }
+     
+             
             }
         },
         error: function (xhr, status, error) {
