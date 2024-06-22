@@ -10,6 +10,7 @@ using Evaluation.UI.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Spire.Pdf.Graphics;
 
 namespace Evaluation.UI.Controllers
 {
@@ -67,7 +68,16 @@ namespace Evaluation.UI.Controllers
 			request.WebRequestCommon.CorrelationId = Guid.NewGuid().ToString();
 			request.WebRequestCommon.UserName = user.EmailAdress;
 			TicketHistoryResp result = await _dashboard.TicketHistoryFindDataWithNbrDaysFilter(request, ct);
-
+            if (request.IsRenewal)
+            {
+                result.TicketHistory = result.TicketHistory.Where(x => x.NewBusiness == false).ToList();
+            }
+            else
+            {
+                result.TicketHistory = result.TicketHistory.Where(x => x.NewBusiness == true).ToList();
+             
+			}
+			
 			return Ok(result.TicketHistory);
 		}
 	}

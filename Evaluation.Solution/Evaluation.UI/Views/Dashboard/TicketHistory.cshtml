@@ -40,9 +40,10 @@
 <div class="tab-content">
     <div class="tab-pane active" id="newBusiness" role="tabpanel">
         <div class="">
+            <br />
             <form id="formSearch">
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label class="control-label" for="Nbr">Number of days passed</label>
                     </div>
                     <div class="col-md-2">
@@ -59,7 +60,22 @@
     </div>
     <div class="tab-pane" id="renewal" role="tabpanel">
         <div class="">
-           
+            <br />
+            <form id="formSearchRenewal">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="control-label" for="Nbr">Number of days passed</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="search" id="txtNbrofDaysRenewal" name="Nbr"  class="form-control" />
+                    </div>
+
+                </div>
+            </form>
+            <table id="tTicketHistoryRenewal" style="width:100%" class="responsive table table-bordered compact">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
         </div>
     </div>
     <div class="tab-pane" id="claims" role="tabpanel">

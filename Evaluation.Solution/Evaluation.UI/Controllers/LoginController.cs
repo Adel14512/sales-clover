@@ -113,14 +113,14 @@ namespace Evaluation.UI.Controllers
 
                 var token = new JwtSecurityToken(_configuration["JsonWebTokenKeys:ValidIssuer"],
                     _configuration["JsonWebTokenKeys:ValidAudience"],
-                    expires: DateTime.Now.AddDays(1),
+                    expires: DateTime.Now.AddMinutes(20),
                     claims: userClaims,
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256));
                 var tokenstring = new JwtSecurityTokenHandler().WriteToken(token);
                 var options = new MemoryCacheEntryOptions().SetAbsoluteExpiration(token.ValidTo);
                 _cache.Set("TOKEN", tokenstring, options);
                 return Ok(new { token = tokenstring });
-                return Ok(null);
+               // return Ok(null);
                 //}
             }
             else
