@@ -27,6 +27,7 @@ namespace Evaluation.UI.DTO.Dashboard
         public string CreatedBy { get; set; }
 		public string AF1URL { get; set; }
 		public string CQURL { get; set; }
+		public bool NewBusiness { get; set; }
 		[JsonIgnore]
         public string Reserved1 { get; set; }
         [JsonIgnore]

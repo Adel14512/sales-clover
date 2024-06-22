@@ -34,6 +34,7 @@ $('#loginform').submit(function (e) {
             localStorage.setItem('jwt', data.token);
             console.log("success login");
             window.location.href = '../Home/Index';
+           
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);

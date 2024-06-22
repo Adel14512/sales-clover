@@ -73,5 +73,15 @@ namespace Evaluation.UI.Authentication
             var currentTime = DateTime.UtcNow;
             return currentTime > expirationTime;
         }
-    }
+		protected override async Task HandleChallengeAsync(AuthenticationProperties properties)
+		{
+			if (!Context.User.Identity.IsAuthenticated)
+			{
+				Response.Redirect("/Login/Index");
+				return;
+			}
+
+			await base.HandleChallengeAsync(properties);
+		}
+	}
 }
