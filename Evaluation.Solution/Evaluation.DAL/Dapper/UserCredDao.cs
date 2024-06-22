@@ -73,6 +73,7 @@ using Evaluation.CAL.DTO.BL291908Consolidation;
 using Evaluation.CAL.DTO.BL041312Consolidation;
 using Evaluation.CAL.DTO.BL331211Consolidation;
 using Evaluation.CAL.DTO.Dashboard;
+using Evaluation.CAL.DTO.Renewal;
 
 namespace Evaluation.DAL.Dapper
 {
@@ -9844,6 +9845,16 @@ namespace Evaluation.DAL.Dapper
             //Logger.Info
             //var userCred = new List<UserCredResp>();
             var res = DapperDbAccess.Query<ProductPriceControlDto>("usp_ProductPriceControle",
+                null,
+                cmdType: CommandType.StoredProcedure);
+            return res;
+        }
+
+        public List<RenewalParameterDto> RenewalParameterFindAll()
+        {
+            //Logger.Info
+            //var userCred = new List<UserCredResp>();
+            var res = DapperDbAccess.Query<RenewalParameterDto>("usp_Renewal_Parameters",
                 null,
                 cmdType: CommandType.StoredProcedure);
             return res;

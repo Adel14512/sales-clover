@@ -46,6 +46,7 @@ using Evaluation.CAL.DTO.BL041312Consolidation;
 using Evaluation.CAL.DTO.BL331211Consolidation;
 using Evaluation.DAL.Dapper;
 using Evaluation.CAL.DTO.Dashboard;
+using Evaluation.CAL.DTO.Renewal;
 
 namespace Evaluation.DAL.IDao
 {
@@ -656,5 +657,7 @@ namespace Evaluation.DAL.IDao
           int masterId, string lastModifiedBy, string policyId);
         List<ProductPriceControlDto> ProductPriceControlFindAll();
         List<TicketHistoryDto> TicketHistoryFindDataWithNbrDaysFilter(int NbrDays, string UserName);
+        List<RenewalParameterDto> RenewalParameterFindAll();
+
     }
 }

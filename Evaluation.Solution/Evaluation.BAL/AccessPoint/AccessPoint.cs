@@ -38,6 +38,7 @@ using Evaluation.CAL.DTO.ProductBenefits;
 using Evaluation.CAL.DTO.ProductCombination;
 using Evaluation.CAL.DTO.ProductDetailsPOIAllNetwork;
 using Evaluation.CAL.DTO.ProductPriceList;
+using Evaluation.CAL.DTO.Renewal;
 using Evaluation.CAL.DTO.SpecialCondition;
 using Evaluation.CAL.DTO.Ticket;
 using Evaluation.CAL.Request;
@@ -2079,6 +2080,11 @@ namespace Evaluation.BAL.AccessPoint
         public List<TicketHistoryDto> TicketHistoryFindDataWithNbrDaysFilter(int NbrDays, string UserName)
         {
             return userCredDao.TicketHistoryFindDataWithNbrDaysFilter(NbrDays, UserName);
+        }
+
+        public List<RenewalParameterDto> RenewalParameterFindAll()
+        {
+            return userCredDao.RenewalParameterFindAll();
         }
     }
 }
