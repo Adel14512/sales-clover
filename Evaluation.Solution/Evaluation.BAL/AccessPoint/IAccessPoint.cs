@@ -671,6 +671,7 @@ namespace Evaluation.BAL.AccessPoint
         List<RenewalParameterDto> RenewalParameterFindAll();
         List<RenewalPolicyDto> RenewalPolicyFindAll();
         List<PolicyInquiryDto> PolicyInquiryFindAll();
+        List<RenewalProcessDto> RenewalProcessFindAll();
 
     }
 }

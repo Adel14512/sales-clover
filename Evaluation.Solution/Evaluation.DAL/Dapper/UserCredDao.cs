@@ -9886,5 +9886,12 @@ namespace Evaluation.DAL.Dapper
                 cmdType: CommandType.StoredProcedure);
             return res;
         }
+        public List<RenewalProcessDto> RenewalProcessFindAll()
+        {
+            var res = DapperDbAccess.Query<RenewalProcessDto>("usp_Renewal_Process",
+                null,
+                cmdType: CommandType.StoredProcedure);
+            return res;
+        }
     }
 }
