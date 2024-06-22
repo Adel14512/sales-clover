@@ -9859,6 +9859,15 @@ namespace Evaluation.DAL.Dapper
                 cmdType: CommandType.StoredProcedure);
             return res;
         }
+        public List<RenewalPolicyDto> RenewalPolicyFindAll()
+        {
+            //Logger.Info
+            //var userCred = new List<UserCredResp>();
+            var res = DapperDbAccess.Query<RenewalPolicyDto>("usp_Renewal_PoliciesList",
+                null,
+                cmdType: CommandType.StoredProcedure);
+            return res;
+        }
 
         public List<TicketHistoryDto> TicketHistoryFindDataWithNbrDaysFilter(int NbrDays, string UserName)
         {

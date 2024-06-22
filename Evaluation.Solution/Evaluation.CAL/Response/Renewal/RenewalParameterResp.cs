@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Evaluation.CAL.Response.Renewal
 {
-    public class RenwalParameterResp
+    public class RenewalParameterResp
     {
         public WebResponseCommon WebResponseCommon { get; set; }
         public List<RenewalParameterDto> RenewalParameter { get; set; }
