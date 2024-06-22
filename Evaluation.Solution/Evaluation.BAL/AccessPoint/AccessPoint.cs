@@ -2090,5 +2090,9 @@ namespace Evaluation.BAL.AccessPoint
         {
             return userCredDao.RenewalPolicyFindAll();
         }
+        public List<PolicyInquiryDto> PolicyInquiryFindAll()
+        {
+            return userCredDao.PolicyInquiryFindAll();
+        }
     }
 }

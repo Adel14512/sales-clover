@@ -169,5 +169,74 @@ namespace Evaluation.SAL.Controllers
                 return Ok(resp);
             }
         }
+        [HttpPost]
+        //[AuthorizeAttribute]
+        public IActionResult PolicyInquiryFindAll(PolicyInquiryReq policyInquiryReq)
+        {
+            PolicyInquiryResp resp;
+            resp = new()
+            {
+                WebResponseCommon = new()
+                {
+                },
+
+                PolicyInquiry = new List<PolicyInquiryDto>()
+            };
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    resp.WebResponseCommon.SuccessIndicator = "Success";
+                    resp.WebResponseCommon.ReturnCode = StatusCodes.Status400BadRequest.ToString();
+                    resp.WebResponseCommon.ReturnMessage = "Bad Request;" + string.Join(" | ", ModelState.Values
+                        .SelectMany(v => v.Errors)
+                        .Select(e => e.ErrorMessage));
+                    resp.WebResponseCommon.CorrelationId = policyInquiryReq == null ? Guid.NewGuid().ToString() :
+                        policyInquiryReq.WebRequestCommon == null ? Guid.NewGuid().ToString() :
+                        policyInquiryReq.WebRequestCommon.CorrelationId == null ? Guid.NewGuid().ToString() :
+                        policyInquiryReq.WebRequestCommon.CorrelationId.Trim() != string.Empty ?
+                        policyInquiryReq.WebRequestCommon.CorrelationId : Guid.NewGuid().ToString();
+                    return Ok(resp);
+                }
+                _logger.SetCorrelationId(policyInquiryReq.WebRequestCommon.CorrelationId, policyInquiryReq.WebRequestCommon.UserName);
+                _logger.LogInfo("Calling the Endpoint PolicyInquiryFindAll is started");
+                _logger.LogDebug(JsonConvert.SerializeObject(policyInquiryReq));
+
+                resp.PolicyInquiry = InstManagerAccessPoint.GetNewAccessPoint().PolicyInquiryFindAll();
+
+                if (resp != null && resp.PolicyInquiry != null && resp.PolicyInquiry.Count > 0)
+                {
+                    resp.WebResponseCommon.SuccessIndicator = "Success";
+                    resp.WebResponseCommon.ReturnMessage = resp.PolicyInquiry[0].Reserved1 != null ? resp.PolicyInquiry[0].Reserved1 : "Enquiry Succeeded";
+                    resp.WebResponseCommon.ReturnCode = resp.PolicyInquiry[0].Reserved1 != null ? StatusCodes.Status204NoContent.ToString() : StatusCodes.Status200OK.ToString();
+                    resp.WebResponseCommon.CorrelationId = policyInquiryReq.WebRequestCommon.CorrelationId;
+                    if (resp.PolicyInquiry[0].Reserved1 != null)
+                        resp.PolicyInquiry = new List<PolicyInquiryDto>();
+                }
+                //else
+                //{
+                //    //resp.
+                //}
+                _logger.LogDebug(JsonConvert.SerializeObject(resp));
+
+                _logger.LogInfo("Calling the Endpoint PolicyInquiryFindAll is completed");
+
+                return Ok(resp);
+                // UserCredDao t = new UserCredDao();
+                //return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error", ex);
+                resp.WebResponseCommon.SuccessIndicator = "Error";
+                resp.WebResponseCommon.ReturnCode = StatusCodes.Status500InternalServerError.ToString();
+                resp.WebResponseCommon.ReturnMessage = "Internal Server Error";
+                resp.WebResponseCommon.CorrelationId = policyInquiryReq.WebRequestCommon.CorrelationId;
+                resp.PolicyInquiry = new List<PolicyInquiryDto>();
+                //CorrelationId = channelFindAllReq.WebRequestCommon.CorrelationId
+                _logger.LogDebug(JsonConvert.SerializeObject(resp));
+                return Ok(resp);
+            }
+        }
     }
 }

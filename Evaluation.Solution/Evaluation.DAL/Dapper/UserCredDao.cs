@@ -9879,5 +9879,12 @@ namespace Evaluation.DAL.Dapper
                 cmdType: CommandType.StoredProcedure);
             return res;
         }
+        public List<PolicyInquiryDto> PolicyInquiryFindAll()
+        {
+            var res = DapperDbAccess.Query<PolicyInquiryDto>("usp_PoliciesInquiries",
+                null,
+                cmdType: CommandType.StoredProcedure);
+            return res;
+        }
     }
 }
