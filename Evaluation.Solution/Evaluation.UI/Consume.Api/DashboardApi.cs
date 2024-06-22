@@ -64,5 +64,26 @@ namespace Evaluation.UI.Consume.Api
 
             return resp;
         }
-    }
+		public async Task<PolicyInquiryResp> PolicyInquiry(PolicyInquiryReq request, CancellationToken ct)
+		{
+			PolicyInquiryResp resp = new PolicyInquiryResp();
+			try
+			{
+				var url = _configuration["ApiURL"] + "api/Dashboard/PolicyInquiryFindAll";
+				resp = await _httpClientHelper.PostApiRequestModelAsync<PolicyInquiryResp>(request, url, ct);
+			}
+			catch (WebException ex)
+			{
+				var response = _apiService.HandleHttpResponse(ex);
+
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(string.Empty, ex);
+
+			}
+
+			return resp;
+		}
+	}
 }

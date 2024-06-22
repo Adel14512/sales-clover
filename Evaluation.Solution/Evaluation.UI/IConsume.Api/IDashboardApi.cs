@@ -7,5 +7,7 @@ namespace Evaluation.UI.IConsume.Api
     {
         Task<ProductPriceControlResp> ProductPriceControFindAll(ProductPriceControlReq request, CancellationToken ct);
         Task<TicketHistoryResp> TicketHistoryFindDataWithNbrDaysFilter(TicketHistoryReq request, CancellationToken ct);
-    }
+        Task<PolicyInquiryResp> PolicyInquiry(PolicyInquiryReq request, CancellationToken ct);
+
+	}
 }
