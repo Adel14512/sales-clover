@@ -38,9 +38,11 @@ using Evaluation.CAL.DTO.ProductBenefits;
 using Evaluation.CAL.DTO.ProductCombination;
 using Evaluation.CAL.DTO.ProductDetailsPOIAllNetwork;
 using Evaluation.CAL.DTO.ProductPriceList;
+using Evaluation.CAL.DTO.Renewal;
 using Evaluation.CAL.DTO.SpecialCondition;
 using Evaluation.CAL.DTO.Ticket;
 using Evaluation.CAL.Request;
+using Evaluation.CAL.Response.Renewal;
 using System;
 using System.Collections.Generic;
 
@@ -666,6 +668,7 @@ namespace Evaluation.BAL.AccessPoint
           string businessLineCode, string createdBy);
         List<ProductPriceControlDto> ProductPriceControlFindAll();
         List<TicketHistoryDto> TicketHistoryFindDataWithNbrDaysFilter(int NbrDays, string UserName);
+        List<RenewalParameterDto> RenewalParameterFindAll();
 
     }
 }
