@@ -670,6 +670,7 @@ namespace Evaluation.BAL.AccessPoint
         List<TicketHistoryDto> TicketHistoryFindDataWithNbrDaysFilter(int NbrDays, string UserName);
         List<RenewalParameterDto> RenewalParameterFindAll();
         List<RenewalPolicyDto> RenewalPolicyFindAll();
+        List<PolicyInquiryDto> PolicyInquiryFindAll();
 
     }
 }

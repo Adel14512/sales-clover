@@ -2,10 +2,9 @@
 
 namespace Evaluation.CAL.Request.Dashboard
 {
-    public class TicketHistoryReq
+    public class PolicyInquiryReq
     {
         [Required]
         public WebRequestCommon WebRequestCommon { get; set; }
-        public int NbrDays { get; set; }
     }
 }
