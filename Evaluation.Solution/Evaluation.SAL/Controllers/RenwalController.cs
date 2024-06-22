@@ -36,7 +36,7 @@ namespace Evaluation.SAL.Controllers
         //[AuthorizeAttribute]
         public IActionResult RenewalParameterFindAll(RenewalParameterReq renewalParameterReq)
         {
-            RenwalParameterResp resp;
+            RenewalParameterResp resp;
             resp = new()
             {
                 WebResponseCommon = new()
@@ -95,6 +95,74 @@ namespace Evaluation.SAL.Controllers
                 resp.WebResponseCommon.ReturnMessage = "Internal Server Error";
                 resp.WebResponseCommon.CorrelationId = renewalParameterReq.WebRequestCommon.CorrelationId;
                 resp.RenewalParameter = new List<RenewalParameterDto>();
+                //CorrelationId = channelFindAllReq.WebRequestCommon.CorrelationId
+                _logger.LogDebug(JsonConvert.SerializeObject(resp));
+                return Ok(resp);
+            }
+        }
+        [HttpPost]
+        //[AuthorizeAttribute]
+        public IActionResult RenewalPolicyFindAll(RenewalPolicyReq renewalPolicyReq)
+        {
+            RenewalPolicyResp resp;
+            resp = new()
+            {
+                WebResponseCommon = new()
+                {
+                },
+                RenewalPolicy = new List<RenewalPolicyDto>()
+            };
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    resp.WebResponseCommon.SuccessIndicator = "Success";
+                    resp.WebResponseCommon.ReturnCode = StatusCodes.Status400BadRequest.ToString();
+                    resp.WebResponseCommon.ReturnMessage = "Bad Request;" + string.Join(" | ", ModelState.Values
+                        .SelectMany(v => v.Errors)
+                        .Select(e => e.ErrorMessage));
+                    resp.WebResponseCommon.CorrelationId = renewalPolicyReq == null ? Guid.NewGuid().ToString() :
+                        renewalPolicyReq.WebRequestCommon == null ? Guid.NewGuid().ToString() :
+                        renewalPolicyReq.WebRequestCommon.CorrelationId == null ? Guid.NewGuid().ToString() :
+                        renewalPolicyReq.WebRequestCommon.CorrelationId.Trim() != string.Empty ?
+                        renewalPolicyReq.WebRequestCommon.CorrelationId : Guid.NewGuid().ToString();
+                    return Ok(resp);
+                }
+                _logger.SetCorrelationId(renewalPolicyReq.WebRequestCommon.CorrelationId, renewalPolicyReq.WebRequestCommon.UserName);
+                _logger.LogInfo("Calling the Endpoint RenewalPolicyFindAll is started");
+                _logger.LogDebug(JsonConvert.SerializeObject(renewalPolicyReq));
+
+                resp.RenewalPolicy = InstManagerAccessPoint.GetNewAccessPoint().RenewalPolicyFindAll();
+
+                if (resp != null && resp.RenewalPolicy != null && resp.RenewalPolicy.Count > 0)
+                {
+                    resp.WebResponseCommon.SuccessIndicator = "Success";
+                    resp.WebResponseCommon.ReturnMessage = resp.RenewalPolicy[0].Reserved1 != null ? resp.RenewalPolicy[0].Reserved1 : "Enquiry Succeeded";
+                    resp.WebResponseCommon.ReturnCode = resp.RenewalPolicy[0].Reserved1 != null ? StatusCodes.Status204NoContent.ToString() : StatusCodes.Status200OK.ToString();
+                    resp.WebResponseCommon.CorrelationId = renewalPolicyReq.WebRequestCommon.CorrelationId;
+                    if (resp.RenewalPolicy[0].Reserved1 != null)
+                        resp.RenewalPolicy = new List<RenewalPolicyDto>();
+                }
+                //else
+                //{
+                //    //resp.
+                //}
+                _logger.LogDebug(JsonConvert.SerializeObject(resp));
+
+                _logger.LogInfo("Calling the Endpoint RenewalPolicyFindAll is completed");
+
+                return Ok(resp);
+                // UserCredDao t = new UserCredDao();
+                //return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error", ex);
+                resp.WebResponseCommon.SuccessIndicator = "Error";
+                resp.WebResponseCommon.ReturnCode = StatusCodes.Status500InternalServerError.ToString();
+                resp.WebResponseCommon.ReturnMessage = "Internal Server Error";
+                resp.WebResponseCommon.CorrelationId = renewalPolicyReq.WebRequestCommon.CorrelationId;
+                resp.RenewalPolicy = new List<RenewalPolicyDto>();
                 //CorrelationId = channelFindAllReq.WebRequestCommon.CorrelationId
                 _logger.LogDebug(JsonConvert.SerializeObject(resp));
                 return Ok(resp);
