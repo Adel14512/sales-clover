@@ -215,36 +215,46 @@ namespace Evaluation.SAL.Controllers
                         .GroupBy(p => new { p.BusinessLineCode, p.PolicyId })
                         .Select(g => g.First())
                         .ToList();
-
+                    //int count = 0;
                     foreach (var item in distinctPolicy)
                     {
-                        var policyFilter = resp.RenewalProcess.Where(p => p.PolicyId == item.PolicyId).ToList();
-                        if (item.BusinessLineCode == "080501" && policyFilter != null && policyFilter.Count > 0)
+                        try
                         {
-                            AF1BL080501Dtco aF1BL080501 = new AF1BL080501Dtco();
-                            aF1BL080501.Ambulatory = policyFilter[0].Ambulatory;
-                            aF1BL080501.ClassOfCoveragCode = policyFilter[0].ClassOfCoveragCode;
-                            aF1BL080501.DoctorVisit = policyFilter[0].DoctorVisit;
-                            aF1BL080501.NetworkLevelCode = policyFilter[0].NetworkLevelCode;
-                            aF1BL080501.NSSF = policyFilter[0].NSSF;
-                            aF1BL080501.PrescriptionMedecine = policyFilter[0].PrescriptionMedecine;
-                            aF1BL080501.ResidenceCode = policyFilter[0].ResidenceCode;
-                            List<AF1BL080501Dto> aF1BL080501List = new List<AF1BL080501Dto>();
-                            foreach (var itemPolicy in policyFilter)
+                            var policyFilter = resp.RenewalProcess.Where(p => p.PolicyId == item.PolicyId).ToList();
+                            if (item.BusinessLineCode == "080501" && policyFilter != null && policyFilter.Count > 0)
                             {
-                                AF1BL080501Dto aF1BL080501Dto = new AF1BL080501Dto();
-                                aF1BL080501Dto.FirstName = itemPolicy.FirstName;
-                                aF1BL080501Dto.LastName = item.LastName;
-                                aF1BL080501Dto.DOB = item.DOB;
-                                aF1BL080501Dto.MiddleName = item.MiddleName;
-                                aF1BL080501Dto.GenderCode = item.GenderCode;
-                                aF1BL080501Dto.RelationCode = item.RelationCode;
-                                aF1BL080501Dto.NationalityCode = item.NationalityCode;
-                                aF1BL080501Dto.MaritalStatusCode = item.MaritalStatusCode;
-                                aF1BL080501List.Add(aF1BL080501Dto);
+                                //if (count == 0)
+                                //    throw new Exception();
+                                //count++;
+                                AF1BL080501Dtco aF1BL080501 = new AF1BL080501Dtco();
+                                aF1BL080501.Ambulatory = policyFilter[0].Ambulatory;
+                                aF1BL080501.ClassOfCoveragCode = policyFilter[0].ClassOfCoveragCode;
+                                aF1BL080501.DoctorVisit = policyFilter[0].DoctorVisit;
+                                aF1BL080501.NetworkLevelCode = policyFilter[0].NetworkLevelCode;
+                                aF1BL080501.NSSF = policyFilter[0].NSSF;
+                                aF1BL080501.PrescriptionMedecine = policyFilter[0].PrescriptionMedecine;
+                                aF1BL080501.ResidenceCode = policyFilter[0].ResidenceCode;
+                                List<AF1BL080501Dto> aF1BL080501List = new List<AF1BL080501Dto>();
+                                foreach (var itemPolicy in policyFilter)
+                                {
+                                    AF1BL080501Dto aF1BL080501Dto = new AF1BL080501Dto();
+                                    aF1BL080501Dto.FirstName = itemPolicy.FirstName;
+                                    aF1BL080501Dto.LastName = item.LastName;
+                                    aF1BL080501Dto.DOB = item.DOB;
+                                    aF1BL080501Dto.MiddleName = item.MiddleName;
+                                    aF1BL080501Dto.GenderCode = item.GenderCode;
+                                    aF1BL080501Dto.RelationCode = item.RelationCode;
+                                    aF1BL080501Dto.NationalityCode = item.NationalityCode;
+                                    aF1BL080501Dto.MaritalStatusCode = item.MaritalStatusCode;
+                                    aF1BL080501List.Add(aF1BL080501Dto);
+                                }
+                                aF1BL080501.AF1BL080501List = aF1BL080501List;
+                                InstManagerAccessPoint.GetNewAccessPoint().SalesTransactionBL080501NewRec(policyFilter[0].BusinessLineCode, policyFilter[0].ContactId, policyFilter[0].ClientId, policyFilter[0].MasterId, aF1BL080501, "SYSADMIN", policyFilter[0].PolicyId);
                             }
-                            aF1BL080501.AF1BL080501List = aF1BL080501List;
-                            InstManagerAccessPoint.GetNewAccessPoint().SalesTransactionBL080501NewRec(policyFilter[0].BusinessLineCode, policyFilter[0].ContactId, policyFilter[0].ClientId, policyFilter[0].MasterId, aF1BL080501, "SYSADMIN", policyFilter[0].PolicyId);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError("Error", ex);
                         }
                     }
 
