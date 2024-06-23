@@ -26,10 +26,10 @@ namespace Evaluation.SAL.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class RenwalController : ControllerBase
+    public class RenewalController : ControllerBase
     {
         private readonly ILoggerManager _logger;
-        public RenwalController(ILoggerManager logger)
+        public RenewalController(ILoggerManager logger)
         {
             _logger = logger;
         }
