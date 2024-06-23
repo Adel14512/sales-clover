@@ -246,6 +246,8 @@ namespace Evaluation.SAL.Controllers
                                     aF1BL080501Dto.RelationCode = item.RelationCode;
                                     aF1BL080501Dto.NationalityCode = item.NationalityCode;
                                     aF1BL080501Dto.MaritalStatusCode = item.MaritalStatusCode;
+                                    aF1BL080501Dto.Email = item.Email;
+                                    aF1BL080501Dto.MobileNumber = item.MobileNumber;
                                     aF1BL080501List.Add(aF1BL080501Dto);
                                 }
                                 aF1BL080501.AF1BL080501List = aF1BL080501List;
