@@ -243,7 +243,7 @@ namespace Evaluation.SAL.Controllers
                                     aF1BL080501Dto.DOB = itemPolicy.DOB;
                                     aF1BL080501Dto.MiddleName = itemPolicy.MiddleName;
                                     aF1BL080501Dto.GenderCode = itemPolicy.GenderCode;
-                                    aF1BL080501Dto.RelationCode = itemPolicy.RelationCode;
+                                    aF1BL080501Dto.RelationCode = itemPolicy.RelationCode == "1" ? "P" : itemPolicy.RelationCode == "2" ? "S" : "C";
                                     aF1BL080501Dto.NationalityCode = itemPolicy.NationalityCode;
                                     aF1BL080501Dto.MaritalStatusCode = itemPolicy.MaritalStatusCode;
                                     aF1BL080501Dto.Email = itemPolicy.Email;
