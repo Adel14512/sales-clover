@@ -239,15 +239,15 @@ namespace Evaluation.SAL.Controllers
                                 {
                                     AF1BL080501Dto aF1BL080501Dto = new AF1BL080501Dto();
                                     aF1BL080501Dto.FirstName = itemPolicy.FirstName;
-                                    aF1BL080501Dto.LastName = item.LastName;
-                                    aF1BL080501Dto.DOB = item.DOB;
-                                    aF1BL080501Dto.MiddleName = item.MiddleName;
-                                    aF1BL080501Dto.GenderCode = item.GenderCode;
-                                    aF1BL080501Dto.RelationCode = item.RelationCode;
-                                    aF1BL080501Dto.NationalityCode = item.NationalityCode;
-                                    aF1BL080501Dto.MaritalStatusCode = item.MaritalStatusCode;
-                                    aF1BL080501Dto.Email = item.Email;
-                                    aF1BL080501Dto.MobileNumber = item.MobileNumber;
+                                    aF1BL080501Dto.LastName = itemPolicy.LastName;
+                                    aF1BL080501Dto.DOB = itemPolicy.DOB;
+                                    aF1BL080501Dto.MiddleName = itemPolicy.MiddleName;
+                                    aF1BL080501Dto.GenderCode = itemPolicy.GenderCode;
+                                    aF1BL080501Dto.RelationCode = itemPolicy.RelationCode;
+                                    aF1BL080501Dto.NationalityCode = itemPolicy.NationalityCode;
+                                    aF1BL080501Dto.MaritalStatusCode = itemPolicy.MaritalStatusCode;
+                                    aF1BL080501Dto.Email = itemPolicy.Email;
+                                    aF1BL080501Dto.MobileNumber = itemPolicy.MobileNumber;
                                     aF1BL080501List.Add(aF1BL080501Dto);
                                 }
                                 aF1BL080501.AF1BL080501List = aF1BL080501List;
