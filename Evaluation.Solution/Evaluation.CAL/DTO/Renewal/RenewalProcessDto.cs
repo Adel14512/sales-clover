@@ -31,6 +31,8 @@ namespace Evaluation.CAL.DTO.Renewal
         public int ClassOfCoveragCode { get; set; }
         public bool DoctorVisit { get; set; }
         public string NetworkLevelCode { get; set; }
+        public string Email { get; set; }
+        public string MobileNumber { get; set; }
         public bool NSSF { get; set; }
         [JsonIgnore]
         public string Reserved1 { get; set; }
