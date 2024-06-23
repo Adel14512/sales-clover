@@ -244,7 +244,7 @@ namespace Evaluation.SAL.Controllers
                                 aF1BL080501List.Add(aF1BL080501Dto);
                             }
                             aF1BL080501.AF1BL080501List = aF1BL080501List;
-                            InstManagerAccessPoint.GetNewAccessPoint().SalesTransactionBL080501NewRec(policyFilter[0].BusinessLineCode, policyFilter[0].ContactId, policyFilter[0].ClientId, policyFilter[0].MasterId, aF1BL080501, "SYSADMIN");
+                            InstManagerAccessPoint.GetNewAccessPoint().SalesTransactionBL080501NewRec(policyFilter[0].BusinessLineCode, policyFilter[0].ContactId, policyFilter[0].ClientId, policyFilter[0].MasterId, aF1BL080501, "SYSADMIN", policyFilter[0].PolicyId);
                         }
                     }
 
