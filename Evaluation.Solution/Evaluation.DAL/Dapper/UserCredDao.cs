@@ -939,7 +939,7 @@ namespace Evaluation.DAL.Dapper
             return salesTransactionBL321110Dto;
         }
 
-        public SalesTransactionBL080501Dto SalesTransactionBL080501NewRec(string businessLineCode, int contactId, int clientId, int masterId, AF1BL080501Dtco aF1BL080501Dtco, string createdBy)
+        public SalesTransactionBL080501Dto SalesTransactionBL080501NewRec(string businessLineCode, int contactId, int clientId, int masterId, AF1BL080501Dtco aF1BL080501Dtco, string createdBy, string policyId = "")
         {
             AF1BL080501Root _classToXml;
             _classToXml = new()
@@ -956,7 +956,8 @@ namespace Evaluation.DAL.Dapper
                     @pClientId = clientId,
                     @pMasterId = masterId,
                     @pAF1 = strXml,
-                    pCreatedBy = createdBy
+                    @pCreatedBy = createdBy,
+                    @pPolicyId = policyId
                 },
                 cmdType: CommandType.StoredProcedure);
 
@@ -9882,6 +9883,13 @@ namespace Evaluation.DAL.Dapper
         public List<PolicyInquiryDto> PolicyInquiryFindAll()
         {
             var res = DapperDbAccess.Query<PolicyInquiryDto>("usp_PoliciesInquiries",
+                null,
+                cmdType: CommandType.StoredProcedure);
+            return res;
+        }
+        public List<RenewalProcessDto> RenewalProcessFindAll()
+        {
+            var res = DapperDbAccess.Query<RenewalProcessDto>("usp_Renewal_Process",
                 null,
                 cmdType: CommandType.StoredProcedure);
             return res;

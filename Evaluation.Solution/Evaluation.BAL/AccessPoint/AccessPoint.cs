@@ -241,9 +241,9 @@ namespace Evaluation.BAL.AccessPoint
         {
             return userCredDao.SalesTransactionBL321110NewRec(businessLineCode, contactId, aF1BL321110Dto, createdBy);
         }
-        public SalesTransactionBL080501Dto SalesTransactionBL080501NewRec(string businessLineCode, int contactId, int clientId, int masterId, AF1BL080501Dtco aF1BL080501Dtco, string createdBy)
+        public SalesTransactionBL080501Dto SalesTransactionBL080501NewRec(string businessLineCode, int contactId, int clientId, int masterId, AF1BL080501Dtco aF1BL080501Dtco, string createdBy, string policyId = "")
         {
-            return userCredDao.SalesTransactionBL080501NewRec(businessLineCode, contactId, clientId, masterId, aF1BL080501Dtco, createdBy);
+            return userCredDao.SalesTransactionBL080501NewRec(businessLineCode, contactId, clientId, masterId, aF1BL080501Dtco, createdBy, policyId);
         }
 
         public List<SalesTransactionDto> SalesTransactionFindWithContactIdFilter(int contactId, int internalStatus)
@@ -2093,6 +2093,10 @@ namespace Evaluation.BAL.AccessPoint
         public List<PolicyInquiryDto> PolicyInquiryFindAll()
         {
             return userCredDao.PolicyInquiryFindAll();
+        }
+        public List<RenewalProcessDto> RenewalProcessFindAll()
+        {
+            return userCredDao.RenewalProcessFindAll();
         }
     }
 }

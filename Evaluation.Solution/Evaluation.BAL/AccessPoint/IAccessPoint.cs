@@ -93,7 +93,7 @@ namespace Evaluation.BAL.AccessPoint
         List<LeadDto> LeadFindAll();
         SalesTransactionBL301401Dto SalesTransactionBL301401NewRec(string businessLineCode, int contactId, List<AF1BL301401Dto> aF1BL301401Dto, string createdBy);
         SalesTransactionBL321110Dto SalesTransactionBL321110NewRec(string businessLineCode, int contactId, List<AF1BL321110Dto> aF1BL321110Dto, string createdBy);
-        SalesTransactionBL080501Dto SalesTransactionBL080501NewRec(string businessLineCode, int contactId, int clientId, int masterId, AF1BL080501Dtco aF1BL080501Dtco, string createdBy);
+        SalesTransactionBL080501Dto SalesTransactionBL080501NewRec(string businessLineCode, int contactId, int clientId, int masterId, AF1BL080501Dtco aF1BL080501Dtco, string createdBy, string policyId = "");
         List<SalesTransactionDto> SalesTransactionFindWithContactIdFilter(int contactId, int internalStatus);
         SalesTransactionBL080501Dto SalesTransactionBL080501FindAF1WithRecIdFilter(int salesTransactionId);
         SalesTransactionBL301401Dto SalesTransactionBL301401FindAF1WithRecIdFilter(int salesTransactionId);
@@ -671,6 +671,7 @@ namespace Evaluation.BAL.AccessPoint
         List<RenewalParameterDto> RenewalParameterFindAll();
         List<RenewalPolicyDto> RenewalPolicyFindAll();
         List<PolicyInquiryDto> PolicyInquiryFindAll();
+        List<RenewalProcessDto> RenewalProcessFindAll();
 
     }
 }
