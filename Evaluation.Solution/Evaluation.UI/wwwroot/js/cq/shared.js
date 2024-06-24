@@ -5,8 +5,7 @@ const trxID = params[1];
 //const rowMaxRange = params[2];
 const BusinessLineCode = params[2];
 $("#btnDashboard").click(function () {
-    var urlencode = encodeParameters("?contactid=" + $("#ContactID").val());
-    window.location.href = "../../transaction/Dashboard/" + urlencode;
+    dashboardRedirect();
 })
 $('#tableCQDetails').DataTable({
     data: dataTableDataDetails,

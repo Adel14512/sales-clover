@@ -22,9 +22,11 @@ using Evaluation.UI.ControllerBusiness;
 
 NLog.Logger logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
+
 try
 {
-    var builder = WebApplication.CreateBuilder(args);
+	
+	var builder = WebApplication.CreateBuilder(args);
 
     // Add services to the container.
     builder.Services.AddRazorPages()
@@ -54,8 +56,9 @@ try
         options.SaveToken = true;
         options.RequireHttpsMetadata = false;
         options.TokenValidationParameters = new TokenValidationParameters()
-        {
-            ValidateIssuerSigningKey = bool.Parse(builder.Configuration["JsonWebTokenKeys:ValidateIssuerSigningKey"]),
+		{
+			LifetimeValidator = CustomLifetimeValidator,
+			ValidateIssuerSigningKey = bool.Parse(builder.Configuration["JsonWebTokenKeys:ValidateIssuerSigningKey"]),
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JsonWebTokenKeys:IssuerSigningKey"])),
             ValidateIssuer = bool.Parse(builder.Configuration["JsonWebTokenKeys:ValidateIssuer"]),
             ValidAudience = builder.Configuration["JsonWebTokenKeys:ValidAudience"],
@@ -76,9 +79,17 @@ try
             }
         };
     });
-
-    //logging
-    builder.Services.AddControllers()
+	bool CustomLifetimeValidator(DateTime? notBefore, DateTime? expires, SecurityToken tokenToValidate, TokenValidationParameters validationParameters)
+	{
+		if (expires != null)
+		{
+			// Check if the token is within the extended valid time (current time + 20 minutes)
+			return DateTime.UtcNow < expires.Value.AddMinutes(20);
+		}
+		return false;
+	}
+	//logging
+	builder.Services.AddControllers()
       .ConfigureApiBehaviorOptions(options =>
       {
           // To preserve the default behavior, capture the original delegate to call later.
@@ -99,6 +110,7 @@ try
               return builtInFactory(context);
           };
       });
+
     // NLog: Setup NLog for Dependency injection
     builder.Logging.ClearProviders();
     builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
@@ -126,6 +138,7 @@ try
     builder.Services.AddTransient<IHttpClientHelper, HttpClientHelper>();
     builder.Services.AddTransient<ILoggerManager, LoggerManager>();
     builder.Services.AddTransient<IDashboardApi, DashboardApi>();
+    builder.Services.AddTransient<ITokenService, TokenService>();
     //builder.Services.AddSignalR(); // Add SignalR
     builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     builder.Services.AddSession(options =>
@@ -168,9 +181,9 @@ try
     app.UseCors("AllowMyOrigin");
     app.UseHttpsRedirection();
     app.UseStaticFiles();
+  
 
-
-    app.UseRouting();
+	app.UseRouting();
     app.UseMiddleware<ErrorHandlerMiddleware>();
     app.UseStatusCodePagesWithRedirects("/login");
     app.UseAuthentication();

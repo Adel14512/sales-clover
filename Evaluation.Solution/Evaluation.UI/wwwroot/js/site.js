@@ -210,3 +210,90 @@ function checkIdTabIsShort() {
 function addNumberToValue(id, number) {
     $("#" + id).val(number);
 }
+
+function dashboardRedirect() {
+    var returnDashboardOrTransaction = localStorage.getItem('returnDashboardOrTransaction');
+    if (returnDashboardOrTransaction == "TicketHistory") {
+        window.location.href = "../../Dashboard/TicketHistory"
+    } else if (returnDashboardOrTransaction == "Dashboard"){
+        var urlencode = encodeParameters("?contactid=" + $("#ContactId").val());
+        window.location.href = "../../transaction/Dashboard/" + urlencode;
+    }
+}
+// Function to decode a JWT token and get its payload
+function parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
+// Function to check if the token is expired
+function isTokenExpired() {
+    const token = localStorage.getItem('token');
+    if (!token) return true;
+
+    const tokenPayload = parseJwt(token);
+    const now = Math.floor(new Date().getTime() / 1000);
+
+    return now > tokenPayload.exp;
+}
+// Function to refresh the token
+function refreshToken() {
+    return $.ajax({
+        url: '/refresh-token',
+        method: 'POST',
+        // Include any necessary headers or data for refreshing the token
+        // For example, you might need to send a refresh token or user credentials
+    }).done(function (response) {
+        localStorage.setItem('token', response.token);
+        $('#token-popup').hide();
+    }).fail(function () {
+        alert('Failed to refresh token. Please try again.');
+    });
+}
+// Function to show the token refresh popup
+function showTokenPopup() {
+    return new Promise((resolve, reject) => {
+        $('#token-popup').show();
+        $('#refresh-token-button').one('click', function () {
+            refreshToken().then(resolve).catch(reject);
+        });
+    });
+}
+
+// Custom AJAX function to handle token expiration and refresh
+function customAjax(options) {
+    if (isTokenExpired()) {
+        showTokenPopup().then(() => {
+            // Add the refreshed token to the request headers
+            options.headers = options.headers || {};
+            options.headers.Authorization = 'Bearer ' + localStorage.getItem('token');
+            // Retry the original request
+            return $.ajax(options);
+        }).fail(() => {
+            alert('Token refresh failed. Please try again.');
+        });
+    } else {
+        // Add the token to the request headers
+        options.headers = options.headers || {};
+        options.headers.Authorization = 'Bearer ' + localStorage.getItem('token');
+        return $.ajax(options);
+    }
+}
+// Example usage
+//$('#some-action-button').on('click', function () {
+//    customAjax({
+//        url: '/your-endpoint',
+//        method: 'GET',
+//        success: function (response) {
+//            console.log('Data:', response);
+//        },
+//        error: function (xhr, status, error) {
+//            console.error('Error:', error);
+//        }
+//    });
+//});

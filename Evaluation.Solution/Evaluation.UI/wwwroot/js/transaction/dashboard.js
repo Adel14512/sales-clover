@@ -284,8 +284,7 @@ var table = $('#tableDashboard').DataTable({
     ],
 });
 $("#btnDashboard").click(function () {
-    var urlencode = encodeParameters("?contactid=" + $("#ContactId").val());
-    window.location.href = "../../transaction/Dashboard/" + urlencode;
+    dashboardRedirect();
 });
 
 function excelOrPdfExport(pageaction, contactID, businessCode, params, ispdf) {
@@ -328,3 +327,4 @@ function excelOrPdfExport(pageaction, contactID, businessCode, params, ispdf) {
         }
     });
 }
+localStorage.setItem('returnDashboardOrTransaction', "Dashboard");

@@ -224,8 +224,7 @@ $('#tableDashboardLong tbody').on('click', 'td:last-child', function () {
 
 });
 $("#btnDashboard").click(function () {
-    var urlencode = encodeParameters("?contactid=" + $("#ContactId").val());
-    window.location.href = "../../transaction/Dashboard/" + urlencode;
+    dashboardRedirect();
 });
 $("#btnExportToExcel").click(function () {
     var formData = new FormData();

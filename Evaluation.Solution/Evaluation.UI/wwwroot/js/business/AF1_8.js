@@ -258,8 +258,7 @@ function checkChildren() {
     return result;
 }
 $("#btnDashboard").click(function () {
-    var urlencode = encodeParameters("?contactid=" + $("#ContactId").val());
-    window.location.href = "../../transaction/Dashboard/" + urlencode;
+    dashboardRedirect();
 })
 function getAge(dateOfBirth) {
     if (!dateOfBirth) {

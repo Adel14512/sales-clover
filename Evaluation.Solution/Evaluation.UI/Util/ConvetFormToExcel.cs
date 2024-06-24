@@ -4985,7 +4985,7 @@ namespace Evaluation.UI.Util
             //draw step3
             ExcelWorksheet worksheetHeaderstep4 = excelPackage.Workbook.Worksheets["SQLStep4"];
             List<IDictionary<string, string>> step4 = _global.GetDictoinaryListFromDynamicList(salesTransactionBL331211SlipResp.Step4BL331211);
-            if (step4 != null)
+            if (step4 != null && step4.Count>0)
             {
                 int columnIndex11 = 1;
                 foreach (string key in step4.FirstOrDefault().Keys)
@@ -5008,9 +5008,67 @@ namespace Evaluation.UI.Util
                 rowIndexstep4++;
             }
 
-            SecureExcelAndHideSQLSheet(true, excelPackage);
-            await excelPackage.SaveAsAsync(memoryStream);
-            return excelPackage.GetAsByteArray();
+
+			// Access the worksheets
+			//var worksheetSheet1 = excelPackage.Workbook.Worksheets["Step1"];
+			//for (int row = 1; row <= worksheetSheet1.Dimension.End.Row; row++)
+			//{
+			//	for (int col = 1; col <= worksheetSheet1.Dimension.End.Column; col++)
+			//	{
+			//		var cell = worksheetSheet1.Cells[row, col];
+			//		if (cell.Formula != null&& cell.Formula != "")
+			//		{
+			//			// Store the calculated value of the formula
+			//			var calculatedValue = cell.Text; // Use cell.Text to get the displayed value
+
+			//			// Replace the formula with the calculated value
+			//			cell.Formula = null;
+			//			cell.Value = calculatedValue;
+			//		}
+			//	}
+			//}
+
+			//// Access the worksheets
+			//var worksheetSheet1 = excelPackage.Workbook.Worksheets["Step1"];
+			//// Create a temporary worksheet to copy values
+			//var tempWorksheet = excelPackage.Workbook.Worksheets.Add("TempSheet");
+
+			//// Copy values from Sheet1 to TempSheet
+			//for (int row = 1; row <= worksheetSheet1.Dimension.End.Row; row++)
+			//{
+			//	for (int col = 1; col <= worksheetSheet1.Dimension.End.Column; col++)
+			//	{
+			//		var cell = worksheetSheet1.Cells[row, col];
+			//		tempWorksheet.Cells[row, col].Value = cell.Text;
+			//	}
+			//}
+
+			//// Copy values back from TempSheet to Sheet1
+			//for (int row = 1; row <= worksheetSheet1.Dimension.End.Row; row++)
+			//{
+			//	for (int col = 1; col <= worksheetSheet1.Dimension.End.Column; col++)
+			//	{
+			//		var cell = tempWorksheet.Cells[row, col];
+			//		worksheetSheet1.Cells[row, col].Formula = null;
+			//		worksheetSheet1.Cells[row, col].Value = cell.Value;
+			//	}
+			//}
+
+			// Remove the temporary worksheet
+			//excelPackage.Workbook.Worksheets.Delete(tempWorksheet);
+			//excelPackage.Save();
+			//worksheetSheet1.ClearFormulas();
+
+			//worksheetSheet1.ClearFormulas();//.ForceFullCalculation = true;
+											//spreadSheet.WorkbookPart.Workbook.CalculationProperties.FullCalculationOnLoad = true;
+
+		    
+			SecureExcelAndHideSQLSheet(true, excelPackage);
+			await excelPackage.SaveAsAsync(memoryStream);
+	
+
+		
+			return excelPackage.GetAsByteArray();
         }
         public async Task<byte[]> Split321110(byte[] fileBytes, SalesTransactionBL321110SlipResp salesTransactionBL321110SlipResp)
         {
