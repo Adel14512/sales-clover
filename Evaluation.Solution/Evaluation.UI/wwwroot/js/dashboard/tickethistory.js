@@ -45,11 +45,13 @@ function search(isRenewal) {
                 if (isRenewal) {
                     $('#tTicketHistoryRenewal').DataTable().destroy();
                     var table = $('#tTicketHistoryRenewal').DataTable(dataTableLoad(data));
+                    localStorage.setItem('activeTabRenewalValue', $("#txtNbrofDaysRenewal").val());
                 } else {
                     $('#tTicketHistory').DataTable().destroy();
                     var table = $('#tTicketHistory').DataTable(dataTableLoad(data));
+                    localStorage.setItem('activeTabNewBusiness', $("#txtNbrofDays").val());
                 }
-     
+               
              
             }
         },
@@ -401,3 +403,25 @@ function filterAddForGridForDate(sender) {
         select.append('<option value="' + d.split('T')[0] + '">' + d.split('T')[0] + '</option>');
     });
 }
+$(document).ready(function () {
+    // Check if there is a saved active tab in local storage
+    var activeTab = localStorage.getItem('activeTab');
+    if (activeTab!=null) {
+        $('.nav-link[href="' + activeTab + '"]').tab('show');
+        if (activeTab == "#newBusiness") {
+            $("#txtNbrofDays").val(localStorage.getItem('activeTabNewBusiness'));
+            search(false);
+        } else if (activeTab == "#renewal") {
+            $("#txtNbrofDaysRenewal").val(localStorage.getItem('activeTabRenewalValue'));
+            search(true);
+        }
+    }
+
+    // Save the active tab in local storage on click
+    $('.nav-link').on('shown.bs.tab', function (e) {
+        var activeTab = $(e.target).attr('href');
+        localStorage.setItem('activeTab', activeTab);
+    });
+    localStorage.setItem('returnDashboardOrTransaction', "TicketHistory");
+ 
+});

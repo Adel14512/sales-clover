@@ -183,6 +183,5 @@ function Submit() {
 //    return childrenCount;
 //}
 $("#btnDashboard").click(function () {
-    var urlencode = encodeParameters("?contactid=" + $("#ContactId").val());
-    window.location.href = "../../transaction/Dashboard/" + urlencode;
+    dashboardRedirect();
 })

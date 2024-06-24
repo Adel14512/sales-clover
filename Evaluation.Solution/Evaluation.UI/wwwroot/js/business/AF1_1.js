@@ -235,8 +235,7 @@ function checkChildren() {
     return result;
 }
 $("#btnDashboard").click(function () {
-    var urlencode = encodeParameters("?contactid=" + $("#ContactId").val());
-    window.location.href = "../../transaction/Dashboard/" + urlencode;
+    dashboardRedirect();
 })
 $("#AF1BL010602Dtco_NbrDaysWhenLess92").attr("disabled", true);
 $("#AF1BL010602Dtco_StayTripOptionCode").change(function(e){

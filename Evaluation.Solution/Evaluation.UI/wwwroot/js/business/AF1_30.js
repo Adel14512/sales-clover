@@ -349,8 +349,7 @@ function submitAF(isSent) {
     }
 }
 $("#btnDashboard").click(function () {
-    var urlencode = encodeParameters("?contactid=" + $("#ContactId").val());
-    window.location.href = "../../transaction/Dashboard/" + urlencode;
+    dashboardRedirect();
 });
 var columnConfig = [
     { data: 'serial', title: 'Serial', width: '100px' },
