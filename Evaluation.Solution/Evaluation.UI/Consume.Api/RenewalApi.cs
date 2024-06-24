@@ -25,7 +25,7 @@ namespace Evaluation.UI.Consume.Api
 			RenewalPolicyResp resp = new RenewalPolicyResp();
 			try
 			{
-				var url = _configuration["ApiURL"] + "api/Renwal/RenewalPolicyFindAll";
+				var url = _configuration["ApiURL"] + "api/Renewal/RenewalPolicyFindAll";
 				resp = await _httpClientHelper.PostApiRequestModelAsync<RenewalPolicyResp>(request, url, ct);
 			}
 			catch (WebException ex)
@@ -46,7 +46,7 @@ namespace Evaluation.UI.Consume.Api
 			RenewalParameterResp resp = new RenewalParameterResp();
 			try
 			{
-				var url = _configuration["ApiURL"] + "api/Renwal/RenewalParameterFindAll";
+				var url = _configuration["ApiURL"] + "api/Renewal/RenewalParameterFindAll";
 				resp = await _httpClientHelper.PostApiRequestModelAsync<RenewalParameterResp>(request, url, ct);
 			}
 			catch (WebException ex)
