@@ -80,5 +80,18 @@ namespace Evaluation.UI.Controllers
 			
 			return Ok(result.TicketHistory);
 		}
+		[Authorize(AuthenticationSchemes = GlobalWords.CustomAuth)]
+		public async Task<IActionResult> PoliciesInquiry(CancellationToken ct)
+		{
+
+			PolicyInquiryReq request = new PolicyInquiryReq();
+			var user = await _userApi.GetUserClaims(User.Claims);
+			request.WebRequestCommon.CorrelationId = Guid.NewGuid().ToString();
+			request.WebRequestCommon.UserName = user.EmailAdress;
+			PolicyInquiryResp result = await _dashboard.PolicyInquiry(request, ct);
+			PolicyInquiryVM policy = new PolicyInquiryVM();
+			policy.PolicyInquiry = result.PolicyInquiry; 
+			return View(policy);
+		}
 	}
 }

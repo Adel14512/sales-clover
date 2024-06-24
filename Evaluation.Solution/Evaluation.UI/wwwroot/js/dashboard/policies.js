@@ -1,15 +1,14 @@
 ﻿var columnConfig = [
-    { data: 'clientType', title: 'Client Type', },
-    { data: 'blCode', title: 'BL Code' },
-    { data: 'blName', title: 'BL Name' },
-    { data: 'policyId', title: 'Policy #' },
-    { data: 'masterName', title: 'Master Name' },
-    { data: 'clientName', title: 'Client Name' },
-    { data: 'decisionMaker', title: 'Decision Maker' },
-    { data: 'policyHandler', title: 'Policy Handler' },
-    { data: 'principal', title: 'Principal' },
-    { data: 'spouce', title: 'Spouce' },
-    { data: 'child', title: 'Child' },
+    { data: 'ticketId', title: 'Ticket', },
+    { data: 'policyId', title: 'Policy' },
+    { data: 'policyEffectiveDate', title: 'Effective Date' },
+    { data: 'policyExpiryDate', title: 'Expiry Date' },
+    { data: 'productName', title: 'Product Name' },
+    { data: 'insurerProductName', title: 'Insurer Product Name' },
+    { data: 'businessLine', title: 'Business Line' },
+    { data: 'policyHolder', title: 'Policy Holder' },
+    { data: 'premium', title: 'Premium' },
+    { data: 'lastModifiedBy', title: 'Last Modified By' },
 ];
 
 var columnDefs = columnConfig.map(function (column, index) {
@@ -30,17 +29,88 @@ var table = $('#tPolicy').DataTable({
     autoWidth: false,
     pageLength: 25,
     columns: [
-        { data: 'clientType', title: 'Client Type', },
-        { data: 'blCode', title: 'BL Code' },
-        { data: 'blName', title: 'BL Name' },
-        { data: 'policyId', title: 'Policy #' },
-        { data: 'masterName', title: 'Master Name' },
-        { data: 'clientName', title: 'Client Name' },
-        { data: 'decisionMaker', title: 'Decision Maker' },
-        { data: 'policyHandler', title: 'Policy Handler' },
-        { data: 'principal', title: 'Principal' },
-        { data: 'spouce', title: 'Spouce' },
-        { data: 'child', title: 'Child' },
+        { data: 'ticketId', title: 'Ticket',  width: "10px"},
+        { data: 'policyId', title: 'Policy' },
+        {
+            data: 'policyEffectiveDate', title: 'Effective Date', render: function (data, type, row) {
+
+                if (data != null) {
+                    return data.split('T')[0];
+                } else {
+                    return "";
+                }
+            }
+},
+        {
+            data: 'policyExpiryDate', title: 'Expiry Date', render: function (data, type, row) {
+
+                if (data != null) {
+                    return data.split('T')[0];
+                } else {
+                    return "";
+                }
+            }
+},
+        { data: 'productName', title: 'Product Name' },
+        { data: 'insurerProductName', title: 'Insurer Product Name' ,width:"160px"},
+        { data: 'businessLine', title: 'Business Line', width: "160px" },
+        { data: 'policyHolder', title: 'Policy Holder' },
+        { data: 'premium', title: 'Premium' },
+        { data: 'lastModifiedBy', title: 'Last Modified By' },
     ],
     columnDefs: columnDefs,
+    initComplete: function () {
+        this.api().columns(0).every(function () {
+            filterAddForGrid(this);
+        }),
+            this.api().columns(1).every(function () {
+                filterAddForGrid(this);
+            }),
+            this.api().columns(2).every(function () {
+                filterAddForGrid(this);
+            }),
+            this.api().columns(3).every(function () {
+                filterAddForGrid(this);
+            }),
+            this.api().columns(4).every(function () {
+                filterAddForGrid(this);
+            }),
+            this.api().columns(5).every(function () {
+                filterAddForGrid(this);
+            }),
+            this.api().columns(6).every(function () {
+                filterAddForGrid(this);
+            }),
+            this.api().columns(7).every(function () {
+                filterAddForGrid(this);
+            }),
+            this.api().columns(8).every(function () {
+                filterAddForGrid(this);
+            }),
+            this.api().columns(9).every(function () {
+                filterAddForGrid(this);
+            }),
+            this.api().columns(10).every(function () {
+                filterAddForGrid(this);
+            });;
+
+    },
 });
+function filterAddForGrid(sender) {
+    var column = sender;
+    var select = $('<select  class="select2 form-select"><option value="">-Select--</option></select>\n')
+        .appendTo($(column.header()))
+        .on('change', function () {
+            var val = $.fn.dataTable.util.escapeRegex(
+                $(this).val()
+            );
+
+            column
+                .search(val ? '^' + val + '$' : '', true, false)
+                .draw();
+        });
+
+    column.data().unique().sort().each(function (d, j) {
+        select.append('<option value="' + d + '">' + d + '</option>');
+    });
+}

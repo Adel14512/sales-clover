@@ -39,31 +39,13 @@ var table = $('#tPolicy').DataTable({
         { data: 'decisionMaker', title: 'Decision Maker' },
         { data: 'policyHandler', title: 'Policy Handler' },
         {
-            data: 'principal', title: 'P', render: function (data, type, row, meta) {
-                if (data != null && data.toString() == "true") {
-                    return "<span class='badge bg-success'>Yes</span>";
-                } else {
-                    return "<span class='badge bg-danger'>No</span>";
-                }
-            }
+            data: 'principal', title: 'P'
         },
         {
-            data: 'spouce', title: 'S', render: function (data, type, row, meta) {
-                if (data != null && data.toString() == "true") {
-                    return "<span class='badge bg-success'>Yes</span>";
-                } else {
-                    return "<span class='badge bg-danger'>No</span>";
-                }
-            }
+            data: 'spouce', title: 'S'
         },
         {
-            data: 'child', title: 'C', render: function (data, type, row, meta) {
-                if (data != null && data.toString() == "true") {
-                    return "<span class='badge bg-success'>Yes</span>";
-                } else {
-                    return "<span class='badge bg-danger'>No</span>";
-                }
-            }
+            data: 'child', title: 'C'
         },
     ],
     columnDefs: columnDefs,
