@@ -966,6 +966,12 @@ namespace Evaluation.BAL.AccessPoint
             return userCredDao.SalesTransactionBL041312UpdGlobalRec(recId,
              clientId, masterId, lastModifiedBy, policyId);
         }
+        public SalesTransactionBL281609Dto SalesTransactionBL281609UpdGlobalRec(int recId,
+           int clientId, int masterId, string lastModifiedBy, string policyId)
+        {
+            return userCredDao.SalesTransactionBL281609UpdGlobalRec(recId,
+             clientId, masterId, lastModifiedBy, policyId);
+        }
 
         public List<PolicyRelatedDocDto> PolicyRelatedDoc(int salesTransactionId, string businessLineCode)
         {
