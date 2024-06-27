@@ -9894,5 +9894,46 @@ namespace Evaluation.DAL.Dapper
                 cmdType: CommandType.StoredProcedure);
             return res;
         }
+        public SalesTransactionBL281609Dto SalesTransactionBL281609UpdGlobalRec(int recId, int clientId, int masterId, string lastModifiedBy, string policyId)
+        {
+            var salesTransaction = DapperDbAccess.QueryFirst<SalesTransactionBL281609Xml>("usp_SalesTransactionBL281609_Upd_Global_Rec",
+                new
+                {
+                    @pRecId = recId,
+                    @pClientId = clientId,
+                    @pMasterId = masterId,
+                    @pPolicyId = policyId,
+                    //@pAF1 = strXml,
+                    @pLastModifiedBy = lastModifiedBy
+                },
+                cmdType: CommandType.StoredProcedure);
+            SalesTransactionBL281609Dto salesTransactionBL281609Dto;
+            if (salesTransaction.AF1BL281609 == null)
+            {
+                salesTransactionBL281609Dto = new()
+                {
+                    Reserved1 = salesTransaction.Reserved1
+                };
+            }
+            else
+            {
+                var xmlToClass = XmlConverter.ToClass<AF1BL281609Root>(salesTransaction.AF1BL281609);
+                salesTransactionBL281609Dto = new()
+                {
+                    RecId = salesTransaction.RecId,
+                    BusinessLineCode = salesTransaction.BusinessLineCode,
+                    ContactId = salesTransaction.ContactId,
+                    ClientId = salesTransaction.ClientId,
+                    MasterId = salesTransaction.MasterId,
+                    TransactionDate = salesTransaction.TransactionDate,
+                    ProductId = salesTransaction.ProductId,
+                    PolicyIssuedDate = salesTransaction.PolicyIssuedDate,
+                    PolicyNumber = salesTransaction.PolicyNumber,
+                    AF1BL281609 = xmlToClass.ArrayOfAF1BL281609,
+                    Reserved1 = salesTransaction.Reserved1
+                };
+            }
+            return salesTransactionBL281609Dto;
+        }
     }
 }

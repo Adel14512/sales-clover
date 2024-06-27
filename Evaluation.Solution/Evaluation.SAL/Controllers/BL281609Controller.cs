@@ -648,5 +648,98 @@ namespace Evaluation.SAL.Controllers
                 return Ok(resp);
             }
         }
+
+        [HttpPost]
+        public IActionResult SalesTransactionBL281609UpdGlobalRec([FromBody] SalesTransactionBL281609UpdGlobalRecReq
+salesTransactionBL281609UpdGlobalRecReq)
+        {
+            SalesTransactionBL281609Resp resp;
+            resp = new()
+            {
+                WebResponseCommon = new()
+                {
+                },
+                SalesTransactionBL281609 = new SalesTransactionBL281609Dto()
+                {
+                    RecId = -1,
+                    AF1BL281609 = new List<AF1BL281609Dto>()
+                }
+            };
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    resp.WebResponseCommon.SuccessIndicator = "Success";
+                    resp.WebResponseCommon.ReturnCode = StatusCodes.Status400BadRequest.ToString();
+                    resp.WebResponseCommon.ReturnMessage = "Bad Request;" + string.Join(" | ", ModelState.Values
+                        .SelectMany(v => v.Errors)
+                        .Select(e => e.ErrorMessage));
+                    resp.WebResponseCommon.CorrelationId = salesTransactionBL281609UpdGlobalRecReq == null ? Guid.NewGuid().ToString() :
+                        salesTransactionBL281609UpdGlobalRecReq.WebRequestCommon == null ? Guid.NewGuid().ToString() :
+                        salesTransactionBL281609UpdGlobalRecReq.WebRequestCommon.CorrelationId == null ? Guid.NewGuid().ToString() :
+                        salesTransactionBL281609UpdGlobalRecReq.WebRequestCommon.CorrelationId.Trim() != string.Empty ?
+                        salesTransactionBL281609UpdGlobalRecReq.WebRequestCommon.CorrelationId : Guid.NewGuid().ToString();
+
+                    return Ok(resp);
+                }
+                _logger.SetCorrelationId(salesTransactionBL281609UpdGlobalRecReq.WebRequestCommon.CorrelationId,
+                    salesTransactionBL281609UpdGlobalRecReq.WebRequestCommon.UserName);
+                _logger.LogInfo("Calling the Endpoint SalesTransactionBL281609UpdGlobalRec is started");
+                _logger.LogDebug(JsonConvert.SerializeObject(salesTransactionBL281609UpdGlobalRecReq));
+                resp.SalesTransactionBL281609 = InstManagerAccessPoint.GetNewAccessPoint().
+                    SalesTransactionBL281609UpdGlobalRec(
+                    salesTransactionBL281609UpdGlobalRecReq.RecId,
+                    salesTransactionBL281609UpdGlobalRecReq.ClientId,
+                    salesTransactionBL281609UpdGlobalRecReq.MasterId,
+                    salesTransactionBL281609UpdGlobalRecReq.WebRequestCommon.UserName, salesTransactionBL281609UpdGlobalRecReq.PolicyId);
+
+                if (resp != null)// && resp.Region.Count == 1)
+                {
+                    resp.WebResponseCommon.SuccessIndicator = "Success";
+                    resp.WebResponseCommon.ReturnMessage = resp.SalesTransactionBL281609.Reserved1 != null ? resp.SalesTransactionBL281609.Reserved1 : "Record updated";
+                    resp.WebResponseCommon.ReturnCode = resp.SalesTransactionBL281609.Reserved1 != null ? StatusCodes.Status302Found.ToString() : StatusCodes.Status202Accepted.ToString();
+                    resp.WebResponseCommon.CorrelationId = salesTransactionBL281609UpdGlobalRecReq.WebRequestCommon.
+                        CorrelationId;
+                    if (resp.SalesTransactionBL281609.Reserved1 != null)
+                        resp.SalesTransactionBL281609 = new SalesTransactionBL281609Dto
+                        {
+                            RecId = -1,
+                            AF1BL281609 = new List<AF1BL281609Dto>()
+                        };
+                    //{
+                    //    Code= regionNewRecReq.Region.Code,
+                    //    Description= regionNewRecReq.Region.Description,
+                    //    IsActive= regionNewRecReq.Region.IsActive                            
+                    //};
+                }
+                else
+                {
+                    //
+                }
+                _logger.LogDebug(JsonConvert.SerializeObject(resp));
+                _logger.LogInfo("Calling the Endpoint SalesTransactionBL281609UpdGlobalRec is completed");
+
+                return Ok(resp);
+                // UserCredDao t = new UserCredDao();
+                //return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error", ex);
+                resp.WebResponseCommon.SuccessIndicator = "Error";
+                resp.WebResponseCommon.ReturnCode = StatusCodes.Status500InternalServerError.ToString();
+                resp.WebResponseCommon.ReturnMessage = "Internal Server Error";
+                resp.WebResponseCommon.CorrelationId = salesTransactionBL281609UpdGlobalRecReq.WebRequestCommon.CorrelationId;
+                resp.SalesTransactionBL281609 = new SalesTransactionBL281609Dto()
+                {
+                    RecId = -1,
+                    AF1BL281609 = new List<AF1BL281609Dto>()
+                };
+                //CorrelationId = regionFindAllReq.WebRequestCommon.CorrelationId
+                _logger.LogDebug(JsonConvert.SerializeObject(resp));
+                return Ok(resp);
+            }
+        }
     }
 }

@@ -256,6 +256,8 @@ namespace Evaluation.BAL.AccessPoint
           int masterId, string lastModifiedBy, string policyId);
         SalesTransactionBL041312Dto SalesTransactionBL041312UpdGlobalRec(int recId, int clientId,
         int masterId, string lastModifiedBy, string policyId);
+        SalesTransactionBL281609Dto SalesTransactionBL281609UpdGlobalRec(int recId, int clientId,
+        int masterId, string lastModifiedBy, string policyId);
         List<PolicyRelatedDocDto> PolicyRelatedDoc(int salesTransactionId, string businessLineCode);
         List<ClientCodeDto> ClientCodeFindWithRecid(int recId);
         PolicyRelatedDocDto PolicyRelatedDocUpdRec(int recId, byte[] attachDocBinary, string attachDocName,

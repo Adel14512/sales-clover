@@ -661,6 +661,7 @@ namespace Evaluation.DAL.IDao
         List<RenewalPolicyDto> RenewalPolicyFindAll();
         List<PolicyInquiryDto> PolicyInquiryFindAll();
         List<RenewalProcessDto> RenewalProcessFindAll();
-
+        SalesTransactionBL281609Dto SalesTransactionBL281609UpdGlobalRec(int recId, int clientId,
+       int masterId, string lastModifiedBy, string policyId);
     }
 }
