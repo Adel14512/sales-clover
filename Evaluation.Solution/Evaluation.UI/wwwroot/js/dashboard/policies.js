@@ -25,7 +25,7 @@ var columnDefs = columnConfig.map(function (column, index) {
 });
 var table = $('#tPolicy').DataTable({
     data: datatable,
-    responsive: false,
+    responsive: true,
     autoWidth: false,
     pageLength: 25,
     columns: [
@@ -57,6 +57,13 @@ var table = $('#tPolicy').DataTable({
         { data: 'policyHolder', title: 'Policy Holder' },
         { data: 'premium', title: 'Premium' },
         { data: 'lastModifiedBy', title: 'Last Modified By' },
+        {
+            data: null, title: 'Action',
+            render: function (data, type, row) {
+                var html = ' <a  onclick="consolidation(this)"   data-ticketid="' + row.ticketId + '"  data-id="' + row.recId + '" data-businesslinecode="' + row.businessLine + '" data-parentid="' + row.parentPolicyId + '" data-policyid="' + row.policyId + '" title="Consolidation"> <i class="fas fa-edit"></i></a>';
+                return html;
+            }
+        }
     ],
     columnDefs: columnDefs,
     initComplete: function () {
@@ -113,4 +120,15 @@ function filterAddForGrid(sender) {
     column.data().unique().sort().each(function (d, j) {
         select.append('<option value="' + d + '">' + d + '</option>');
     });
+}
+function consolidation(e) {
+    var buscode = e.dataset.businesslinecode.split(" -")[0];
+    ////var parentid = e.dataset.parentsalestransacrionid;
+    //var ticketid = e.dataset.ticketid;
+    ////var ticketCode = e.dataset.ticketcode;
+    //var salesTransactionId = e.dataset.recid;
+    var policyparentId = e.dataset.parentid;
+    var params = encodeParameters("?parentpolicyId=" + policyparentId);
+    window.location.href = "/Consolidation/Consolidation" + buscode + "/" + params;
+
 }

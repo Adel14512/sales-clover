@@ -244,6 +244,27 @@ namespace Evaluation.UI.Consume.Api
             }
 
             return resp;
+        }     
+        public async Task<SalesTransactionBL281609Resp> EditAf28Consolidation(SalesTransactionBL281609UpdGlobalRecReq request, CancellationToken ct)
+        {
+            SalesTransactionBL281609Resp resp = new SalesTransactionBL281609Resp();
+            try
+            {
+                var url = _configuration["ApiURL"] + "api/BL281609/SalesTransactionBL281609UpdGlobalRec";
+                resp = await _httpClientHelper.PostApiRequestModelAsync<SalesTransactionBL281609Resp>(request, url, ct);
+            }
+            catch (WebException ex)
+            {
+                var response = _apiService.HandleHttpResponse(ex);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(string.Empty, ex);
+
+            }
+
+            return resp;
         }
         public async Task<SalesTransactionBL321110Resp> EditAf32Consolidation(SalesTransactionBL321110UpdGlobalRecReq request, CancellationToken ct)
         {

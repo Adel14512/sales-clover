@@ -211,48 +211,72 @@ function rowActiveInActive(sender) {
     var icon = sender.children[0]
     var obj = {};
     obj.ProductId = sender.dataset.id;
-
+    var msgTitle = "";
+    var msgText = "";
     // Set new icon and color based on current class
     if (icon.classList.contains('fa-eye')) {
         obj.IsActive = false;
+        msgTitle = "Sure you want to deactivate this product?";
+        msgText = "Deactivate";
     } else {
         obj.IsActive = true;
+        msgTitle = "Sure you want to activate this product?";
+        msgText = "Activate";
     }
     var formData = new FormData();
+    Swal.fire(
+        {
+            title: msgTitle,
+            text: msgText,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, Complete it!",
+            closeOnConfirm: false,
+        }).then((result) => {
+            if (result.value) {
 
-    formData.append('product', JSON.stringify(obj));
-    $.ajax({
-        type: 'POST',
-        url: '/Product/ChangeActiveStatus',
-        data: formData,
-        processData: false,
-        contentType: false,
-        beforeSend: function (xhr) {
-            showLoading();
-            // xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('jwt'));
-            //  xhr.setRequestHeader('X-CSRF-TOKEN', $('input[name="__RequestVerificationToken"]').val());
-        },
-        success: function (data, status, xhr) {
-            hideLoading();
-            if (data != null && data.webResponseCommon.returnCode == '202') {
-                toastr.success("", "Saved");
-                window.location.href = window.location.href;
-                if (icon.classList.contains('fa-eye')) {
-                    icon.classList.toggle('fa-eye', false);
-                    icon.classList.toggle('fa-eye-slash', true);
-                } else {
-                    icon.classList.toggle('fa-eye', true);
-                    icon.classList.toggle('fa-eye-slash', false);
+                if (result.value) {
+                  
+                    formData.append('product', JSON.stringify(obj));
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Product/ChangeActiveStatus',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        beforeSend: function (xhr) {
+                            showLoading();
+                            // xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('jwt'));
+                            //  xhr.setRequestHeader('X-CSRF-TOKEN', $('input[name="__RequestVerificationToken"]').val());
+                        },
+                        success: function (data, status, xhr) {
+                            hideLoading();
+                            if (data != null && data.webResponseCommon.returnCode == '202') {
+                                toastr.success("", "Saved");
+                                window.location.href = window.location.href;
+                                if (icon.classList.contains('fa-eye')) {
+                                    icon.classList.toggle('fa-eye', false);
+                                    icon.classList.toggle('fa-eye-slash', true);
+                                } else {
+                                    icon.classList.toggle('fa-eye', true);
+                                    icon.classList.toggle('fa-eye-slash', false);
+                                }
+                            } else {
+                                toastr.warning("Error Changing Active Status", "UnSaved");
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            toastr.error(error, "Error Changing Active Status");
+                            hideLoading();
+                        }
+                    });
                 }
-            } else {
-                toastr.warning("Error Changing Active Status", "UnSaved");
             }
-        },
-        error: function (xhr, status, error) {
-            toastr.error(error, "Error Changing Active Status");
-            hideLoading();
-        }
-    });
+        });
+ 
+
+   
 
 }
 function rowComplete(sender) {

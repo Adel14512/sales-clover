@@ -254,7 +254,21 @@ namespace Evaluation.UI.Controllers
             // Code to process the form data
             return Ok(result);
         }
-        [HttpPost]
+		[HttpPost]
+		//[ValidateAntiForgeryToken]
+		[Authorize(AuthenticationSchemes = GlobalWords.CustomAuth)]
+		public async Task<IActionResult> EditAF1_28Consolidation(IFormCollection keyValues, CancellationToken ct)
+		{
+
+			SalesTransactionBL281609UpdGlobalRecReq requestBody = JsonConvert.DeserializeObject<SalesTransactionBL281609UpdGlobalRecReq>(keyValues["data"]);
+			var user = await _userApi.GetUserClaims(User.Claims);
+			requestBody.WebRequestCommon.CorrelationId = Guid.NewGuid().ToString();
+			requestBody.WebRequestCommon.UserName = user.EmailAdress;
+			var result = await _transactionApi.EditAf28Consolidation(requestBody, ct);
+			// Code to process the form data
+			return Ok(result);
+		}
+		[HttpPost]
         //[ValidateAntiForgeryToken]
         [Authorize(AuthenticationSchemes = GlobalWords.CustomAuth)]
         public async Task<IActionResult> EditAF1_8(IFormCollection keyValues, CancellationToken ct)

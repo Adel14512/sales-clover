@@ -22,7 +22,9 @@ namespace Evaluation.UI.IConsume.Api
     public interface IConsolidationApi
     {
         Task<PolicyResp> CreateConsolidation(PolicyNewRecReq request, CancellationToken ct);
-        Task<PolicyRelatedDocResp> UpdatePolicyAndDocuments(PolicyRelatedDocUpdRecReq request, CancellationToken ct);
+        Task<PolicyResp> PolicyFindAllWithParentPolicyId(PolicyBl080501FindParentPolicyIdRecReq request, CancellationToken ct);
+
+		Task<PolicyRelatedDocResp> UpdatePolicyAndDocuments(PolicyRelatedDocUpdRecReq request, CancellationToken ct);
         Task<PolicyRelatedDocResp> CreatePolicyAndDocuments(PolicyRelatedDocNewRecReq request, CancellationToken ct);
         Task<PolicyUpdResp> UpdatePolicyForm(PolicyUpdRecReq request, CancellationToken ct);
         Task<PolicyBL301401Resp> CreateConsolidation301401(PolicyBL301401NewRecReq request, CancellationToken ct);

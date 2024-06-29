@@ -4,8 +4,7 @@ var inssudedModelSelectedData;
 var policyItems = [];
 var countClick = 0;
 $(document).ready(function () {
-    $('input[type="text"], input[type="file"],select').prop('disabled', true);
-
+    $('input[type="text"], input[type="file"],select').attr('disabled', 'disabled');
     $("#btnDashboard").click(function (e) {
         var params = encodeParameters("?contactId=" + $("#ContactId").val());
         window.location.href = "/transaction/Dashboard/" + params;
@@ -192,17 +191,16 @@ $(document).ready(function () {
         $('#tPolicies tbody tr').removeClass('consolidationselectedrow');
         // Add the 'selected' class to the clicked row
         $(this).addClass('consolidationselectedrow');
-        $('input[type="text"], input[type="file"],select').prop('disabled', false);
-
+        $('input[type="text"], input[type="file"],select').removeAttr('disabled');
         // Get the selected row data
         policySelectedData = tPolicies.row(this).data();
         //draw data
-        $("#MasterId").val(salesTransactionBL080501.masterId);
-        $("#ClientId").val(salesTransactionBL080501.clientId);
+        $("#MasterId").val(salesTransactionBL080501.masterId).change();
+        $("#ClientId").val(salesTransactionBL080501.clientId).change();
         $("#MasterClientRecID").val(salesTransactionBL080501.recId);
         $("#txtInssuranceCompany").val(policySelectedData.insurerProduct);
-        $("#ddlIsBilling").val(policySelectedData.billingToSamePolicyHolder == true ? "Yes" : "No");
-        $("#ddlProrata").val(policySelectedData.proRataAccept == true ? "Yes" : "No");
+        $("#ddlIsBilling").val(policySelectedData.billingToSamePolicyHolder == true ? "Yes" : "No").change();
+        $("#ddlProrata").val(policySelectedData.proRataAccept == true ? "Yes" : "No").change();
         $("#checkSkipUpload").val();
         $("#txtPolicyNumber").val(policySelectedData.policyNumber);
         $("#txtEffectiveDate").val(policySelectedData.policyEffectiveDate.split('T')[0]);
@@ -600,10 +598,10 @@ $(document).ready(function () {
 
     }
     //master client w lista and datatable
-    $('#MasterId').on('blur', function () {
+    $('#MasterId').on("select2:close", function () {
         SubmitAf8(true);
     })
-    $('#ClientId').on('blur', function () {
+    $('#ClientId').on("select2:close", function () {
         SubmitAf8(true);
     })
     function SubmitAf8(isClientMaster) {
@@ -613,6 +611,7 @@ $(document).ready(function () {
             obj.RecId = $("#MasterClientRecID").val();
             obj.ClientId = $("#ClientId").val();
             obj.MasterId = $("#MasterId").val();
+            obj.PolicyId = policySelectedData.policyId;
             formBody.append("data", JSON.stringify(obj));
             $.ajax({
                 url: "/Business/EditAF1_8Consolidation",
@@ -754,6 +753,7 @@ $(document).ready(function () {
 
     //// Trigger a draw to populate the table initially (you may not need this depending on your setup)
     //tPolicies.draw();
+    initiateSelect2();
 });
 
 

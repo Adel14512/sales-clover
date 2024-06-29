@@ -26,6 +26,7 @@ using Evaluation.UI.Response.BL331211Consolidation;
 using Evaluation.UI.Request.BL331211Consolidation;
 using Evaluation.UI.Response.BL041312Consolidation;
 using Evaluation.UI.Request.BL041312Consolidation;
+using Evaluation.UI.Response;
 
 namespace Evaluation.UI.ControllerBusiness
 {
@@ -45,48 +46,71 @@ namespace Evaluation.UI.ControllerBusiness
             _consolidationApi = consolidationApi;
         }
    
-        public async Task<ConsolidationVM> GetConsolidationBusiness(string id, IEnumerable<Claim> claims, CancellationToken ct)
+        public async Task<ConsolidationVM> GetConsolidationBusiness(string id, IEnumerable<Claim> claims,CancellationToken ct)
         {
             ConsolidationVM convm = new ConsolidationVM();
             var user = await _userApi.GetUserClaims(claims);
-            var paramDecode = _global.DecodeParameters(id, 5);
-            var contactID = Convert.ToInt32(paramDecode[0]); 
-            var salestransactionID = Convert.ToInt32(paramDecode[1]);
-            var businesscode = paramDecode[2];
-            var productID = Convert.ToInt32(paramDecode[3]);
-            var combinationID = paramDecode[4];
 
-            GlobalLookupFindAllReq req = new GlobalLookupFindAllReq();
-            req.WebRequestCommon.CorrelationId = Guid.NewGuid().ToString();
-            req.WebRequestCommon.UserName = user.EmailAdress;
-            var resultClientMaster = await _generalListApi.GetGlobalLookupFindAll(req, ct);
-            GenericIdReq requestCont = new GenericIdReq();
-            requestCont.recId = contactID;
-            ContactVM contactVM = await _contactApi.GetContactByIDApi(requestCont, ct);
+			GlobalLookupFindAllReq req = new GlobalLookupFindAllReq();
+			req.WebRequestCommon.CorrelationId = Guid.NewGuid().ToString();
+			req.WebRequestCommon.UserName = user.EmailAdress;
+			var resultClientMaster = await _generalListApi.GetGlobalLookupFindAll(req, ct);
+			convm.Masters = resultClientMaster.Master;
+			convm.Clients = resultClientMaster.Client;
 
-            convm.Masters = resultClientMaster.Master;
-            convm.Clients = resultClientMaster.Client;
-
-            GenericEmptyReq request = new GenericEmptyReq();
-            GlobalLookupFindAllReq req1 = new GlobalLookupFindAllReq();
-            request.WebRequestCommon.CorrelationId = Guid.NewGuid().ToString();
-            request.WebRequestCommon.UserName = user.EmailAdress;
-            req1.WebRequestCommon.CorrelationId = Guid.NewGuid().ToString();
-            req1.WebRequestCommon.UserName = user.EmailAdress;
-            var result = await _generalListApi.GetAllGeneralLists(request, ct);
+			PolicyResp resultConsolidation = new PolicyResp();
+			ContactVM contactVM= new ContactVM();
+            var salestransactionID = 0;
+            var businesscode = "";
+			try
+            {
+				var paramDecode = _global.DecodeParameters(id, 5);
+				var contactID = Convert.ToInt32(paramDecode[0]);
+			    salestransactionID = Convert.ToInt32(paramDecode[1]);
+			    businesscode = paramDecode[2];
+				var productID = Convert.ToInt32(paramDecode[3]);
+				var combinationID = paramDecode[4];
 
 
-            PolicyNewRecReq reqCon = new PolicyNewRecReq();
-            reqCon.SalesTransactionId = salestransactionID;
-            reqCon.ProductId = productID;
-            reqCon.Combination = combinationID;
-            reqCon.BusinessLineCode = businesscode;
-            reqCon.WebRequestCommon.CorrelationId = Guid.NewGuid().ToString();
-            reqCon.WebRequestCommon.UserName = user.EmailAdress;
-            var resultConsolidation = await _consolidationApi.CreateConsolidation(reqCon, ct);
+				GenericIdReq requestCont = new GenericIdReq();
+				requestCont.recId = contactID;
+				contactVM = await _contactApi.GetContactByIDApi(requestCont, ct);
 
 
-            convm.PolicyRelatedDoc = resultConsolidation.PolicyRelatedDoc;
+
+			
+				PolicyNewRecReq reqCon = new PolicyNewRecReq();
+				reqCon.SalesTransactionId = salestransactionID;
+				reqCon.ProductId = productID;
+				reqCon.Combination = combinationID;
+				reqCon.BusinessLineCode = businesscode;
+				reqCon.WebRequestCommon.CorrelationId = Guid.NewGuid().ToString();
+				reqCon.WebRequestCommon.UserName = user.EmailAdress;
+			    resultConsolidation = await _consolidationApi.CreateConsolidation(reqCon, ct);
+			}
+            catch  {
+				var paramDecode = _global.DecodeParameters(id, 1);
+				var parentPolicyId = paramDecode[0];
+				PolicyBl080501FindParentPolicyIdRecReq policyBl080501FindParentPolicyIdRecReq = new PolicyBl080501FindParentPolicyIdRecReq();
+				policyBl080501FindParentPolicyIdRecReq.WebRequestCommon.CorrelationId = Guid.NewGuid().ToString();
+				policyBl080501FindParentPolicyIdRecReq.WebRequestCommon.UserName = user.EmailAdress;
+                policyBl080501FindParentPolicyIdRecReq.ParentPolicyId = parentPolicyId;
+				resultConsolidation = await _consolidationApi.PolicyFindAllWithParentPolicyId(policyBl080501FindParentPolicyIdRecReq,ct);
+
+				salestransactionID = resultConsolidation.SalesTransactionBL080501.RecId;
+				businesscode = resultConsolidation.SalesTransactionBL080501.BusinessLineCode;
+
+				GenericIdReq requestCont = new GenericIdReq();
+				requestCont.recId = resultConsolidation.SalesTransactionBL080501.ContactId;
+				contactVM = await _contactApi.GetContactByIDApi(requestCont, ct);
+			}
+
+			GenericEmptyReq request = new GenericEmptyReq();
+			request.WebRequestCommon.CorrelationId = Guid.NewGuid().ToString();
+			request.WebRequestCommon.UserName = user.EmailAdress;
+			var result = await _generalListApi.GetAllGeneralLists(request, ct);
+
+			convm.PolicyRelatedDoc = resultConsolidation.PolicyRelatedDoc;
             convm.PaymentSchedule = resultConsolidation.PaymentSchedule;
             convm.Policy = resultConsolidation.Policy;
             convm.SalesTransactionId = salestransactionID;
