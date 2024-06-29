@@ -419,7 +419,7 @@ namespace Evaluation.SAL.Controllers
                 if (resp != null)// && resp.Region.Count == 1)
                 {
                     resp.WebResponseCommon.SuccessIndicator = "Success";
-                    resp.WebResponseCommon.ReturnMessage = resp.Policy[0].Reserved1 != null ? resp.Policy[0].Reserved1 : "New record created";
+                    resp.WebResponseCommon.ReturnMessage = resp.Policy[0].Reserved1 != null ? resp.Policy[0].Reserved1 : "Enquiry Succeeded";
                     resp.WebResponseCommon.ReturnCode = resp.Policy[0].Reserved1 != null ? StatusCodes.Status302Found.ToString() : StatusCodes.Status201Created.ToString();
                     resp.WebResponseCommon.CorrelationId = policyBL291908FindParentPolicyIdRecReq.WebRequestCommon.CorrelationId;
                     if (resp.Policy[0].Reserved1 != null)
