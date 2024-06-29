@@ -663,5 +663,17 @@ namespace Evaluation.DAL.IDao
         List<RenewalProcessDto> RenewalProcessFindAll();
         SalesTransactionBL281609Dto SalesTransactionBL281609UpdGlobalRec(int recId, int clientId,
        int masterId, string lastModifiedBy, string policyId);
+        List<PolicyDto> PolicyFindAllWithParentPolicyId(string parentPolicyId);
+        List<PolicyBL010602Dto> PolicyBL010602FindAllWithParentPolicyId(string parentPolicyId);
+        List<PolicyBL021502Dto> PolicyBL021502FindAllWithParentPolicyId(string parentPolicyId);
+        List<PolicyBL041312Dto> PolicyBL041312FindAllWithParentPolicyId(string parentPolicyId);
+        List<PolicyBL051807Dto> PolicyBL051807FindAllWithParentPolicyId(string parentPolicyId);
+        List<PolicyBL070806Dto> PolicyBL070806FindAllWithParentPolicyId(string parentPolicyId);
+        List<PolicyBL090703Dto> PolicyBL090703FindAllWithParentPolicyId(string parentPolicyId);
+        List<PolicyBL281609Dto> PolicyBL281609FindAllWithParentPolicyId(string parentPolicyId);
+        List<PolicyBL291908Dto> PolicyBL291908FindAllWithParentPolicyId(string parentPolicyId);
+        List<PolicyBL301401Dto> PolicyBL301401FindAllWithParentPolicyId(string parentPolicyId);
+        List<PolicyBL321110Dto> PolicyBL321110FindAllWithParentPolicyId(string parentPolicyId);
+        List<PolicyBL331211Dto> PolicyBL331211FindAllWithParentPolicyId(string parentPolicyId);
     }
 }

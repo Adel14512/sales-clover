@@ -4550,6 +4550,17 @@ namespace Evaluation.DAL.Dapper
 
             return policyList;
         }
+        public List<PolicyDto> PolicyFindAllWithParentPolicyId(string parentPolicyId)
+        {
+            var res = DapperDbAccess.Query<PolicyDto>("usp_Policy_Find_All_With_ParentPolicyId",
+                                 new
+                                 {
+                                     @pParentPolicyId = parentPolicyId
+                                 },
+                                  cmdType: CommandType.StoredProcedure);
+
+            return res;
+        }
 
         public List<PaymentScheduleDto> PolicyPaymentSchedule(int salesTransactionId, string businessLineCode)
         {
@@ -9934,6 +9945,127 @@ namespace Evaluation.DAL.Dapper
                 };
             }
             return salesTransactionBL281609Dto;
+        }
+        public List<PolicyBL010602Dto> PolicyBL010602FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            var res = DapperDbAccess.Query<PolicyBL010602Dto>("usp_PolicyBL010602_Find_All_With_ParentPolicyId",
+                                 new
+                                 {
+                                     @pParentPolicyId = parentPolicyId
+                                 },
+                                  cmdType: CommandType.StoredProcedure);
+
+            return res;
+        }
+        public List<PolicyBL021502Dto> PolicyBL021502FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            var res = DapperDbAccess.Query<PolicyBL021502Dto>("usp_PolicyBL021502_Find_All_With_ParentPolicyId",
+                                 new
+                                 {
+                                     @pParentPolicyId = parentPolicyId
+                                 },
+                                  cmdType: CommandType.StoredProcedure);
+
+            return res;
+        }
+        public List<PolicyBL041312Dto> PolicyBL041312FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            var res = DapperDbAccess.Query<PolicyBL041312Dto>("usp_PolicyBL041312_Find_All_With_ParentPolicyId",
+                                 new
+                                 {
+                                     @pParentPolicyId = parentPolicyId
+                                 },
+                                  cmdType: CommandType.StoredProcedure);
+
+            return res;
+        }
+        public List<PolicyBL051807Dto> PolicyBL051807FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            var res = DapperDbAccess.Query<PolicyBL051807Dto>("usp_PolicyBL051807_Find_All_With_ParentPolicyId",
+                                 new
+                                 {
+                                     @pParentPolicyId = parentPolicyId
+                                 },
+                                  cmdType: CommandType.StoredProcedure);
+
+            return res;
+        }
+        public List<PolicyBL070806Dto> PolicyBL070806FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            var res = DapperDbAccess.Query<PolicyBL070806Dto>("usp_PolicyBL070806_Find_All_With_ParentPolicyId",
+                                 new
+                                 {
+                                     @pParentPolicyId = parentPolicyId
+                                 },
+                                  cmdType: CommandType.StoredProcedure);
+
+            return res;
+        }
+        public List<PolicyBL090703Dto> PolicyBL090703FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            var res = DapperDbAccess.Query<PolicyBL090703Dto>("usp_PolicyBL090703_Find_All_With_ParentPolicyId",
+                                 new
+                                 {
+                                     @pParentPolicyId = parentPolicyId
+                                 },
+                                  cmdType: CommandType.StoredProcedure);
+
+            return res;
+        }
+        public List<PolicyBL281609Dto> PolicyBL281609FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            var res = DapperDbAccess.Query<PolicyBL281609Dto>("usp_PolicyBL281609_Find_All_With_ParentPolicyId",
+                                 new
+                                 {
+                                     @pParentPolicyId = parentPolicyId
+                                 },
+                                  cmdType: CommandType.StoredProcedure);
+
+            return res;
+        }
+        public List<PolicyBL291908Dto> PolicyBL291908FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            var res = DapperDbAccess.Query<PolicyBL291908Dto>("usp_PolicyBL291908_Find_All_With_ParentPolicyId",
+                                 new
+                                 {
+                                     @pParentPolicyId = parentPolicyId
+                                 },
+                                  cmdType: CommandType.StoredProcedure);
+
+            return res;
+        }
+        public List<PolicyBL301401Dto> PolicyBL301401FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            var res = DapperDbAccess.Query<PolicyBL301401Dto>("usp_PolicyBL301401_Find_All_With_ParentPolicyId",
+                                 new
+                                 {
+                                     @pParentPolicyId = parentPolicyId
+                                 },
+                                  cmdType: CommandType.StoredProcedure);
+
+            return res;
+        }
+        public List<PolicyBL321110Dto> PolicyBL321110FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            var res = DapperDbAccess.Query<PolicyBL321110Dto>("usp_PolicyBL321110_Find_All_With_ParentPolicyId",
+                                 new
+                                 {
+                                     @pParentPolicyId = parentPolicyId
+                                 },
+                                  cmdType: CommandType.StoredProcedure);
+
+            return res;
+        }
+        public List<PolicyBL331211Dto> PolicyBL331211FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            var res = DapperDbAccess.Query<PolicyBL331211Dto>("usp_PolicyBL331211_Find_All_With_ParentPolicyId",
+                                 new
+                                 {
+                                     @pParentPolicyId = parentPolicyId
+                                 },
+                                  cmdType: CommandType.StoredProcedure);
+
+            return res;
         }
     }
 }

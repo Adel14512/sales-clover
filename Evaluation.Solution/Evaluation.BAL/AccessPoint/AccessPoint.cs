@@ -930,6 +930,10 @@ namespace Evaluation.BAL.AccessPoint
         {
             return userCredDao.PolicyNewRec(salesTransactionId, productId, combination, businessLineCode, createdBy);
         }
+        public List<PolicyDto> PolicyFindAllWithParentPolicyId(string parentPolicyId)
+        {
+            return userCredDao.PolicyFindAllWithParentPolicyId(parentPolicyId);
+        }
         public List<PaymentScheduleDto> PolicyPaymentSchedule(int salesTransactionId, string businessLineCode)
         {
             return userCredDao.PolicyPaymentSchedule(salesTransactionId, businessLineCode);
@@ -2103,6 +2107,50 @@ namespace Evaluation.BAL.AccessPoint
         public List<RenewalProcessDto> RenewalProcessFindAll()
         {
             return userCredDao.RenewalProcessFindAll();
+        }
+        public List<PolicyBL010602Dto> PolicyBL010602FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            return userCredDao.PolicyBL010602FindAllWithParentPolicyId(parentPolicyId);
+        }
+        public List<PolicyBL021502Dto> PolicyBL021502FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            return userCredDao.PolicyBL021502FindAllWithParentPolicyId(parentPolicyId);
+        }
+        public List<PolicyBL041312Dto> PolicyBL041312FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            return userCredDao.PolicyBL041312FindAllWithParentPolicyId(parentPolicyId);
+        }
+        public List<PolicyBL051807Dto> PolicyBL051807FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            return userCredDao.PolicyBL051807FindAllWithParentPolicyId(parentPolicyId);
+        }
+        public List<PolicyBL070806Dto> PolicyBL070806FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            return userCredDao.PolicyBL070806FindAllWithParentPolicyId(parentPolicyId);
+        }
+        public List<PolicyBL090703Dto> PolicyBL090703FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            return userCredDao.PolicyBL090703FindAllWithParentPolicyId(parentPolicyId);
+        }
+        public List<PolicyBL281609Dto> PolicyBL281609FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            return userCredDao.PolicyBL281609FindAllWithParentPolicyId(parentPolicyId);
+        }
+        public List<PolicyBL291908Dto> PolicyBL291908FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            return userCredDao.PolicyBL291908FindAllWithParentPolicyId(parentPolicyId);
+        }
+        public List<PolicyBL301401Dto> PolicyBL301401FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            return userCredDao.PolicyBL301401FindAllWithParentPolicyId(parentPolicyId);
+        }
+        public List<PolicyBL321110Dto> PolicyBL321110FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            return userCredDao.PolicyBL321110FindAllWithParentPolicyId(parentPolicyId);
+        }
+        public List<PolicyBL331211Dto> PolicyBL331211FindAllWithParentPolicyId(string parentPolicyId)
+        {
+            return userCredDao.PolicyBL331211FindAllWithParentPolicyId(parentPolicyId);
         }
     }
 }
