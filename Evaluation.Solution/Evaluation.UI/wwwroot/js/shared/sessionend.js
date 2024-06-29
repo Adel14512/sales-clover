@@ -8,7 +8,7 @@
 //    return console.error(err.toString());
 //});
 
-let sessionTimeoutWarningDuration = 180 * 60 * 1000; // 5 minutes warning before session ends
+let sessionTimeoutWarningDuration = 600 * 60 * 1000; // 5 minutes warning before session ends
 let sessionTimeoutDuration = 90 * 60 * 1000; // 20 minutes session timeout
 
 //setTimeout(function () {

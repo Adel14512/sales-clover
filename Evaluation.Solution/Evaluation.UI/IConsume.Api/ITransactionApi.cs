@@ -96,6 +96,7 @@ namespace Evaluation.UI.IConsume.Api
         Task<SalesTransactionBL281609SlipResp> Slip281609(SalesTransactionBL281609FindAF1WithRecIdReq request, CancellationToken ct);
         Task<SalesTransactionBL311703SlipResp> Slip311703(SalesTransactionBL311703FindAF1WithRecIdReq request, CancellationToken ct);
         Task<SalesTransactionBL080501Resp> EditAf8Consolidation(SalesTransactionBL080501UpdGlobalRecReq request, CancellationToken ct);
+        Task<SalesTransactionBL281609Resp> EditAf28Consolidation(SalesTransactionBL281609UpdGlobalRecReq request, CancellationToken ct);
       
         Task<SalesTransactionBL331211Resp> EditAf33Consolidation(SalesTransactionBL331211UpdGlobalRecReq request, CancellationToken ct);
         

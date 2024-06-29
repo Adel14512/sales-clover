@@ -56,6 +56,27 @@ namespace Evaluation.UI.Consume.Api
             }
 
             return resp;
+        }     
+        public async Task<PolicyResp> PolicyFindAllWithParentPolicyId(PolicyBl080501FindParentPolicyIdRecReq request, CancellationToken ct)
+        {
+            PolicyResp resp = new PolicyResp();
+            try
+            {
+                var url = _configuration["ApiURL"] + "api/Policy/PolicyFindAllWithParentPolicyId";
+                resp = await _httpClientHelper.PostApiRequestModelAsync<PolicyResp>(request, url, ct);
+            }
+            catch (WebException ex)
+            {
+                var response = _apiService.HandleHttpResponse(ex);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(string.Empty, ex);
+
+            }
+
+            return resp;
         }
         public async Task<PolicyRelatedDocResp> UpdatePolicyAndDocuments(PolicyRelatedDocUpdRecReq request, CancellationToken ct)
         {

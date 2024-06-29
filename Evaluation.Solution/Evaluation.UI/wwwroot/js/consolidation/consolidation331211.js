@@ -198,12 +198,12 @@ $(document).ready(function () {
         // Get the selected row data
         policySelectedData = tPolicies.row(this).data();
         //draw data
-        $("#MasterId").val(salesTransactionBL331211.masterId);
-        $("#ClientId").val(salesTransactionBL331211.clientId);
+        $("#MasterId").val(salesTransactionBL331211.masterId).change();
+        $("#ClientId").val(salesTransactionBL331211.clientId).change();
         $("#MasterClientRecID").val(salesTransactionBL331211.recId);
         $("#txtInssuranceCompany").val(policySelectedData.insurerProduct);
-        $("#ddlIsBilling").val(policySelectedData.billingToSamePolicyHolder == true ? "Yes" : "No");
-        $("#ddlProrata").val(policySelectedData.proRataAccept == true ? "Yes" : "No");
+        $("#ddlIsBilling").val(policySelectedData.billingToSamePolicyHolder == true ? "Yes" : "No").change();
+        $("#ddlProrata").val(policySelectedData.proRataAccept == true ? "Yes" : "No").change();
         $("#checkSkipUpload").val();
         $("#txtPolicyNumber").val(policySelectedData.policyNumber);
         $("#txtEffectiveDate").val(policySelectedData.policyEffectiveDate.split('T')[0]);
@@ -434,16 +434,16 @@ $(document).ready(function () {
             { item: 'Net Premium', percent: '', amount: policySelectedData.netPremiumAmount, isEdit: false, isNetCalculated: false, elemenetAmount: 'NetPremiumAmount' },
         ];
         // Call the function to generate table rows
-       // if (countClick == 0) {
-            generateTableRows();
-         //   countClick++;
+        // if (countClick == 0) {
+        generateTableRows();
+        //   countClick++;
         //}
-       
+
     });
 
     //Table tInsured Start
     var columnConfigtInsured = [
-       // { data: 'relationCode', title: 'Relation', },
+        // { data: 'relationCode', title: 'Relation', },
         { data: 'firstName', title: 'First Name', },
         { data: 'middleName', title: 'Father/Middle Name' },
         { data: 'lastName', title: 'Last Name' },
@@ -451,8 +451,8 @@ $(document).ready(function () {
         { data: 'dob', title: 'DD/MM/YYYY' },
         { data: 'nationalityCode', title: 'Nationality' },
         { data: 'maritalStatusCode', title: 'Marital Status' },
-      //  { data: 'mobileNumber', title: 'Mobile No' },
-     //   { data: 'email', title: 'E-mail' },
+        //  { data: 'mobileNumber', title: 'Mobile No' },
+        //   { data: 'email', title: 'E-mail' },
     ];
     var columnDefstInsured = columnConfigtInsured.map(function (column, index) {
         return {
@@ -468,7 +468,7 @@ $(document).ready(function () {
     });
     var tInsured = $('#tInsured').DataTable({
         data: salesTransactionBL331211.aF1BL331211,
-        responsive: true, 
+        responsive: true,
         autoWidth: true,
         ordering: false,
         columns: [
@@ -507,8 +507,8 @@ $(document).ready(function () {
                     return maritalStatusList.find(x => x.code.toLowerCase() == data.toLowerCase()).description;
                 }
             },
-           // { data: 'mobileNumber', title: 'Mobile No' },
-           // { data: 'email', title: 'E-mail' },
+            // { data: 'mobileNumber', title: 'Mobile No' },
+            // { data: 'email', title: 'E-mail' },
             //{
             //    data: 'recId', title: 'Actions', render: function (data, type, row, meta) {
             //        var html = '<a class="edit-btn"><i class="fas fa-edit"></i></a> ';
@@ -570,8 +570,8 @@ $(document).ready(function () {
             obj.DocumentType = model.documentType;
             obj.ParentPolicyId = policySelectedData.parentPolicyId;
             obj.PolicyId = policySelectedData.policyId
-            
-           
+
+
 
             formData.append('uploadfile', model.file);
             formData.append('data', JSON.stringify(obj));
@@ -627,10 +627,10 @@ $(document).ready(function () {
 
 
     //master client w lista and datatable
-    $('#MasterId').on('blur', function () {
+    $('#MasterId').on("select2:close", function () {
         SubmitAf32(true);
     })
-    $('#ClientId').on('blur', function () {
+    $('#ClientId').on("select2:close", function () {
         SubmitAf32(true);
     })
     function SubmitAf32(isClientMaster) {
@@ -656,7 +656,8 @@ $(document).ready(function () {
                     hideLoading();
                     if (data != null && data.webResponseCommon.returnCode == '202') {
                         toastr.success("", "Saved");
-
+                        salesTransactionBL331211.masterId = $("#MasterId").val();
+                        salesTransactionBL331211.clientId = $("#ClientId").val();
                     } else {
                         toastr.error(data.webResponseCommon.returnMessage, "Didin't saved");
 
@@ -782,6 +783,7 @@ $(document).ready(function () {
 
     //// Trigger a draw to populate the table initially (you may not need this depending on your setup)
     //tPolicies.draw();
+    initiateSelect2();
 });
 function getValues() {
     var table = document.getElementById("tInsured");
@@ -792,7 +794,7 @@ function getValues() {
         var cells = rows[i].getElementsByTagName("td");
 
         var rowValues = {
-           // relationCode: cells[0].dataset.relationcode,
+            // relationCode: cells[0].dataset.relationcode,
             firstName: cells[0].textContent,
             middleName: cells[1].textContent,
             lastName: cells[2].textContent,
@@ -958,7 +960,7 @@ function Submit() {
             if (data != null && data.webResponseCommon.returnCode == '202') {
                 toastr.success("", "Saved");
                 var policy = policyList.find(x => x.policyId == policySelectedData.policyId)
-          
+
                 policy.grossPremiumGP = parseFloat($("#grossPremium").text()) || 0;
                 policy.commisionFromGPPer = parseFloat($("#CommisionFromGPPer").text()) || 0;
                 policy.commisionFromGPAmount = parseFloat($("#CommisionFromGPAmount").text()) || 0;
@@ -978,7 +980,7 @@ function Submit() {
                 policy.policyHolder = $("#txtPolicyHolder").val();
             } else {
                 // Redraw the row to reflect the updated data
-              //  currentRowSelectedInsured.data(inssudedModelSelectedData).draw();
+                //  currentRowSelectedInsured.data(inssudedModelSelectedData).draw();
                 toastr.error(data.webResponseCommon.returnMessage, "Didin't saved");
 
             }

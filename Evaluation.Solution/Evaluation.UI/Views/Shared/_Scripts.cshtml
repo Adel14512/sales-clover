@@ -38,9 +38,10 @@
     //  $(".select2").select2();
     //$(".form-select").select2({ dropdownCssClass: 'form-select' });
     //$(".select2").select2({ width: '100%', dropdownCssClass: 'form-select' });
-    // $(document).ready(function () {
+     $(document).ready(function () {
+       // $(".form-select").select2({ width: '100%', height: '100%' });
     //     $(".form-select").select2({dropdownCssClass: 'form-select', width: '100%'   dropdownParent: $('.modal') });
-    // });
+     });
     // $(".select2").select2({ theme: 'bootstrap-5' });
     // $(".select2").select2({ theme: "bootstrap-5" });
     // Show the loading icon and semi-transparent background
@@ -56,7 +57,10 @@
     function hideLoading() {
         document.getElementById("loading").style.display = "none";
     }
-
+    function initiateSelect2() {
+        $(".form-select").select2({ width: '100%', height: '100%', selectOnClose: true });
+    }
+ 
     // Call the showLoading() function when the page is loading
     //window.addEventListener("load", function () {
     //    showLoading();

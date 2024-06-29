@@ -758,6 +758,7 @@ $(document).ready(function () {
 
     //// Trigger a draw to populate the table initially (you may not need this depending on your setup)
     //tPolicies.draw();
+    initiateSelect2();
 });
 function getValues() {
     var table = document.getElementById("tInsured");

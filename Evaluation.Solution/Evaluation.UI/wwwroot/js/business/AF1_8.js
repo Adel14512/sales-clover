@@ -315,6 +315,7 @@ function childrenValidationAge(childrenAge, principalAge, spouseAge) {
     //}
     return true;
 }
+initiateSelect2();
 // Populate Client dropdown
 //var clientSelect = document.getElementById("ClientId");
 //var masterSelect = document.getElementById("MasterId");
