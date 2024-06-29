@@ -245,6 +245,7 @@ namespace Evaluation.BAL.AccessPoint
         List<CQFullListBL080501Dto> SalesTransactionBL080501FindCQFullListWithRecIdFilter(int salesTransactionId);
         List<GlobalLookupDto> GlobalLookupFindAll();
         List<PolicyDto> PolicyNewRec(int salesTransactionId, int productId, string combination, string businessLineCode, string createdBy);
+        List<PolicyDto> PolicyFindAllWithParentPolicyId(string parentPolicyId);
         List<PaymentScheduleDto> PolicyPaymentSchedule(int salesTransactionId, string businessLineCode);
         SalesTransactionBL080501Dto SalesTransactionBL080501UpdGlobalRec(int recId, int clientId,
            int masterId, string lastModifiedBy, string policyId);

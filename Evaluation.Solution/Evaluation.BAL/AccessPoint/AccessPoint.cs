@@ -930,6 +930,10 @@ namespace Evaluation.BAL.AccessPoint
         {
             return userCredDao.PolicyNewRec(salesTransactionId, productId, combination, businessLineCode, createdBy);
         }
+        public List<PolicyDto> PolicyFindAllWithParentPolicyId(string parentPolicyId)
+        {
+            return userCredDao.PolicyFindAllWithParentPolicyId(parentPolicyId);
+        }
         public List<PaymentScheduleDto> PolicyPaymentSchedule(int salesTransactionId, string businessLineCode)
         {
             return userCredDao.PolicyPaymentSchedule(salesTransactionId, businessLineCode);

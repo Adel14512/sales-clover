@@ -4550,6 +4550,17 @@ namespace Evaluation.DAL.Dapper
 
             return policyList;
         }
+        public List<PolicyDto> PolicyFindAllWithParentPolicyId(string parentPolicyId)
+        {
+            var res = DapperDbAccess.Query<PolicyDto>("usp_Policy_Find_All_With_ParentPolicyId",
+                                 new
+                                 {
+                                     @pParentPolicyId = parentPolicyId
+                                 },
+                                  cmdType: CommandType.StoredProcedure);
+
+            return res;
+        }
 
         public List<PaymentScheduleDto> PolicyPaymentSchedule(int salesTransactionId, string businessLineCode)
         {
