@@ -39,6 +39,8 @@ namespace Evaluation.CAL.DTO.BL070806Consolidation
         public DateTime PolicyEffectiveDate { get; set; }
         public DateTime PolicyExpiryDate { get; set; }
         public DateTime PolicyIssuedDate { get; set; }
+        public string BusinessLineCode { get; set; }
+
         [JsonIgnore]
         public string Reserved1 { get; set; }
         [JsonIgnore]
