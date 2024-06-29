@@ -366,5 +366,88 @@ namespace Evaluation.SAL.Controllers
                 return Ok(resp);
             }
         }
+        [HttpPost]
+        public IActionResult PolicyBL331211FindAllWithParentPolicyId([FromBody] PolicyBL331211FindParentPolicyIdRecReq policyBL331211FindParentPolicyIdRecReq)
+        {
+            PolicyBL331211Resp resp;
+            resp = new()
+            {
+                WebResponseCommon = new()
+                {
+                },
+                Policy = new List<PolicyBL331211Dto>() { },
+                SalesTransactionBL331211 = new SalesTransactionBL331211Dto()
+                {
+                    RecId = -1,
+                    AF1BL331211 = new List<AF1BL331211Dto>()
+                },
+                paymentScheduleBL331211 = new List<PaymentScheduleBL331211Dto>(),
+                policyRelatedDoc331211 = new List<PolicyRelatedDocBL331211Dto>()
+            };
+
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    resp.WebResponseCommon.SuccessIndicator = "Success";
+                    resp.WebResponseCommon.ReturnCode = StatusCodes.Status400BadRequest.ToString();
+                    resp.WebResponseCommon.ReturnMessage = "Bad Request;" + string.Join(" | ", ModelState.Values
+                        .SelectMany(v => v.Errors)
+                        .Select(e => e.ErrorMessage));
+                    resp.WebResponseCommon.CorrelationId = policyBL331211FindParentPolicyIdRecReq == null ? Guid.NewGuid().ToString() :
+                        policyBL331211FindParentPolicyIdRecReq.WebRequestCommon == null ? Guid.NewGuid().ToString() :
+                        policyBL331211FindParentPolicyIdRecReq.WebRequestCommon.CorrelationId == null ? Guid.NewGuid().ToString() :
+                        policyBL331211FindParentPolicyIdRecReq.WebRequestCommon.CorrelationId.Trim() != string.Empty ?
+                        policyBL331211FindParentPolicyIdRecReq.WebRequestCommon.CorrelationId : Guid.NewGuid().ToString();
+
+                    return Ok(resp);
+                }
+                _logger.SetCorrelationId(policyBL331211FindParentPolicyIdRecReq.WebRequestCommon.CorrelationId, policyBL331211FindParentPolicyIdRecReq.WebRequestCommon.UserName);
+                _logger.LogInfo("Calling the Endpoint PolicyFindAllWithParentPolicyId is started");
+                _logger.LogDebug(JsonConvert.SerializeObject(policyBL331211FindParentPolicyIdRecReq));
+                resp.Policy = InstManagerAccessPoint.GetNewAccessPoint().PolicyBL331211FindAllWithParentPolicyId(policyBL331211FindParentPolicyIdRecReq.ParentPolicyId);
+                if (resp.Policy == null)
+                    return Ok(resp);
+                if (resp.Policy.Count == 0)
+                    return Ok(resp);
+                resp.SalesTransactionBL331211 = InstManagerAccessPoint.GetNewAccessPoint().
+                    SalesTransactionBL331211FindAF1WithRecIdFilter(resp.Policy[0].SalesTransactionId);
+                resp.paymentScheduleBL331211 = InstManagerAccessPoint.GetNewAccessPoint().
+                   PolicyPaymentScheduleBL331211(resp.Policy[0].SalesTransactionId, resp.Policy[0].BusinessLineCode);
+                resp.policyRelatedDoc331211 = InstManagerAccessPoint.GetNewAccessPoint().
+                   PolicyRelatedDocBL331211(resp.Policy[0].SalesTransactionId, resp.Policy[0].BusinessLineCode);
+
+                if (resp != null)// && resp.Region.Count == 1)
+                {
+                    resp.WebResponseCommon.SuccessIndicator = "Success";
+                    resp.WebResponseCommon.ReturnMessage = resp.Policy[0].Reserved1 != null ? resp.Policy[0].Reserved1 : "New record created";
+                    resp.WebResponseCommon.ReturnCode = resp.Policy[0].Reserved1 != null ? StatusCodes.Status302Found.ToString() : StatusCodes.Status201Created.ToString();
+                    resp.WebResponseCommon.CorrelationId = policyBL331211FindParentPolicyIdRecReq.WebRequestCommon.CorrelationId;
+                    if (resp.Policy[0].Reserved1 != null)
+                        resp.Policy = new List<PolicyBL331211Dto>() { };
+                }
+                else
+                {
+                    //
+                }
+                _logger.LogDebug(JsonConvert.SerializeObject(resp));
+                _logger.LogInfo("Calling the Endpoint PolicyFindAllWithParentPolicyId is completed");
+
+                return Ok(resp);
+                // UserCredDao t = new UserCredDao();
+                //return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Error", ex);
+                resp.WebResponseCommon.SuccessIndicator = "Error";
+                resp.WebResponseCommon.ReturnCode = StatusCodes.Status500InternalServerError.ToString();
+                resp.WebResponseCommon.ReturnMessage = "Internal Server Error";
+                resp.WebResponseCommon.CorrelationId = policyBL331211FindParentPolicyIdRecReq.WebRequestCommon.CorrelationId;
+                resp.Policy = new List<PolicyBL331211Dto>() { };
+                _logger.LogDebug(JsonConvert.SerializeObject(resp));
+                return Ok(resp);
+            }
+        }
     }
 }
