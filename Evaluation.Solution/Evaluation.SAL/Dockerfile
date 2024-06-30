@@ -23,5 +23,8 @@ RUN dotnet publish "./Evaluation.SAL.csproj" -c $BUILD_CONFIGURATION -o /app/pub
 
 FROM base AS final
 WORKDIR /app
+# Copy the NLog.config file to the /app directory
+#COPY Evaluation.SAL/NLog.config /app/NLog.config
 COPY --from=publish /app/publish .
+#ENV ASPNETCORE_URLS=http://+:80
 ENTRYPOINT ["dotnet", "Evaluation.SAL.dll"]

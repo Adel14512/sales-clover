@@ -12,15 +12,17 @@ using System.Text;
 using Evaluation.CAL.Wrapper;
 using NLog;
 using System.IO;
+using NLog.Web;
 
 namespace Evaluation.SAL
 {
     public class Startup
     {
         public Startup(IConfiguration configuration)
-        {            
+        {
             _Configuration = configuration;
-            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/Nlog.Config"));
+            //LogManager.LoadConfiguration("./Nlog.config");
+            LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
         }
 
         public IConfiguration _Configuration { get; }
@@ -38,13 +40,13 @@ namespace Evaluation.SAL
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             ValidIssuer = _Configuration["Jwt:Issuer"],
-            ValidAudience = _Configuration["Jwt:Issuer"],            
+            ValidAudience = _Configuration["Jwt:Issuer"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_Configuration["Jwt:Key"]))
         };
     });
-            services.AddSingleton<ILoggerManager, LoggerManager>(); 
+            services.AddSingleton<ILoggerManager, LoggerManager>();
             services.AddMvc();
-            services.AddControllers();            
+            services.AddControllers();
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Clover.SAL", Version = "v1" });
@@ -117,7 +119,7 @@ namespace Evaluation.SAL
 
             app.UseRouting();
             app.UseAuthentication();
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseAuthorization();
 
             //app.UseSwagger();
