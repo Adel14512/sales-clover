@@ -2,8 +2,8 @@
 const currentUrl = window.location.href;
 var urlParams;
 try {
-     urlParams = new URLSearchParams(window.location.search);
-} catch  {
+    urlParams = new URLSearchParams(window.location.search);
+} catch {
 
 }
 
@@ -16,7 +16,7 @@ function encodeParameters(parameter) {
 
 function decodeParameters(ticket, numberOfParameters) {
     const parameters = [];
-    const decoded = atob(ticket.replace("#",""));
+    const decoded = atob(ticket.replace("#", ""));
     const decodedParams = decoded.split('&');
 
     for (let i = 0; i < numberOfParameters; i++) {
@@ -215,7 +215,7 @@ function dashboardRedirect() {
     var returnDashboardOrTransaction = localStorage.getItem('returnDashboardOrTransaction');
     if (returnDashboardOrTransaction == "TicketHistory") {
         window.location.href = "../../Dashboard/TicketHistory"
-    } else if (returnDashboardOrTransaction == "Dashboard"){
+    } else if (returnDashboardOrTransaction == "Dashboard") {
         var urlencode = encodeParameters("?contactid=" + $("#ContactId").val());
         window.location.href = "../../transaction/Dashboard/" + urlencode;
     }
@@ -233,7 +233,7 @@ function parseJwt(token) {
 
 // Function to check if the token is expired
 function isTokenExpired() {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('jwt');
     if (!token) return true;
 
     const tokenPayload = parseJwt(token);
@@ -244,12 +244,12 @@ function isTokenExpired() {
 // Function to refresh the token
 function refreshToken() {
     return $.ajax({
-        url: '/refresh-token',
+        url: '/login/RefreshToken',
         method: 'POST',
         // Include any necessary headers or data for refreshing the token
         // For example, you might need to send a refresh token or user credentials
     }).done(function (response) {
-        localStorage.setItem('token', response.token);
+        localStorage.setItem('jwt', response.token);
         $('#token-popup').hide();
     }).fail(function () {
         alert('Failed to refresh token. Please try again.');
@@ -258,7 +258,21 @@ function refreshToken() {
 // Function to show the token refresh popup
 function showTokenPopup() {
     return new Promise((resolve, reject) => {
-        $('#token-popup').show();
+        Swal.fire(
+            {
+                title: "Session Expired",
+                text: "Your session has expired. Please log in again.",
+                type: "warning",
+                //showCancelButton: true,
+                confirmButtonColor: "green",
+                confirmButtonText: "Login",
+                closeOnConfirm: false,
+            }).then((result) => {
+                if (result.value) {
+                    window.location.href = "/Login/Index"; // Redirect to login page
+                }
+            });
+        // $('#token-popup').show();
         $('#refresh-token-button').one('click', function () {
             refreshToken().then(resolve).catch(reject);
         });
@@ -271,7 +285,7 @@ function customAjax(options) {
         showTokenPopup().then(() => {
             // Add the refreshed token to the request headers
             options.headers = options.headers || {};
-            options.headers.Authorization = 'Bearer ' + localStorage.getItem('token');
+            options.headers.Authorization = 'Bearer ' + localStorage.getItem('jwt');
             // Retry the original request
             return $.ajax(options);
         }).fail(() => {
@@ -280,7 +294,7 @@ function customAjax(options) {
     } else {
         // Add the token to the request headers
         options.headers = options.headers || {};
-        options.headers.Authorization = 'Bearer ' + localStorage.getItem('token');
+        options.headers.Authorization = 'Bearer ' + localStorage.getItem('jwt');
         return $.ajax(options);
     }
 }

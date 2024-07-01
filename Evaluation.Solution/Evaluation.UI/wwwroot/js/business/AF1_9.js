@@ -320,3 +320,4 @@ function childrenValidationAge(childrenAge, principalAge, spouseAge) {
 $("#btnDownloadEmptyExcel").click(function () {
     downloadEmptyExcel(BusinessLineCode, JSON.stringify("AF1_9"), JSON.stringify("AF"));
 })
+initiateSelect2();
