@@ -65,10 +65,10 @@ namespace Evaluation.UI.Authentication
 
 				}
 				AuthenticationTicket ticket = GetTicketFromToken(token);
-				if (IsTokenHas10mins(token))
-				{
-					ticket = CreateNewTokenTicket(token);
-				}
+				//if (IsTokenHas10mins(token))
+				//{
+				//	ticket = CreateNewTokenTicket(token);
+				//}
 				return AuthenticateResult.Success(ticket);
 			}
 			//return AuthenticateResult.NoResult();

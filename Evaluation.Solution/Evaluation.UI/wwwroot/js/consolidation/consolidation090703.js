@@ -197,12 +197,12 @@ $(document).ready(function () {
         // Get the selected row data
         policySelectedData = tPolicies.row(this).data();
         //draw data
-        $("#MasterId").val(salesTransactionBL090703.masterId);
-        $("#ClientId").val(salesTransactionBL090703.clientId);
+        $("#MasterId").val(salesTransactionBL090703.masterId).change();
+        $("#ClientId").val(salesTransactionBL090703.clientId).change();
         $("#MasterClientRecID").val(salesTransactionBL090703.recId);
         $("#txtInssuranceCompany").val(policySelectedData.insurerProduct);
-        $("#ddlIsBilling").val(policySelectedData.billingToSamePolicyHolder == true ? "Yes" : "No");
-        $("#ddlProrata").val(policySelectedData.proRataAccept == true ? "Yes" : "No");
+        $("#ddlIsBilling").val(policySelectedData.billingToSamePolicyHolder == true ? "Yes" : "No").change();
+        $("#ddlProrata").val(policySelectedData.proRataAccept == true ? "Yes" : "No").change();
         $("#checkSkipUpload").val();
         $("#txtPolicyNumber").val(policySelectedData.policyNumber);
         $("#txtEffectiveDate").val(policySelectedData.policyEffectiveDate.split('T')[0]);
@@ -604,10 +604,10 @@ $(document).ready(function () {
 
 
     //master client w lista and datatable
-    $('#MasterId').on('blur', function () {
+    $('#MasterId').on('select2:close', function () {
         SubmitAf8(true);
     })
-    $('#ClientId').on('blur', function () {
+    $('#ClientId').on('select2:close', function () {
         SubmitAf8(true);
     })
     function SubmitAf8(isClientMaster) {
@@ -758,6 +758,7 @@ $(document).ready(function () {
 
     //// Trigger a draw to populate the table initially (you may not need this depending on your setup)
     //tPolicies.draw();
+    initiateSelect2();
 });
 function getValues() {
     var table = document.getElementById("tInsured");

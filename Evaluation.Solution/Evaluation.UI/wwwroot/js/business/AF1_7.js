@@ -277,3 +277,4 @@ function childrenValidationAge(childrenAge, principalAge, spouseAge) {
     //}
     return true;
 }
+initiateSelect2();

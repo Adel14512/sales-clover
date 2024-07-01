@@ -197,12 +197,12 @@ $(document).ready(function () {
         // Get the selected row data
         policySelectedData = tPolicies.row(this).data();
         //draw data
-        $("#MasterId").val(salesTransactionBL010602.masterId);
-        $("#ClientId").val(salesTransactionBL010602.clientId);
+        $("#MasterId").val(salesTransactionBL010602.masterId).change();
+        $("#ClientId").val(salesTransactionBL010602.clientId).change();
         $("#MasterClientRecID").val(salesTransactionBL010602.recId);
         $("#txtInssuranceCompany").val(policySelectedData.insurerProduct);
-        $("#ddlIsBilling").val(policySelectedData.billingToSamePolicyHolder == true ? "Yes" : "No");
-        $("#ddlProrata").val(policySelectedData.proRataAccept == true ? "Yes" : "No");
+        $("#ddlIsBilling").val(policySelectedData.billingToSamePolicyHolder == true ? "Yes" : "No").change();
+        $("#ddlProrata").val(policySelectedData.proRataAccept == true ? "Yes" : "No").change();
         $("#checkSkipUpload").val();
         $("#txtPolicyNumber").val(policySelectedData.policyNumber);
         $("#txtEffectiveDate").val(policySelectedData.policyEffectiveDate.split('T')[0]);
@@ -604,10 +604,10 @@ $(document).ready(function () {
 
 
     //master client w lista and datatable
-    $('#MasterId').on('blur', function () {
+    $('#MasterId').on('select2:close', function () {
         SubmitAf8(true);
     })
-    $('#ClientId').on('blur', function () {
+    $('#ClientId').on('select2:close', function () {
         SubmitAf8(true);
     })
     function SubmitAf8(isClientMaster) {

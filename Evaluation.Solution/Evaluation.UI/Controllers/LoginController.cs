@@ -114,6 +114,7 @@ namespace Evaluation.UI.Controllers
                 var token = new JwtSecurityToken(_configuration["JsonWebTokenKeys:ValidIssuer"],
                     _configuration["JsonWebTokenKeys:ValidAudience"],
                     expires: DateTime.Now.AddHours(10),
+                   // expires: DateTime.Now.AddMinutes(1),
                     claims: userClaims,
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256));
                 var tokenstring = new JwtSecurityTokenHandler().WriteToken(token);
@@ -139,5 +140,10 @@ namespace Evaluation.UI.Controllers
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
         }
-    }
+		[HttpPost]
+		public async Task<IActionResult> RefreshToken(CancellationToken ct)
+		{
+            return null;
+		}
+	}
 }
